@@ -1,0 +1,71 @@
+﻿namespace Infusion.Gaming.LightCycles.Conditions
+{
+    using System;
+
+    using Infusion.Gaming.LightCycles.Model;
+
+    /// <summary>
+    /// The game end condition.
+    /// </summary>
+    public class EndCondition : ICondition
+    {
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EndCondition"/> class.
+        /// </summary>
+        /// <param name="condition">
+        /// The condition carried by end condition check
+        /// </param>
+        /// <param name="result">
+        /// The result of the end condition when condition is met
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when condition argument is null
+        /// </exception>
+        public EndCondition(ICondition condition, GameResultEnum result)
+        {
+            if (condition == null)
+            {
+                throw new ArgumentNullException("condition");
+            }
+
+            this.Condition = condition;
+            this.Result = result;
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the condition.
+        /// </summary>
+        public ICondition Condition { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the result.
+        /// </summary>
+        public GameResultEnum Result { get; protected set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// Performs condition check.
+        /// </summary>
+        /// <param name="game">
+        /// The game on which condition check should be performed.
+        /// </param>
+        /// <returns>
+        /// The result of the condition check.
+        /// </returns>
+        public bool Check(IGame game)
+        {
+            return this.Condition.Check(game);
+        }
+
+        #endregion
+    }
+}
