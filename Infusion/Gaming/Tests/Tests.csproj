@@ -48,9 +48,7 @@
   <ItemGroup>
     <Compile Include="Conditions\NumberOfPlayersTests.cs" />
     <Compile Include="Conditions\EndConditionTests.cs" />
-    <Compile Include="Events\EventsArbiterTests.cs" />
     <Compile Include="Events\EventsTests.cs" />
-    <Compile Include="Events\EventsCollectionTests.cs" />
     <Compile Include="MockHelper.cs" />
     <Compile Include="Model\Data\CharExtensionsTests.cs" />
     <Compile Include="Model\Data\DirectionHelperTests.cs" />

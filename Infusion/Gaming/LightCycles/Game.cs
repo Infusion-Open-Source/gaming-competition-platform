@@ -176,7 +176,7 @@ namespace Infusion.Gaming.LightCycles
         /// <returns>
         /// The state of the game after transition <see cref="IGameState"/>.
         /// </returns>
-        public IGameState Step(EventsCollection gameEvents)
+        public IGameState Step(IEnumerable<Event> gameEvents)
         {
             if (this.GameState != GameStateEnum.Running)
             {
@@ -259,7 +259,7 @@ namespace Infusion.Gaming.LightCycles
         /// <param name="gameEvents">
         /// Collection of game events that affects the state.
         /// </param>
-        protected void TransitToNextState(EventsCollection gameEvents)
+        protected void TransitToNextState(IEnumerable<Event> gameEvents)
         {
             var nextState = new GameState(this.CurrentState.Turn + 1, this.CurrentState.Map.Clone());
             var eventsToProcess = new EventsCollection();
@@ -270,7 +270,7 @@ namespace Infusion.Gaming.LightCycles
             {
                 foreach (IEventProcessor eventProcessor in this.EventProcessors)
                 {
-                    EventsCollection newEvents;
+                    IEnumerable<Event> newEvents;
                     bool eventProcessed = eventProcessor.Process(
                         eventsToProcess[0], this.CurrentState, nextState, out newEvents);
                     eventsToProcess.AddRange(newEvents);

@@ -139,7 +139,7 @@ namespace Infusion.Gaming.ServerLauncher
             {
                 // tick
                 var eventsArbiter = new EventsArbiter();
-                var events = new EventsCollection();
+                var events = new List<Event>();
                 for (int p = 0; p < NumberOfPlayers; p++)
                 {
                     var player = new Player((char)('A' + p));

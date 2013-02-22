@@ -31,7 +31,7 @@ namespace Infusion.Gaming.LightCycles.Events
     /// <summary>
     ///     The events collection.
     /// </summary>
-    public class EventsCollection : List<Event>
+    internal class EventsCollection : List<Event>
     {
         #region Constructors and Destructors
 

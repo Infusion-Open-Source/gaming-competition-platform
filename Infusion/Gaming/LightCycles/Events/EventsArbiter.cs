@@ -49,7 +49,7 @@ namespace Infusion.Gaming.LightCycles.Events
         /// <returns>
         /// The set of valid players events <see cref="EventsCollection"/>.
         /// </returns>
-        public EventsCollection Arbitrage(EventsCollection events, IEnumerable<Player> playersInGame)
+        public IEnumerable<Event> Arbitrage(IEnumerable<Event> events, IEnumerable<Player> playersInGame)
         {
             if (events == null)
             {
@@ -62,9 +62,10 @@ namespace Infusion.Gaming.LightCycles.Events
             }
 
             var results = new EventsCollection();
+            var eventsToCheck = new EventsCollection(events);
             foreach (Player player in playersInGame)
             {
-                Event e = events.FilterBy(player).MostRecent;
+                Event e = eventsToCheck.FilterBy(player).MostRecent;
                 if (e == null)
                 {
                     e = new PlayerMoveEvent(player, RelativeDirectionEnum.Undefined);

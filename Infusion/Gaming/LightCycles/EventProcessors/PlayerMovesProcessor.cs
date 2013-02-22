@@ -26,6 +26,7 @@
 
 namespace Infusion.Gaming.LightCycles.EventProcessors
 {
+    using System.Collections.Generic;
     using System.Drawing;
 
     using Infusion.Gaming.LightCycles.Events;
@@ -59,7 +60,7 @@ namespace Infusion.Gaming.LightCycles.EventProcessors
         /// <returns>
         /// was event processed by processor
         /// </returns>
-        public bool Process(Event e, IGameState currentState, IGameState nextState, out EventsCollection newEvents)
+        public bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents)
         {
             newEvents = new EventsCollection();
             var moveEvent = e as PlayerMoveEvent;
@@ -71,7 +72,7 @@ namespace Infusion.Gaming.LightCycles.EventProcessors
             Point location = currentState.Map.PlayersLocations[moveEvent.Player];
             DirectionEnum direction = currentState.Directions[moveEvent.Player];
             Point newLocation = DirectionHelper.NextLocation(location, direction, moveEvent.Direction);
-
+            EventsCollection events = new EventsCollection();
             if (nextState.Map.Locations[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Space)
             {
                 // player moves to new loaction
@@ -84,16 +85,16 @@ namespace Infusion.Gaming.LightCycles.EventProcessors
             {
                 // player-trail collision 
                 // player-wall collision 
-                newEvents.Add(new PlayerCollisionEvent(moveEvent.Player));
+                events.Add(new PlayerCollisionEvent(moveEvent.Player));
             }
             else if (nextState.Map.Locations[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Player)
             {
                 // player-player collision 
-                newEvents.Add(new PlayerCollisionEvent(moveEvent.Player));
-                newEvents.Add(
-                    new PlayerCollisionEvent(nextState.Map.Locations[newLocation.X, newLocation.Y].Player));
+                events.Add(new PlayerCollisionEvent(moveEvent.Player));
+                events.Add(new PlayerCollisionEvent(nextState.Map.Locations[newLocation.X, newLocation.Y].Player));
             }
 
+            ((EventsCollection)newEvents).AddRange(events);
             return true;
         }
 

@@ -25,6 +25,8 @@
 
 namespace Infusion.Gaming.LightCycles.EventProcessors
 {
+    using System.Collections.Generic;
+
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Model;
 
@@ -54,7 +56,7 @@ namespace Infusion.Gaming.LightCycles.EventProcessors
         /// <returns>
         /// was event processed by processor
         /// </returns>
-        public bool Process(Event e, IGameState currentState, IGameState nextState, out EventsCollection newEvents)
+        public bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents)
         {
             newEvents = new EventsCollection();
             var collisionEvent = e as PlayerCollisionEvent;

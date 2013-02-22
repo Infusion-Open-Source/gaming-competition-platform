@@ -120,7 +120,7 @@ namespace Infusion.Gaming.LightCycles
         /// <returns>
         /// The state of the game after transition <see cref="IGameState"/>.
         /// </returns>
-        IGameState Step(EventsCollection gameEvents);
+        IGameState Step(IEnumerable<Event> gameEvents);
 
         /// <summary>
         ///     Stops the game.
