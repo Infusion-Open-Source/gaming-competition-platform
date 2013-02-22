@@ -1,4 +1,28 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Events
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EventsTests.cs" company="Infusion">
+//    Copyright (C) 2013 Paweł Drozdowski
+//
+//    This file is part of LightCycles Game Engine.
+//
+//    LightCycles Game Engine is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    LightCycles Game Engine is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+//   The events tests.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Infusion.Gaming.LightCycles.Tests.Events
 {
     using System;
 
@@ -9,7 +33,7 @@
     using NUnit.Framework;
 
     /// <summary>
-    /// The events tests.
+    ///     The events tests.
     /// </summary>
     [TestFixture]
     public class EventsTests
@@ -17,7 +41,7 @@
         #region Public Methods and Operators
 
         /// <summary>
-        /// The player collision event checks.
+        ///     The player collision event checks.
         /// </summary>
         [Test]
         public void PlayerCollisionEventChecks()
@@ -27,7 +51,7 @@
         }
 
         /// <summary>
-        /// The player move event checks.
+        ///     The player move event checks.
         /// </summary>
         [Test]
         public void PlayerMoveEventChecks()
@@ -46,7 +70,7 @@
         }
 
         /// <summary>
-        /// The tick event checks.
+        ///     The tick event checks.
         /// </summary>
         [Test]
         public void TickEventChecks()

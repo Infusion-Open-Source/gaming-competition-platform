@@ -1,11 +1,35 @@
-﻿namespace Infusion.Gaming.LightCycles.Model.Data
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Map.cs" company="Infusion">
+//    Copyright (C) 2013 Paweł Drozdowski
+//
+//    This file is part of LightCycles Game Engine.
+//
+//    LightCycles Game Engine is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    LightCycles Game Engine is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+//   The game map.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Infusion.Gaming.LightCycles.Model.Data
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
 
     /// <summary>
-    /// The game map.
+    ///     The game map.
     /// </summary>
     public class Map : IMap
     {
@@ -59,41 +83,17 @@
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the height of the map.
+        ///     Gets or sets the height of the map.
         /// </summary>
         public int Height { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the map locations.
+        ///     Gets or sets the map locations.
         /// </summary>
         public Location[,] Locations { get; protected set; }
 
         /// <summary>
-        /// Gets the players locations.
-        /// </summary>
-        public Dictionary<Player, Point> PlayerLocations
-        {
-            get
-            {
-                var playerLocations = new Dictionary<Player, Point>();
-                for (int y = 0; y < this.Height; y++)
-                {
-                    for (int x = 0; x < this.Width; x++)
-                    {
-                        Location location = this.Locations[x, y];
-                        if (location.LocationType == LocationTypeEnum.Player)
-                        {
-                            playerLocations.Add(location.Player, new Point(x, y));
-                        }
-                    }
-                }
-
-                return playerLocations;
-            }
-        }
-
-        /// <summary>
-        /// Gets the players.
+        ///     Gets the players.
         /// </summary>
         public List<Player> Players
         {
@@ -117,7 +117,31 @@
         }
 
         /// <summary>
-        /// Gets or sets the width of the map.
+        ///     Gets the players locations.
+        /// </summary>
+        public Dictionary<Player, Point> PlayersLocations
+        {
+            get
+            {
+                var playerLocations = new Dictionary<Player, Point>();
+                for (int y = 0; y < this.Height; y++)
+                {
+                    for (int x = 0; x < this.Width; x++)
+                    {
+                        Location location = this.Locations[x, y];
+                        if (location.LocationType == LocationTypeEnum.Player)
+                        {
+                            playerLocations.Add(location.Player, new Point(x, y));
+                        }
+                    }
+                }
+
+                return playerLocations;
+            }
+        }
+
+        /// <summary>
+        ///     Gets or sets the width of the map.
         /// </summary>
         public int Width { get; protected set; }
 
@@ -126,10 +150,10 @@
         #region Public Methods and Operators
 
         /// <summary>
-        /// Clone the map.
+        ///     Clone the map.
         /// </summary>
         /// <returns>
-        /// The cloned map <see cref="IMap"/>.
+        ///     The cloned map <see cref="IMap" />.
         /// </returns>
         public IMap Clone()
         {
@@ -184,10 +208,10 @@
         }
 
         /// <summary>
-        /// Gets the hash code of the object.
+        ///     Gets the hash code of the object.
         /// </summary>
         /// <returns>
-        /// The hash code.
+        ///     The hash code.
         /// </returns>
         public override int GetHashCode()
         {
@@ -204,10 +228,10 @@
         }
 
         /// <summary>
-        /// Gets zero state of the map. Creates T-1 map from initial map which is helpful to find out players initial directions.
+        ///     Gets zero state of the map. Creates T-1 map from initial map which is helpful to find out players initial directions.
         /// </summary>
         /// <returns>
-        /// The cloned map <see cref="IMap"/>.
+        ///     The cloned map <see cref="IMap" />.
         /// </returns>
         public IMap GetZeroStateMap()
         {

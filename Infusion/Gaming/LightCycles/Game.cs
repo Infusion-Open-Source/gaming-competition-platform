@@ -1,23 +1,46 @@
-﻿namespace Infusion.Gaming.LightCycles
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Game.cs" company="Infusion">
+//    Copyright (C) 2013 Paweł Drozdowski
+//
+//    This file is part of LightCycles Game Engine.
+//
+//    LightCycles Game Engine is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    LightCycles Game Engine is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+//   The program.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace Infusion.Gaming.LightCycles
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
 
     using Infusion.Gaming.LightCycles.Conditions;
+    using Infusion.Gaming.LightCycles.EventProcessors;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
 
     /// <summary>
-    /// The game.
+    ///     The game.
     /// </summary>
     public class Game : IGame
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Game"/> class.
+        ///     Initializes a new instance of the <see cref="Game" /> class.
         /// </summary>
         public Game()
         {
@@ -29,36 +52,46 @@
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the current game state.
+        ///     Gets or sets the current game state.
         /// </summary>
         public IGameState CurrentState { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the state of the game.
+        ///     Gets or sets the end conditions.
+        /// </summary>
+        public List<EndCondition> EndConditions { get; protected set; }
+
+        /// <summary>
+        ///     Gets or sets the event processors collection.
+        /// </summary>
+        public List<IEventProcessor> EventProcessors { get; protected set; }
+
+        /// <summary>
+        ///     Gets or sets the state of the game.
         /// </summary>
         public GameStateEnum GameState { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the previous game state.
+        ///     Gets or sets the game mode.
+        /// </summary>
+        public GameModeEnum Mode { get; protected set; }
+
+        /// <summary>
+        ///     Gets or sets the previous game state.
         /// </summary>
         public IGameState PreviousState { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the result of the game.
+        ///     Gets or sets the result of the game.
         /// </summary>
         public GameResultEnum Result { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the game settings.
-        /// </summary>
-        public Settings Settings { get; protected set; }
 
         #endregion
 
         #region Public Methods and Operators
 
         /// <summary>
-        /// Resets the game.
+        ///     Resets the game.
         /// </summary>
         public void Reset()
         {
@@ -76,19 +109,30 @@
         /// <summary>
         /// Starts the game.
         /// </summary>
+        /// <param name="mode">
+        /// Game mode.
+        /// </param>
         /// <param name="players">
         /// The set of players taking part in the game.
         /// </param>
         /// <param name="initialMap">
         /// The initial map of the game.
         /// </param>
-        /// <param name="settings">
-        /// The settings of the game.
+        /// <param name="endConditions">
+        /// Game end conditions.
+        /// </param>
+        /// <param name="eventProcessors">
+        /// Game events processors.
         /// </param>
         /// <returns>
         /// The initial state of the game <see cref="IGameState"/>.
         /// </returns>
-        public IGameState Start(IEnumerable<Player> players, IMap initialMap, Settings settings)
+        public IGameState Start(
+            GameModeEnum mode, 
+            IEnumerable<Player> players, 
+            IMap initialMap, 
+            IEnumerable<EndCondition> endConditions, 
+            IEnumerable<IEventProcessor> eventProcessors)
         {
             if (this.GameState != GameStateEnum.Initializing)
             {
@@ -105,7 +149,19 @@
                 throw new ArgumentNullException("initialMap");
             }
 
-            this.Settings = settings;
+            if (endConditions == null)
+            {
+                throw new ArgumentNullException("endConditions");
+            }
+
+            if (eventProcessors == null)
+            {
+                throw new ArgumentNullException("eventProcessors");
+            }
+
+            this.Mode = mode;
+            this.EndConditions = new List<EndCondition>(endConditions);
+            this.EventProcessors = new List<IEventProcessor>(eventProcessors);
             this.CurrentState = this.CreateInitialState(players, initialMap);
             this.GameState = GameStateEnum.Running;
             return this.CurrentState;
@@ -116,7 +172,7 @@
         /// </summary>
         /// <param name="gameEvents">
         /// The set of game events that occurs between game turns.
-        /// </param>s
+        /// </param>
         /// <returns>
         /// The state of the game after transition <see cref="IGameState"/>.
         /// </returns>
@@ -133,7 +189,7 @@
         }
 
         /// <summary>
-        /// Stops the game.
+        ///     Stops the game.
         /// </summary>
         public void Stop()
         {
@@ -150,11 +206,11 @@
         #region Methods
 
         /// <summary>
-        /// The check of end conditions.
+        ///     The check of end conditions.
         /// </summary>
         protected void CheckEndConditions()
         {
-            foreach (EndCondition endCondition in this.Settings.EndConditions)
+            foreach (EndCondition endCondition in this.EndConditions)
             {
                 if (endCondition.Check(this))
                 {
@@ -190,12 +246,11 @@
             }
 
             initialMap.RemovePlayers(playersToRemove);
-            IMap zeroStateMap = initialMap.GetZeroStateMap();
-
-            var resolver = new PlayerDirectionResolver();
-            Dictionary<Player, DirectionEnum> playersDirections = resolver.Resolve(initialMap, zeroStateMap);
-
-            return new GameState(0, initialMap, playersDirections);
+            var prevState = new GameState(0, initialMap.GetZeroStateMap());
+            var initialState = new GameState(0, initialMap);
+            initialState.UpdatePlayersDirection(prevState);
+            initialState.UpdateTrailsAge(prevState);
+            return initialState;
         }
 
         /// <summary>
@@ -206,71 +261,31 @@
         /// </param>
         protected void TransitToNextState(EventsCollection gameEvents)
         {
-            int nextTurn = this.CurrentState.Turn + 1;
-            IMap nextMap = this.CurrentState.Map.Clone();
+            var nextState = new GameState(this.CurrentState.Turn + 1, this.CurrentState.Map.Clone());
+            var eventsToProcess = new EventsCollection();
+            eventsToProcess.Add(new TickEvent(nextState.Turn));
+            eventsToProcess.AddRange(gameEvents);
 
-            // execute events and transit to next state
-            var events = new EventsCollection();
-            events.Add(new TickEvent(nextTurn));
-            events.AddRange(gameEvents);
-            while (events.Count > 0)
+            while (eventsToProcess.Count > 0)
             {
-                Event e = events[0];
-                events.RemoveAt(0);
-                Console.WriteLine(e);
-
-                var moveEvent = e as PlayerMoveEvent;
-                if (moveEvent != null)
+                foreach (IEventProcessor eventProcessor in this.EventProcessors)
                 {
-                    if (this.CurrentState.Map.Players.Contains(moveEvent.Player))
+                    EventsCollection newEvents;
+                    bool eventProcessed = eventProcessor.Process(
+                        eventsToProcess[0], this.CurrentState, nextState, out newEvents);
+                    eventsToProcess.AddRange(newEvents);
+                    if (eventProcessed)
                     {
-                        Point location = this.CurrentState.Map.PlayerLocations[moveEvent.Player];
-                        var newLocation = new Point(location.X, location.Y);
-                        DirectionEnum currentDirection = this.CurrentState.Directions[moveEvent.Player];
-
-                        DirectionEnum newDirection = DirectionHelper.ChangeDirection(currentDirection, moveEvent.Direction);
-                        switch (newDirection)
-                        {
-                            case DirectionEnum.Up:
-                                newLocation.Y--;
-                                break;
-                            case DirectionEnum.Down:
-                                newLocation.Y++;
-                                break;
-                            case DirectionEnum.Left:
-                                newLocation.X--;
-                                break;
-                            case DirectionEnum.Right:
-                                newLocation.X++;
-                                break;
-                        }
-
-                        if (nextMap.Locations[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Space)
-                        {
-                            nextMap.Locations[newLocation.X, newLocation.Y] = new Location(
-                                LocationTypeEnum.Player, moveEvent.Player);
-                            nextMap.Locations[location.X, location.Y] = new Location(
-                                LocationTypeEnum.Trail, moveEvent.Player);
-                        }
-                        else
-                        {
-                            // collision 
-                            events.Add(new PlayerCollisionEvent(moveEvent.Player));
-                        }
+                        eventsToProcess.RemoveAt(0);
+                        break;
                     }
-                }
-
-                var collisionEvent = e as PlayerCollisionEvent;
-                if (collisionEvent != null)
-                {
-                    nextMap.RemovePlayer(collisionEvent.Player);
                 }
             }
 
+            nextState.UpdatePlayersDirection(this.CurrentState);
+            nextState.UpdateTrailsAge(this.CurrentState);
             this.PreviousState = this.CurrentState;
-            var resolver = new PlayerDirectionResolver();
-            Dictionary<Player, DirectionEnum> playersDirections = resolver.Resolve(nextMap, this.CurrentState.Map);
-            this.CurrentState = new GameState(nextTurn, nextMap, playersDirections);
+            this.CurrentState = nextState;
         }
 
         #endregion

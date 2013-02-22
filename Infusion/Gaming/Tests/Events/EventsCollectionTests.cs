@@ -1,4 +1,28 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Events
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EventsCollectionTests.cs" company="Infusion">
+//    Copyright (C) 2013 Paweł Drozdowski
+//
+//    This file is part of LightCycles Game Engine.
+//
+//    LightCycles Game Engine is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    LightCycles Game Engine is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+//   The events collection tests.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Infusion.Gaming.LightCycles.Tests.Events
 {
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Model;
@@ -7,7 +31,7 @@
     using NUnit.Framework;
 
     /// <summary>
-    /// The events collection tests.
+    ///     The events collection tests.
     /// </summary>
     [TestFixture]
     public class EventsCollectionTests
@@ -15,7 +39,7 @@
         #region Public Methods and Operators
 
         /// <summary>
-        /// The player filtered recent event check.
+        ///     The player filtered recent event check.
         /// </summary>
         [Test]
         public void PlayerFilteredRecentEventCheck()
@@ -35,7 +59,7 @@
         }
 
         /// <summary>
-        /// The player filtering checks.
+        ///     The player filtering checks.
         /// </summary>
         [Test]
         public void PlayerFilteringChecks()
@@ -55,7 +79,7 @@
         }
 
         /// <summary>
-        /// The recent event checks.
+        ///     The recent event checks.
         /// </summary>
         [Test]
         public void RecentEventChecks()
@@ -70,7 +94,7 @@
             Assert.IsNotNull(events.MostRecent);
             Assert.AreEqual(RelativeDirectionEnum.StraightForward, ((PlayerMoveEvent)events.MostRecent).Direction);
         }
-        
+
         #endregion
     }
 }

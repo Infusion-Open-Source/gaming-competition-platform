@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Player.cs" company="Infusion">
+// <copyright file="EventLoggingProcessor.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,36 +18,35 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The player.
+//   Event logging processor.
+//   Prints out event to console.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model.Data
+namespace Infusion.Gaming.LightCycles.EventProcessors
 {
     using System;
 
+    using Infusion.Gaming.LightCycles.Events;
+    using Infusion.Gaming.LightCycles.Model;
+
     /// <summary>
-    ///     The player.
+    ///     Event logging processor.
+    ///     Prints out event to console.
     /// </summary>
-    public class Player
+    public class EventLoggingProcessor : IEventProcessor
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Player"/> class.
+        /// Initializes a new instance of the <see cref="EventLoggingProcessor"/> class.
         /// </summary>
-        /// <param name="id">
-        /// The player id.
+        /// <param name="silent">
+        /// flag whether processor is silent or not
         /// </param>
-        public Player(char id)
+        public EventLoggingProcessor(bool silent)
         {
-            id = id.ToUpper();
-            if (id < 'A' || id > 'Z')
-            {
-                throw new ArgumentOutOfRangeException("id");
-            }
-
-            this.Id = id;
+            this.IsSilent = silent;
         }
 
         #endregion
@@ -55,53 +54,41 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         #region Public Properties
 
         /// <summary>
-        ///     Gets or sets the id.
+        ///     Gets or sets a value indicating whether processor is silent or not
         /// </summary>
-        public char Id { get; protected set; }
+        public bool IsSilent { get; protected set; }
 
         #endregion
 
         #region Public Methods and Operators
 
         /// <summary>
-        /// Check if equals.
+        /// Process player move events
         /// </summary>
-        /// <param name="obj">
-        /// The object to compare to.
+        /// <param name="e">
+        /// event to process
+        /// </param>
+        /// <param name="currentState">
+        /// current game state
+        /// </param>
+        /// <param name="nextState">
+        /// next game state
+        /// </param>
+        /// <param name="newEvents">
+        /// new events produced by processor
         /// </param>
         /// <returns>
-        /// The result of comparison.
+        /// was event processed by processor
         /// </returns>
-        public override bool Equals(object obj)
+        public bool Process(Event e, IGameState currentState, IGameState nextState, out EventsCollection newEvents)
         {
-            if (obj == null)
+            newEvents = new EventsCollection();
+            if (!this.IsSilent)
             {
-                return false;
+                Console.WriteLine(e);
             }
 
-            return obj.GetHashCode() == this.GetHashCode();
-        }
-
-        /// <summary>
-        ///     Gets the hash code of the object.
-        /// </summary>
-        /// <returns>
-        ///     The hash code.
-        /// </returns>
-        public override int GetHashCode()
-        {
-            return this.Id;
-        }
-
-        /// <summary>
-        ///     To string.
-        /// </summary>
-        /// <returns>
-        ///     String representation of an object.
-        /// </returns>
-        public override string ToString()
-        {
-            return this.Id.ToString();
+            return false;
         }
 
         #endregion

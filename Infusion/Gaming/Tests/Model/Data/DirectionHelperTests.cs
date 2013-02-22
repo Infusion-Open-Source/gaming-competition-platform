@@ -1,4 +1,28 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Model.Data
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DirectionHelperTests.cs" company="Infusion">
+//    Copyright (C) 2013 Paweł Drozdowski
+//
+//    This file is part of LightCycles Game Engine.
+//
+//    LightCycles Game Engine is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    LightCycles Game Engine is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+//   The direction helper tests.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Infusion.Gaming.LightCycles.Tests.Model.Data
 {
     using System.Drawing;
 
@@ -7,7 +31,7 @@
     using NUnit.Framework;
 
     /// <summary>
-    /// The direction helper tests.
+    ///     The direction helper tests.
     /// </summary>
     [TestFixture]
     public class DirectionHelperTests
@@ -15,26 +39,7 @@
         #region Public Methods and Operators
 
         /// <summary>
-        /// The direction checking checks.
-        /// </summary>
-        [Test]
-        public void DirectionCheckingChecks()
-        {
-            Assert.AreEqual(DirectionEnum.Left, DirectionHelper.CheckDirection(-1, 0, 0, 0));
-            Assert.AreEqual(DirectionEnum.Right, DirectionHelper.CheckDirection(1, 0, 0, 0));
-            Assert.AreEqual(DirectionEnum.Up, DirectionHelper.CheckDirection(0, -1, 0, 0));
-            Assert.AreEqual(DirectionEnum.Down, DirectionHelper.CheckDirection(0, 1, 0, 0));
-            Assert.AreEqual(DirectionEnum.Undefined, DirectionHelper.CheckDirection(0, 0, 0, 0));
-
-            Assert.AreEqual(DirectionEnum.Left, DirectionHelper.CheckDirection(new Point(-1, 0), new Point(0, 0)));
-            Assert.AreEqual(DirectionEnum.Right, DirectionHelper.CheckDirection(new Point(1, 0), new Point(0, 0)));
-            Assert.AreEqual(DirectionEnum.Up, DirectionHelper.CheckDirection(new Point(0, -1), new Point(0, 0)));
-            Assert.AreEqual(DirectionEnum.Down, DirectionHelper.CheckDirection(new Point(0, 1), new Point(0, 0)));
-            Assert.AreEqual(DirectionEnum.Undefined, DirectionHelper.CheckDirection(new Point(0, 0), new Point(0, 0)));
-        }
-
-        /// <summary>
-        /// Change direction checks.
+        ///     Change direction checks.
         /// </summary>
         [Test]
         public void ChangeDirectionChecks()
@@ -79,6 +84,25 @@
                 DirectionEnum.Right, DirectionHelper.ChangeDirection(DirectionEnum.Up, RelativeDirectionEnum.Right));
             Assert.AreEqual(
                 DirectionEnum.Left, DirectionHelper.ChangeDirection(DirectionEnum.Down, RelativeDirectionEnum.Right));
+        }
+
+        /// <summary>
+        ///     The direction checking checks.
+        /// </summary>
+        [Test]
+        public void DirectionCheckingChecks()
+        {
+            Assert.AreEqual(DirectionEnum.Left, DirectionHelper.CheckDirection(-1, 0, 0, 0));
+            Assert.AreEqual(DirectionEnum.Right, DirectionHelper.CheckDirection(1, 0, 0, 0));
+            Assert.AreEqual(DirectionEnum.Up, DirectionHelper.CheckDirection(0, -1, 0, 0));
+            Assert.AreEqual(DirectionEnum.Down, DirectionHelper.CheckDirection(0, 1, 0, 0));
+            Assert.AreEqual(DirectionEnum.Undefined, DirectionHelper.CheckDirection(0, 0, 0, 0));
+
+            Assert.AreEqual(DirectionEnum.Left, DirectionHelper.CheckDirection(new Point(-1, 0), new Point(0, 0)));
+            Assert.AreEqual(DirectionEnum.Right, DirectionHelper.CheckDirection(new Point(1, 0), new Point(0, 0)));
+            Assert.AreEqual(DirectionEnum.Up, DirectionHelper.CheckDirection(new Point(0, -1), new Point(0, 0)));
+            Assert.AreEqual(DirectionEnum.Down, DirectionHelper.CheckDirection(new Point(0, 1), new Point(0, 0)));
+            Assert.AreEqual(DirectionEnum.Undefined, DirectionHelper.CheckDirection(new Point(0, 0), new Point(0, 0)));
         }
 
         #endregion

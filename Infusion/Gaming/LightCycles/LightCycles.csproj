@@ -51,6 +51,12 @@
     <Compile Include="Conditions\EndCondition.cs" />
     <Compile Include="Conditions\ICondition.cs" />
     <Compile Include="Conditions\NumberOfPlayers.cs" />
+    <Compile Include="EventProcessors\EventLoggingProcessor.cs" />
+    <Compile Include="EventProcessors\GarbageProcessor.cs" />
+    <Compile Include="EventProcessors\IEventProcessor.cs" />
+    <Compile Include="EventProcessors\PlayerCollisionProcessor.cs" />
+    <Compile Include="EventProcessors\PlayerMovesProcessor.cs" />
+    <Compile Include="EventProcessors\TrailAgingProcessor.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventsCollection.cs" />
@@ -69,7 +75,6 @@
     <Compile Include="Model\Data\MapStreamGenerator.cs" />
     <Compile Include="Model\Data\MapSerializer.cs" />
     <Compile Include="Model\DirectionHelper.cs" />
-    <Compile Include="Model\PlayerDirectionResolver.cs" />
     <Compile Include="Model\DirectionEnum.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Model\GameModeEnum.cs" />
@@ -80,7 +85,9 @@
     <Compile Include="Model\Data\Player.cs" />
     <Compile Include="Model\RelativeDirectionEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\Settings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

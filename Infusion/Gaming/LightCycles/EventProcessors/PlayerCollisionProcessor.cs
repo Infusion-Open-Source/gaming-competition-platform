@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CharExtensions.cs" company="Infusion">
+// <copyright file="PlayerCollisionProcessor.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,55 +18,53 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The char type extensions.
+//   Player collision event processor.
+//   When player collides with something then he/she is removed (with the trail) from the map.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model.Data
+namespace Infusion.Gaming.LightCycles.EventProcessors
 {
+    using Infusion.Gaming.LightCycles.Events;
+    using Infusion.Gaming.LightCycles.Model;
+
     /// <summary>
-    ///     The char type extensions.
+    ///     Player collision event processor.
+    ///     When player collides with something then he/she is removed (with the trail) from the map.
     /// </summary>
-    public static class CharExtensions
+    public class PlayerCollisionProcessor : IEventProcessor
     {
         #region Public Methods and Operators
 
         /// <summary>
-        /// Change character to lower case.
+        /// Process player move events
         /// </summary>
-        /// <param name="c">
-        /// The character to change.
+        /// <param name="e">
+        /// event to process
+        /// </param>
+        /// <param name="currentState">
+        /// current game state
+        /// </param>
+        /// <param name="nextState">
+        /// next game state
+        /// </param>
+        /// <param name="newEvents">
+        /// new events produced by processor
         /// </param>
         /// <returns>
-        /// The changed character.
+        /// was event processed by processor
         /// </returns>
-        public static char ToLower(this char c)
+        public bool Process(Event e, IGameState currentState, IGameState nextState, out EventsCollection newEvents)
         {
-            if (c >= 'A' && c <= 'Z')
+            newEvents = new EventsCollection();
+            var collisionEvent = e as PlayerCollisionEvent;
+            if (collisionEvent == null)
             {
-                return (char)(c + ('a' - 'A'));
+                return false;
             }
 
-            return c;
-        }
-
-        /// <summary>
-        /// Change character to upper case.
-        /// </summary>
-        /// <param name="c">
-        /// The character to change.
-        /// </param>
-        /// <returns>
-        /// The changed character.
-        /// </returns>
-        public static char ToUpper(this char c)
-        {
-            if (c >= 'a' && c <= 'z')
-            {
-                return (char)(c + ('A' - 'a'));
-            }
-
-            return c;
+            nextState.Map.RemovePlayer(collisionEvent.Player);
+            return true;
         }
 
         #endregion

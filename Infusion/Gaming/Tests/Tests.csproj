@@ -53,12 +53,13 @@
     <Compile Include="Events\EventsCollectionTests.cs" />
     <Compile Include="MockHelper.cs" />
     <Compile Include="Model\Data\CharExtensionsTests.cs" />
-    <Compile Include="Model\Data\PlayerDirectionResolverTests.cs" />
     <Compile Include="Model\Data\DirectionHelperTests.cs" />
     <Compile Include="Model\Data\MapSerializerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Settings.StyleCop" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LightCycles\LightCycles.csproj">
       <Project>{9753941F-A627-4D65-967C-A0472AFD9B5F}</Project>

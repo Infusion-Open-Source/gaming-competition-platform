@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IGameState.cs" company="Infusion">
+// <copyright file="IEventProcessor.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,63 +18,41 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The GameState interface.
+//   Events processor interface
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model
+namespace Infusion.Gaming.LightCycles.EventProcessors
 {
-    using System.Collections.Generic;
-    using System.Drawing;
-
-    using Infusion.Gaming.LightCycles.Model.Data;
+    using Infusion.Gaming.LightCycles.Events;
+    using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     The GameState interface.
+    ///     Events processor interface
     /// </summary>
-    public interface IGameState
+    public interface IEventProcessor
     {
-        #region Public Properties
-
-        /// <summary>
-        ///     Gets the players directions.
-        /// </summary>
-        Dictionary<Player, DirectionEnum> Directions { get; }
-
-        /// <summary>
-        ///     Gets the map.
-        /// </summary>
-        IMap Map { get; }
-
-        /// <summary>
-        ///     Gets the trails age.
-        /// </summary>
-        Dictionary<Point, int> TrailsAge { get; }
-
-        /// <summary>
-        ///     Gets the turn.
-        /// </summary>
-        int Turn { get; }
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
-        /// Updates direction on which players go
+        /// Process player move events
         /// </summary>
-        /// <param name="previousState">
-        /// previous game state to compare to
+        /// <param name="e">
+        /// event to process
         /// </param>
-        void UpdatePlayersDirection(IGameState previousState);
-
-        /// <summary>
-        /// Updates age of players trails
-        /// </summary>
-        /// <param name="previousState">
-        /// previous game state to compare to
+        /// <param name="currentState">
+        /// current game state
         /// </param>
-        void UpdateTrailsAge(IGameState previousState);
+        /// <param name="nextState">
+        /// next game state
+        /// </param>
+        /// <param name="newEvents">
+        /// new events produced by processor
+        /// </param>
+        /// <returns>
+        /// was event processed by processor
+        /// </returns>
+        bool Process(Event e, IGameState currentState, IGameState nextState, out EventsCollection newEvents);
 
         #endregion
     }
