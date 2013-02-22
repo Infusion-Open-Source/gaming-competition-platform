@@ -138,6 +138,8 @@ namespace Infusion.Gaming.ServerLauncher
             while (game.GameState == GameStateEnum.Running)
             {
                 // tick
+
+                // TODO: Break down arbiter to set of EventFilter classes implementing IEventFilter and pass it into Game class
                 var eventsArbiter = new EventsArbiter();
                 var events = new List<Event>();
                 for (int p = 0; p < NumberOfPlayers; p++)

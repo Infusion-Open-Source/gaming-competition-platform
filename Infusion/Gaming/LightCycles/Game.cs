@@ -210,6 +210,7 @@ namespace Infusion.Gaming.LightCycles
         /// </summary>
         protected void CheckEndConditions()
         {
+            // TODO: should be moved to approperiate internal strongly typed EndConditions collection
             foreach (EndCondition endCondition in this.EndConditions)
             {
                 if (endCondition.Check(this))
@@ -237,6 +238,8 @@ namespace Infusion.Gaming.LightCycles
         {
             var playersInGame = new List<Player>(players);
             var playersToRemove = new List<Player>();
+
+            // TODO: refactor - move to Map as internal strongly typed players collection
             foreach (Player player in initialMap.Players)
             {
                 if (!playersInGame.Contains(player))
@@ -268,11 +271,11 @@ namespace Infusion.Gaming.LightCycles
 
             while (eventsToProcess.Count > 0)
             {
+                // TODO: move to event processor internal strongly typrd collection
                 foreach (IEventProcessor eventProcessor in this.EventProcessors)
                 {
                     IEnumerable<Event> newEvents;
-                    bool eventProcessed = eventProcessor.Process(
-                        eventsToProcess[0], this.CurrentState, nextState, out newEvents);
+                    bool eventProcessed = eventProcessor.Process(eventsToProcess[0], this.CurrentState, nextState, out newEvents);
                     eventsToProcess.AddRange(newEvents);
                     if (eventProcessed)
                     {
