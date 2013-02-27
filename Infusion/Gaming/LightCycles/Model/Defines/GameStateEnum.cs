@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GameModeEnum.cs" company="Infusion">
+// <copyright file="GameStateEnum.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,25 +18,35 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The game mode enumeration.
+//   The game state enumeration.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model
+namespace Infusion.Gaming.LightCycles.Model.Defines
 {
     /// <summary>
-    ///     The game mode enumeration.
+    ///     The game state enumeration.
     /// </summary>
-    public enum GameModeEnum
+    public enum GameStateEnum
     {
         /// <summary>
-        ///     Undefined mode.
+        ///     Undefined state.
         /// </summary>
         Undefined = 0, 
 
         /// <summary>
-        ///     Free for all.
+        ///     Game is initializing.
         /// </summary>
-        FreeForAll
+        Initializing, 
+
+        /// <summary>
+        ///     Game is running.
+        /// </summary>
+        Running, 
+
+        /// <summary>
+        ///     Game has stopped.
+        /// </summary>
+        Stopped, 
     }
 }

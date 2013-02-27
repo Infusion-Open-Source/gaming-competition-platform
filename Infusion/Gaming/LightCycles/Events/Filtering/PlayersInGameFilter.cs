@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PlayerCollisionEvent.cs" company="Infusion">
+// <copyright file="PlayersInGameFilter.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,51 +18,48 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The player collision event.
+//   Events processor interface
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 using Infusion.Gaming.LightCycles.Model;
 
-namespace Infusion.Gaming.LightCycles.Events
+namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
-    using Infusion.Gaming.LightCycles.Model.Data;
-
     /// <summary>
-    ///     The player collision event.
+    ///     Filter keeps events only from players that are still in game
     /// </summary>
-    public class PlayerCollisionEvent : PlayerEvent
+    public class PlayersInGameFilter : IEventFilter
     {
-        #region Constructors and Destructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerCollisionEvent"/> class.
-        /// </summary>
-        /// <param name="player">
-        /// The player which collides.
-        /// </param>
-        public PlayerCollisionEvent(Player player)
-            : base(player)
-        {
-        }
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
-        ///     Get string.
+        /// Filter game events
         /// </summary>
+        /// <param name="state">
+        /// current game state
+        /// </param>
+        /// <param name="events">
+        /// events to filter
+        /// </param>
         /// <returns>
-        ///     The string representation of an object.
+        /// filteres events list
         /// </returns>
-        public override string ToString()
+        public IList<Event> Filter(IGameState state, IEnumerable<Event> events)
         {
-            var builder = new StringBuilder();
-            builder.AppendFormat("{0}: collides", this.Player);
-            return builder.ToString();
+            var data = new EventsCollection(events);
+            var results = new List<Event>();
+            foreach (Player player in state.Map.Players)
+            {
+                results.AddRange(data.FilterBy(player));
+            }
+
+            return results;
         }
 
         #endregion

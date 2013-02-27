@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GarbageProcessor.cs" company="Infusion">
+// <copyright file="PlayerCollisionProcessor.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,51 +18,22 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   Garbage event processor.
-//   Catches all events that weren't processed by other event processors and removes it from the queue.
-//   Should be put at the end of processors queue.
+//   Player collision event processor.
+//   When player collides with something then he/she is removed (with the trail) from the map.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.EventProcessors
+using System.Collections.Generic;
+using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles.Events.Processing
 {
-    using System;
-    using System.Collections.Generic;
-
-    using Infusion.Gaming.LightCycles.Events;
-    using Infusion.Gaming.LightCycles.Model;
-
     /// <summary>
-    ///     Garbage event processor.
-    ///     Catches all events that weren't processed by other event processors and removes it from the queue.
-    ///     Should be put at the end of processors queue.
+    ///     Player collision event processor.
+    ///     When player collides with something then he/she is removed (with the trail) from the map.
     /// </summary>
-    public class GarbageProcessor : IEventProcessor
+    public class PlayerCollisionProcessor : IEventProcessor
     {
-        #region Constructors and Destructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GarbageProcessor"/> class.
-        /// </summary>
-        /// <param name="silent">
-        /// flag whether processor is silent or not
-        /// </param>
-        public GarbageProcessor(bool silent)
-        {
-            this.IsSilent = silent;
-        }
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        ///      Gets or sets a value indicating whether processor is silent or not
-        /// </summary>
-        public bool IsSilent { get; protected set; }
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
@@ -86,11 +57,13 @@ namespace Infusion.Gaming.LightCycles.EventProcessors
         public bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents)
         {
             newEvents = new EventsCollection();
-            if (!this.IsSilent)
+            var collisionEvent = e as PlayerCollisionEvent;
+            if (collisionEvent == null)
             {
-                Console.WriteLine(string.Format("No processor to pick up {0} event. Removed by garbage processor", e));
+                return false;
             }
 
+            nextState.Map.RemovePlayer(collisionEvent.Player);
             return true;
         }
 

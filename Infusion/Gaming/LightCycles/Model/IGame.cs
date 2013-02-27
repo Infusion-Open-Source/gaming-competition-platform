@@ -22,16 +22,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles
+using Infusion.Gaming.LightCycles.Events.Filtering;
+using Infusion.Gaming.LightCycles.Events.Processing;
+using System.Collections.Generic;
+using Infusion.Gaming.LightCycles.Conditions;
+using Infusion.Gaming.LightCycles.Events;
+using Infusion.Gaming.LightCycles.Model.Data;
+using Infusion.Gaming.LightCycles.Model.Defines;
+
+namespace Infusion.Gaming.LightCycles.Model
 {
-    using System.Collections.Generic;
-
-    using Infusion.Gaming.LightCycles.Conditions;
-    using Infusion.Gaming.LightCycles.EventProcessors;
-    using Infusion.Gaming.LightCycles.Events;
-    using Infusion.Gaming.LightCycles.Model;
-    using Infusion.Gaming.LightCycles.Model.Data;
-
     /// <summary>
     ///     The Game interface.
     /// </summary>
@@ -45,19 +45,24 @@ namespace Infusion.Gaming.LightCycles
         IGameState CurrentState { get; }
 
         /// <summary>
-        ///     Gets the end conditions.
+        ///     Gets the end condition.
         /// </summary>
-        List<EndCondition> EndConditions { get; }
+        IEndCondition EndCondition { get; }
 
         /// <summary>
-        ///     Gets the event processors collection.
+        ///     Gets the event processor.
         /// </summary>
-        List<IEventProcessor> EventProcessors { get; }
+        IEventProcessor EventProcessor { get; }
+
+        /// <summary>
+        ///     Gets the event filter.
+        /// </summary>
+        IEventFilter EventFilter { get; }
 
         /// <summary>
         ///     Gets the state of the game.
         /// </summary>
-        GameStateEnum GameState { get; }
+        GameStateEnum State { get; }
 
         /// <summary>
         ///     Gets the game mode.
@@ -95,11 +100,14 @@ namespace Infusion.Gaming.LightCycles
         /// <param name="initialMap">
         /// The initial map of the game.
         /// </param>
-        /// <param name="endConditions">
-        /// Game end conditions.
+        /// <param name="endCondition">
+        /// Game end condition.
         /// </param>
-        /// <param name="eventProcessors">
-        /// Game events processors.
+        /// <param name="eventFilter">
+        /// Game events filter.
+        /// </param>
+        /// <param name="eventProcessor">
+        /// Game events processor.
         /// </param>
         /// <returns>
         /// The initial state of the game <see cref="IGameState"/>.
@@ -108,8 +116,9 @@ namespace Infusion.Gaming.LightCycles
             GameModeEnum mode, 
             IEnumerable<Player> players, 
             IMap initialMap, 
-            IEnumerable<EndCondition> endConditions, 
-            IEnumerable<IEventProcessor> eventProcessors);
+            IEndCondition endCondition, 
+            IEventFilter eventFilter,
+            IEventProcessor eventProcessor);
 
         /// <summary>
         /// Makes game step, transition form current game state to next one.

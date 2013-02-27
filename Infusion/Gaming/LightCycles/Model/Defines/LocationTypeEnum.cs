@@ -22,7 +22,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model.Data
+namespace Infusion.Gaming.LightCycles.Model.Defines
 {
     /// <summary>
     ///     The location type enumerator.

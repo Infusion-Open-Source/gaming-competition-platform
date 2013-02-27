@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GameStateEnum.cs" company="Infusion">
+// <copyright file="IEndCondition.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,35 +18,26 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The game state enumeration.
+//   The Condition interface.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model
+using Infusion.Gaming.LightCycles.Model.Defines;
+
+namespace Infusion.Gaming.LightCycles.Conditions
 {
     /// <summary>
-    ///     The game state enumeration.
+    ///     The Condition interface.
     /// </summary>
-    public enum GameStateEnum
+    public interface IEndCondition : ICondition
     {
+        #region Public Methods and Operators
+        
         /// <summary>
-        ///     Undefined state.
+        ///     Gets the game result when condition is met.
         /// </summary>
-        Undefined = 0, 
+        GameResultEnum Result { get; }
 
-        /// <summary>
-        ///     Game is initializing.
-        /// </summary>
-        Initializing, 
-
-        /// <summary>
-        ///     Game is running.
-        /// </summary>
-        Running, 
-
-        /// <summary>
-        ///     Game has stopped.
-        /// </summary>
-        Stopped, 
+        #endregion
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EventLoggingProcessor.cs" company="Infusion">
+// <copyright file="Player.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,36 +18,38 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   Event logging processor.
-//   Prints out event to console.
+//   The player.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.EventProcessors
+using System.Globalization;
+using Infusion.Gaming.LightCycles.Extensions;
+using System;
+
+namespace Infusion.Gaming.LightCycles.Model
 {
-    using System;
-    using System.Collections.Generic;
-
-    using Infusion.Gaming.LightCycles.Events;
-    using Infusion.Gaming.LightCycles.Model;
-
     /// <summary>
-    ///     Event logging processor.
-    ///     Prints out event to console.
+    ///     The player.
     /// </summary>
-    public class EventLoggingProcessor : IEventProcessor
+    public class Player
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventLoggingProcessor"/> class.
+        /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>
-        /// <param name="silent">
-        /// flag whether processor is silent or not
+        /// <param name="id">
+        /// The player id.
         /// </param>
-        public EventLoggingProcessor(bool silent)
+        public Player(char id)
         {
-            this.IsSilent = silent;
+            id = id.ToUpper();
+            if (id < 'A' || id > 'Z')
+            {
+                throw new ArgumentOutOfRangeException("id");
+            }
+
+            this.Id = id;
         }
 
         #endregion
@@ -55,41 +57,53 @@ namespace Infusion.Gaming.LightCycles.EventProcessors
         #region Public Properties
 
         /// <summary>
-        ///     Gets or sets a value indicating whether processor is silent or not
+        ///     Gets or sets the id.
         /// </summary>
-        public bool IsSilent { get; protected set; }
+        public char Id { get; protected set; }
 
         #endregion
 
         #region Public Methods and Operators
 
         /// <summary>
-        /// Process player move events
+        /// Check if equals.
         /// </summary>
-        /// <param name="e">
-        /// event to process
-        /// </param>
-        /// <param name="currentState">
-        /// current game state
-        /// </param>
-        /// <param name="nextState">
-        /// next game state
-        /// </param>
-        /// <param name="newEvents">
-        /// new events produced by processor
+        /// <param name="obj">
+        /// The object to compare to.
         /// </param>
         /// <returns>
-        /// was event processed by processor
+        /// The result of comparison.
         /// </returns>
-        public bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents)
+        public override bool Equals(object obj)
         {
-            newEvents = new EventsCollection();
-            if (!this.IsSilent)
+            if (obj == null)
             {
-                Console.WriteLine(e);
+                return false;
             }
 
-            return false;
+            return obj.GetHashCode() == this.GetHashCode();
+        }
+
+        /// <summary>
+        ///     Gets the hash code of the object.
+        /// </summary>
+        /// <returns>
+        ///     The hash code.
+        /// </returns>
+        public override int GetHashCode()
+        {
+            return this.Id;
+        }
+
+        /// <summary>
+        ///     To string.
+        /// </summary>
+        /// <returns>
+        ///     String representation of an object.
+        /// </returns>
+        public override string ToString()
+        {
+            return this.Id.ToString(CultureInfo.InvariantCulture);
         }
 
         #endregion

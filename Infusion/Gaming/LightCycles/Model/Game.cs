@@ -21,17 +21,19 @@
 //   The program.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Infusion.Gaming.LightCycles
+
+using Infusion.Gaming.LightCycles.Events.Filtering;
+using Infusion.Gaming.LightCycles.Events.Processing;
+using Infusion.Gaming.LightCycles.Extensions;
+using System;
+using System.Collections.Generic;
+using Infusion.Gaming.LightCycles.Conditions;
+using Infusion.Gaming.LightCycles.Events;
+using Infusion.Gaming.LightCycles.Model.Data;
+using Infusion.Gaming.LightCycles.Model.Defines;
+
+namespace Infusion.Gaming.LightCycles.Model
 {
-    using System;
-    using System.Collections.Generic;
-
-    using Infusion.Gaming.LightCycles.Conditions;
-    using Infusion.Gaming.LightCycles.EventProcessors;
-    using Infusion.Gaming.LightCycles.Events;
-    using Infusion.Gaming.LightCycles.Model;
-    using Infusion.Gaming.LightCycles.Model.Data;
-
     /// <summary>
     ///     The game.
     /// </summary>
@@ -59,17 +61,22 @@ namespace Infusion.Gaming.LightCycles
         /// <summary>
         ///     Gets or sets the end conditions.
         /// </summary>
-        public List<EndCondition> EndConditions { get; protected set; }
+        public IEndCondition EndCondition { get; protected set; }
 
         /// <summary>
         ///     Gets or sets the event processors collection.
         /// </summary>
-        public List<IEventProcessor> EventProcessors { get; protected set; }
+        public IEventProcessor EventProcessor { get; protected set; }
+
+        /// <summary>
+        ///     Gets the event filter.
+        /// </summary>
+        public IEventFilter EventFilter { get; protected set; }
 
         /// <summary>
         ///     Gets or sets the state of the game.
         /// </summary>
-        public GameStateEnum GameState { get; protected set; }
+        public GameStateEnum State { get; protected set; }
 
         /// <summary>
         ///     Gets or sets the game mode.
@@ -95,13 +102,13 @@ namespace Infusion.Gaming.LightCycles
         /// </summary>
         public void Reset()
         {
-            if (this.GameState == GameStateEnum.Running)
+            if (this.State == GameStateEnum.Running)
             {
                 this.Stop();
             }
 
             this.Result = GameResultEnum.Undefined;
-            this.GameState = GameStateEnum.Initializing;
+            this.State = GameStateEnum.Initializing;
             this.CurrentState = null;
             this.PreviousState = null;
         }
@@ -118,11 +125,14 @@ namespace Infusion.Gaming.LightCycles
         /// <param name="initialMap">
         /// The initial map of the game.
         /// </param>
-        /// <param name="endConditions">
-        /// Game end conditions.
+        /// <param name="endCondition">
+        /// Game end condition.
         /// </param>
-        /// <param name="eventProcessors">
-        /// Game events processors.
+        /// <param name="eventFilter">
+        /// Game events filter.
+        /// </param>
+        /// <param name="eventProcessor">
+        /// Game events processor.
         /// </param>
         /// <returns>
         /// The initial state of the game <see cref="IGameState"/>.
@@ -131,10 +141,11 @@ namespace Infusion.Gaming.LightCycles
             GameModeEnum mode, 
             IEnumerable<Player> players, 
             IMap initialMap, 
-            IEnumerable<EndCondition> endConditions, 
-            IEnumerable<IEventProcessor> eventProcessors)
+            IEndCondition endCondition,
+            IEventFilter eventFilter,
+            IEventProcessor eventProcessor)
         {
-            if (this.GameState != GameStateEnum.Initializing)
+            if (this.State != GameStateEnum.Initializing)
             {
                 throw new GameException("Can be started only while initializing");
             }
@@ -149,21 +160,27 @@ namespace Infusion.Gaming.LightCycles
                 throw new ArgumentNullException("initialMap");
             }
 
-            if (endConditions == null)
+            if (endCondition == null)
             {
-                throw new ArgumentNullException("endConditions");
+                throw new ArgumentNullException("endCondition");
             }
 
-            if (eventProcessors == null)
+            if (eventFilter == null)
             {
-                throw new ArgumentNullException("eventProcessors");
+                throw new ArgumentNullException("eventFilter");
+            }
+
+            if (eventProcessor == null)
+            {
+                throw new ArgumentNullException("eventProcessor");
             }
 
             this.Mode = mode;
-            this.EndConditions = new List<EndCondition>(endConditions);
-            this.EventProcessors = new List<IEventProcessor>(eventProcessors);
+            this.EndCondition = endCondition;
+            this.EventFilter = eventFilter;
+            this.EventProcessor = eventProcessor;
             this.CurrentState = this.CreateInitialState(players, initialMap);
-            this.GameState = GameStateEnum.Running;
+            this.State = GameStateEnum.Running;
             return this.CurrentState;
         }
 
@@ -178,7 +195,7 @@ namespace Infusion.Gaming.LightCycles
         /// </returns>
         public IGameState Step(IEnumerable<Event> gameEvents)
         {
-            if (this.GameState != GameStateEnum.Running)
+            if (this.State != GameStateEnum.Running)
             {
                 throw new GameException("Can step forward only when running");
             }
@@ -193,7 +210,7 @@ namespace Infusion.Gaming.LightCycles
         /// </summary>
         public void Stop()
         {
-            if (this.GameState != GameStateEnum.Running)
+            if (this.State != GameStateEnum.Running)
             {
                 throw new GameException("Can be stopped only when running");
             }
@@ -210,18 +227,13 @@ namespace Infusion.Gaming.LightCycles
         /// </summary>
         protected void CheckEndConditions()
         {
-            // TODO: should be moved to approperiate internal strongly typed EndConditions collection
-            foreach (EndCondition endCondition in this.EndConditions)
+            if(this.EndCondition.Check(this))
             {
-                if (endCondition.Check(this))
-                {
-                    this.Result = endCondition.Result;
-                    this.GameState = GameStateEnum.Stopped;
-                    break;
-                }
+                this.Result = this.EndCondition.Result;
+                this.State = GameStateEnum.Stopped;
             }
         }
-
+        
         /// <summary>
         /// Creates initial state of the game.
         /// </summary>
@@ -236,23 +248,18 @@ namespace Infusion.Gaming.LightCycles
         /// </returns>
         protected IGameState CreateInitialState(IEnumerable<Player> players, IMap initialMap)
         {
-            var playersInGame = new List<Player>(players);
-            var playersToRemove = new List<Player>();
-
-            // TODO: refactor - move to Map as internal strongly typed players collection
-            foreach (Player player in initialMap.Players)
-            {
-                if (!playersInGame.Contains(player))
-                {
-                    playersToRemove.Add(player);
-                }
-            }
-
+            var givenPlayers = new List<Player>(players);
+            var playersInGame = givenPlayers.Intersect(initialMap.Players);
+            var playersToRemove = givenPlayers.Remove(playersInGame);
+            
             initialMap.RemovePlayers(playersToRemove);
+
             var prevState = new GameState(0, initialMap.GetZeroStateMap());
             var initialState = new GameState(0, initialMap);
+            
             initialState.UpdatePlayersDirection(prevState);
             initialState.UpdateTrailsAge(prevState);
+            
             return initialState;
         }
 
@@ -265,23 +272,19 @@ namespace Infusion.Gaming.LightCycles
         protected void TransitToNextState(IEnumerable<Event> gameEvents)
         {
             var nextState = new GameState(this.CurrentState.Turn + 1, this.CurrentState.Map.Clone());
-            var eventsToProcess = new EventsCollection();
-            eventsToProcess.Add(new TickEvent(nextState.Turn));
-            eventsToProcess.AddRange(gameEvents);
-
+            var eventsToProcess = new Queue<Event>();
+            eventsToProcess.Enqueue(new TickEvent(nextState.Turn));
+            eventsToProcess.Enqueue(this.EventFilter.Filter(this.CurrentState, gameEvents));
+            
             while (eventsToProcess.Count > 0)
             {
-                // TODO: move to event processor internal strongly typrd collection
-                foreach (IEventProcessor eventProcessor in this.EventProcessors)
+                Event e = eventsToProcess.Dequeue();
+                IEnumerable<Event> newEvents;
+                bool eventProcessed = this.EventProcessor.Process(e, this.CurrentState, nextState, out newEvents);
+                eventsToProcess.Enqueue(newEvents);
+                if (!eventProcessed)
                 {
-                    IEnumerable<Event> newEvents;
-                    bool eventProcessed = eventProcessor.Process(eventsToProcess[0], this.CurrentState, nextState, out newEvents);
-                    eventsToProcess.AddRange(newEvents);
-                    if (eventProcessed)
-                    {
-                        eventsToProcess.RemoveAt(0);
-                        break;
-                    }
+                    throw new GameException(string.Format("None of the processores have processed event: {0}", e));
                 }
             }
 

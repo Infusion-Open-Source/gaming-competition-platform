@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PlayerCollisionEvent.cs" company="Infusion">
+// <copyright file="DirectionEnum.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,53 +18,40 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The player collision event.
+//   The direction enumeration.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model;
-
-namespace Infusion.Gaming.LightCycles.Events
+namespace Infusion.Gaming.LightCycles.Model.Defines
 {
-    using System.Text;
-
-    using Infusion.Gaming.LightCycles.Model.Data;
-
     /// <summary>
-    ///     The player collision event.
+    ///     The direction enumeration.
     /// </summary>
-    public class PlayerCollisionEvent : PlayerEvent
+    public enum DirectionEnum
     {
-        #region Constructors and Destructors
+        /// <summary>
+        ///     Undefined direction.
+        /// </summary>
+        Undefined = 0, 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerCollisionEvent"/> class.
+        ///     Goes up.
         /// </summary>
-        /// <param name="player">
-        /// The player which collides.
-        /// </param>
-        public PlayerCollisionEvent(Player player)
-            : base(player)
-        {
-        }
-
-        #endregion
-
-        #region Public Methods and Operators
+        Up, 
 
         /// <summary>
-        ///     Get string.
+        ///     Goes down.
         /// </summary>
-        /// <returns>
-        ///     The string representation of an object.
-        /// </returns>
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-            builder.AppendFormat("{0}: collides", this.Player);
-            return builder.ToString();
-        }
+        Down, 
 
-        #endregion
+        /// <summary>
+        ///     Goes left.
+        /// </summary>
+        Left, 
+
+        /// <summary>
+        ///     Goes right.
+        /// </summary>
+        Right
     }
 }

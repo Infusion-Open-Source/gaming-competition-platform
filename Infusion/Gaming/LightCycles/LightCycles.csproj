@@ -48,47 +48,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conditions\EndConditionSet.cs" />
+    <Compile Include="Conditions\IEndCondition.cs" />
     <Compile Include="Conditions\EndCondition.cs" />
     <Compile Include="Conditions\ICondition.cs" />
     <Compile Include="Conditions\NumberOfPlayers.cs" />
-    <Compile Include="EventProcessors\EventLoggingProcessor.cs" />
-    <Compile Include="EventProcessors\GarbageProcessor.cs" />
-    <Compile Include="EventProcessors\IEventProcessor.cs" />
-    <Compile Include="EventProcessors\PlayerCollisionProcessor.cs" />
-    <Compile Include="EventProcessors\PlayerMovesProcessor.cs" />
-    <Compile Include="EventProcessors\TrailAgingProcessor.cs" />
-    <Compile Include="IGame.cs" />
+    <Compile Include="Events\Filtering\IdlePlayerMoveEventAppender.cs" />
+    <Compile Include="Events\Filtering\EventFilterSet.cs" />
+    <Compile Include="Events\Filtering\PlayerRecentEventFilter.cs" />
+    <Compile Include="Events\Filtering\IEventFilter.cs" />
+    <Compile Include="Events\Filtering\PlayersInGameFilter.cs" />
+    <Compile Include="Events\Processing\EventProcessorSet.cs" />
+    <Compile Include="Events\Processing\EventLoggingProcessor.cs" />
+    <Compile Include="Events\Processing\GarbageProcessor.cs" />
+    <Compile Include="Events\Processing\IEventProcessor.cs" />
+    <Compile Include="Events\Processing\PlayerCollisionProcessor.cs" />
+    <Compile Include="Events\Processing\PlayerMovesProcessor.cs" />
+    <Compile Include="Events\Processing\TrailAgingProcessor.cs" />
+    <Compile Include="Extensions\QueueExtensions.cs" />
+    <Compile Include="LightCyclesGame.cs" />
+    <Compile Include="Model\IGame.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventsCollection.cs" />
     <Compile Include="Events\PlayerCollisionEvent.cs" />
     <Compile Include="Events\PlayerEvent.cs" />
-    <Compile Include="Events\EventsArbiter.cs" />
     <Compile Include="Events\PlayerMoveEvent.cs" />
     <Compile Include="Events\TickEvent.cs" />
-    <Compile Include="GameException.cs" />
+    <Compile Include="Model\GameException.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Model\IGameState.cs" />
-    <Compile Include="Model\Data\CharExtensions.cs" />
+    <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Model\Data\IMap.cs" />
     <Compile Include="Model\Data\Location.cs" />
     <Compile Include="Model\Data\LocationSerializer.cs" />
-    <Compile Include="Model\Data\LocationTypeEnum.cs" />
+    <Compile Include="Model\Defines\LocationTypeEnum.cs" />
     <Compile Include="Model\Data\MapStreamGenerator.cs" />
     <Compile Include="Model\Data\MapSerializer.cs" />
     <Compile Include="Model\DirectionHelper.cs" />
-    <Compile Include="Model\DirectionEnum.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="Model\GameModeEnum.cs" />
-    <Compile Include="Model\GameResultEnum.cs" />
+    <Compile Include="Model\Defines\DirectionEnum.cs" />
+    <Compile Include="Model\Game.cs" />
+    <Compile Include="Model\Defines\GameModeEnum.cs" />
+    <Compile Include="Model\Defines\GameResultEnum.cs" />
     <Compile Include="Model\GameState.cs" />
-    <Compile Include="Model\GameStateEnum.cs" />
+    <Compile Include="Model\Defines\GameStateEnum.cs" />
     <Compile Include="Model\Data\Map.cs" />
-    <Compile Include="Model\Data\Player.cs" />
-    <Compile Include="Model\RelativeDirectionEnum.cs" />
+    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\Defines\RelativeDirectionEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Settings.StyleCop" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

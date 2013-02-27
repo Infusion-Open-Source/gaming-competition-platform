@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PlayerCollisionEvent.cs" company="Infusion">
+// <copyright file="GameException.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,51 +18,52 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The player collision event.
+//   The game exception.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model;
+using System;
 
-namespace Infusion.Gaming.LightCycles.Events
+namespace Infusion.Gaming.LightCycles.Model
 {
-    using System.Text;
-
-    using Infusion.Gaming.LightCycles.Model.Data;
-
     /// <summary>
-    ///     The player collision event.
+    ///     The game exception.
     /// </summary>
-    public class PlayerCollisionEvent : PlayerEvent
+    [Serializable]
+    public class GameException : Exception
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerCollisionEvent"/> class.
+        ///     Initializes a new instance of the <see cref="GameException" /> class.
         /// </summary>
-        /// <param name="player">
-        /// The player which collides.
-        /// </param>
-        public PlayerCollisionEvent(Player player)
-            : base(player)
+        public GameException()
         {
         }
 
-        #endregion
-
-        #region Public Methods and Operators
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameException"/> class.
+        /// </summary>
+        /// <param name="message">
+        /// The exception message.
+        /// </param>
+        public GameException(string message)
+            : base(message)
+        {
+        }
 
         /// <summary>
-        ///     Get string.
+        /// Initializes a new instance of the <see cref="GameException"/> class.
         /// </summary>
-        /// <returns>
-        ///     The string representation of an object.
-        /// </returns>
-        public override string ToString()
+        /// <param name="message">
+        /// The exception message.
+        /// </param>
+        /// <param name="internalExcpetion">
+        /// The internal exception.
+        /// </param>
+        public GameException(string message, Exception internalExcpetion)
+            : base(message, internalExcpetion)
         {
-            var builder = new StringBuilder();
-            builder.AppendFormat("{0}: collides", this.Player);
-            return builder.ToString();
         }
 
         #endregion

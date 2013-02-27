@@ -22,6 +22,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Infusion.Gaming.LightCycles.Model.Defines;
+
 namespace Infusion.Gaming.LightCycles.Tests.Model.Data
 {
     using System.Drawing;

@@ -22,6 +22,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Infusion.Gaming.LightCycles.Extensions;
+using Infusion.Gaming.LightCycles.Model.Defines;
+
 namespace Infusion.Gaming.LightCycles.Model.Data
 {
     using System;

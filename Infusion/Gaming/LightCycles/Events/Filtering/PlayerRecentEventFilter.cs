@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RelativeDirectionEnum.cs" company="Infusion">
+// <copyright file="PlayerRecentEventFilter.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,35 +18,50 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The relative direction enumeration.
+//   Events processor interface
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model
+using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     /// <summary>
-    ///     The relative direction enumeration.
+    ///     Filter keeps only recent event from each player
     /// </summary>
-    public enum RelativeDirectionEnum
+    public class PlayerRecentEventFilter : IEventFilter
     {
-        /// <summary>
-        ///     Undefined direction.
-        /// </summary>
-        Undefined = 0, 
+        #region Public Methods and Operators
 
         /// <summary>
-        ///     Go straight forward.
+        /// Filter game events
         /// </summary>
-        StraightForward, 
+        /// <param name="state">
+        /// current game state
+        /// </param>
+        /// <param name="events">
+        /// events to filter
+        /// </param>
+        /// <returns>
+        /// filteres events list
+        /// </returns>
+        public IList<Event> Filter(IGameState state, IEnumerable<Event> events)
+        {
+            var data = new EventsCollection(events);
+            var results = new List<Event>();
+            foreach (Player player in data.Players)
+            {
+                results.Add(data.FilterBy(player).MostRecent);
+            }
 
-        /// <summary>
-        ///     Turn left.
-        /// </summary>
-        Left, 
+            return results;
+        }
 
-        /// <summary>
-        ///     Turn right.
-        /// </summary>
-        Right
+        #endregion
     }
 }

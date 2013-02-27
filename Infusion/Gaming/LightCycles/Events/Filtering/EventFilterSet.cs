@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CharExtensions.cs" company="Infusion">
+// <copyright file="EventFilterSet.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,55 +18,63 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The char type extensions.
+//   Events processor interface
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model.Data
+using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     /// <summary>
-    ///     The char type extensions.
+    ///     Event filter set
     /// </summary>
-    public static class CharExtensions
+    public class EventFilterSet : List<IEventFilter>, IEventFilter
     {
         #region Public Methods and Operators
 
         /// <summary>
-        /// Change character to lower case.
+        /// Initializes a new instance of the <see cref="EventFilterSet"/> class.
         /// </summary>
-        /// <param name="c">
-        /// The character to change.
-        /// </param>
-        /// <returns>
-        /// The changed character.
-        /// </returns>
-        public static char ToLower(this char c)
+        public EventFilterSet()
         {
-            if (c >= 'A' && c <= 'Z')
-            {
-                return (char)(c + ('a' - 'A'));
-            }
-
-            return c;
         }
 
         /// <summary>
-        /// Change character to upper case.
+        /// Initializes a new instance of the <see cref="EventFilterSet"/> class.
         /// </summary>
-        /// <param name="c">
-        /// The character to change.
+        /// <param name="filters">set of filters</param>
+        public EventFilterSet(IEnumerable<IEventFilter> filters)
+            : base(filters)
+        {
+        }
+
+        /// <summary>
+        /// Filter game events
+        /// </summary>
+        /// <param name="state">
+        /// current game state
+        /// </param>
+        /// <param name="events">
+        /// events to filter
         /// </param>
         /// <returns>
-        /// The changed character.
+        /// filteres events list
         /// </returns>
-        public static char ToUpper(this char c)
-        {
-            if (c >= 'a' && c <= 'z')
+        public IList<Event> Filter(IGameState state, IEnumerable<Event> events)
+        {            
+            IList<Event> results = new List<Event>(events);
+            foreach (IEventFilter filter in this)
             {
-                return (char)(c + ('A' - 'a'));
+                results = filter.Filter(state, results);
             }
 
-            return c;
+            return results;
         }
 
         #endregion
