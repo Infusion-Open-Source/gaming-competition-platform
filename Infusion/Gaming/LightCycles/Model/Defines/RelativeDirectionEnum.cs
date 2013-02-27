@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GameResultEnum.cs" company="Infusion">
+// <copyright file="RelativeDirectionEnum.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,40 +18,35 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The game result enumeration.
+//   The relative direction enumeration.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model
+namespace Infusion.Gaming.LightCycles.Model.Defines
 {
     /// <summary>
-    ///     The game result enumeration.
+    ///     The relative direction enumeration.
     /// </summary>
-    public enum GameResultEnum
+    public enum RelativeDirectionEnum
     {
         /// <summary>
-        ///     Undefined result.
+        ///     Undefined direction.
         /// </summary>
         Undefined = 0, 
 
         /// <summary>
-        ///     Game is still running.
+        ///     Go straight forward.
         /// </summary>
-        StillRunning, 
+        StraightForward, 
 
         /// <summary>
-        ///     Game finished with a winner.
+        ///     Turn left.
         /// </summary>
-        FinshedWithWinner, 
+        Left, 
 
         /// <summary>
-        ///     Game finished without a winner.
+        ///     Turn right.
         /// </summary>
-        FinishedWithoutWinner, 
-
-        /// <summary>
-        ///     Game has been terminated.
-        /// </summary>
-        Terminated
+        Right
     }
 }

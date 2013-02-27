@@ -22,6 +22,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Infusion.Gaming.LightCycles.Model;
+
 namespace Infusion.Gaming.LightCycles.Events
 {
     using System.Collections.Generic;
@@ -77,6 +79,27 @@ namespace Infusion.Gaming.LightCycles.Events
                 }
 
                 return result;
+            }
+        }
+
+        /// <summary>
+        ///     Gets players owning events.
+        /// </summary>
+        public List<Player> Players
+        {
+            get
+            {
+                var results = new List<Player>();
+                foreach (Event e in this)
+                {
+                    var playerEvent = e as PlayerEvent;
+                    if (playerEvent != null && !results.Contains(playerEvent.Player))
+                    {
+                        results.Add(playerEvent.Player);
+                    }
+                }
+
+                return results;
             }
         }
 

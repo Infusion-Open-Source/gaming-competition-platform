@@ -24,15 +24,14 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.EventProcessors
+using System.Collections.Generic;
+using System.Drawing;
+using Infusion.Gaming.LightCycles.Model;
+using Infusion.Gaming.LightCycles.Model.Data;
+using Infusion.Gaming.LightCycles.Model.Defines;
+
+namespace Infusion.Gaming.LightCycles.Events.Processing
 {
-    using System.Collections.Generic;
-    using System.Drawing;
-
-    using Infusion.Gaming.LightCycles.Events;
-    using Infusion.Gaming.LightCycles.Model;
-    using Infusion.Gaming.LightCycles.Model.Data;
-
     /// <summary>
     ///     Processor for player move events.
     ///     Reflects result of player move events.

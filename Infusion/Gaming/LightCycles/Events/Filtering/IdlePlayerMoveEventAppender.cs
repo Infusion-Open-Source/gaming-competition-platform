@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EventsArbiter.cs" company="Infusion">
+// <copyright file="IdlePlayerMoveEventAppender.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,63 +18,62 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The events arbiter.
+//   Events processor interface
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Events
+using Infusion.Gaming.LightCycles.Model;
+using Infusion.Gaming.LightCycles.Model.Defines;
+
+namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System;
     using System.Collections.Generic;
-
-    using Infusion.Gaming.LightCycles.Model;
-    using Infusion.Gaming.LightCycles.Model.Data;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
-    ///     The events arbiter.
+    ///     Adds undefined move event for players that are idle
     /// </summary>
-    public class EventsArbiter
+    public class IdlePlayerMoveEventAppender : IEventFilter
     {
+        private readonly RelativeDirectionEnum direction;
+
         #region Public Methods and Operators
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IdlePlayerMoveEventAppender"/> class.
+        /// </summary>
+        /// <param name="direction">direction for the appended move event</param>
+        public IdlePlayerMoveEventAppender(RelativeDirectionEnum direction)
+        {
+            this.direction = direction;
+        }
 
         /// <summary>
-        /// Makes an arbitrage of a given set of players events. Only one valid event per player will be returned as a result.
+        /// Filter game events
         /// </summary>
-        /// <param name="events">
-        /// The set of gathered events to check.
+        /// <param name="state">
+        /// current game state
         /// </param>
-        /// <param name="playersInGame">
-        /// The players in the game.
+        /// <param name="events">
+        /// events to filter
         /// </param>
         /// <returns>
-        /// The set of valid players events <see cref="EventsCollection"/>.
+        /// filteres events list
         /// </returns>
-        public IEnumerable<Event> Arbitrage(IEnumerable<Event> events, IEnumerable<Player> playersInGame)
+        public IList<Event> Filter(IGameState state, IEnumerable<Event> events)
         {
-            if (events == null)
+            var data = new EventsCollection(events);
+            foreach (Player player in state.Map.Players)
             {
-                throw new ArgumentNullException("events");
-            }
-
-            if (playersInGame == null)
-            {
-                throw new ArgumentNullException("playersInGame");
-            }
-
-            var results = new EventsCollection();
-            var eventsToCheck = new EventsCollection(events);
-            foreach (Player player in playersInGame)
-            {
-                Event e = eventsToCheck.FilterBy(player).MostRecent;
-                if (e == null)
+                if(data.FilterBy(player).Count == 0)
                 {
-                    e = new PlayerMoveEvent(player, RelativeDirectionEnum.Undefined);
+                    data.Add(new PlayerMoveEvent(player, this.direction));
                 }
-
-                results.Add(e);
             }
 
-            return results;
+            return data;
         }
 
         #endregion

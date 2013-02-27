@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PlayerCollisionProcessor.cs" company="Infusion">
+// <copyright file="EventProcessorSet.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,25 +18,42 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   Player collision event processor.
-//   When player collides with something then he/she is removed (with the trail) from the map.
+//   Events processor interface
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.EventProcessors
-{
-    using System.Collections.Generic;
+using System.ComponentModel;
+using Infusion.Gaming.LightCycles.Model;
 
-    using Infusion.Gaming.LightCycles.Events;
-    using Infusion.Gaming.LightCycles.Model;
+namespace Infusion.Gaming.LightCycles.Events.Processing
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
-    ///     Player collision event processor.
-    ///     When player collides with something then he/she is removed (with the trail) from the map.
+    ///     Event processor set
     /// </summary>
-    public class PlayerCollisionProcessor : IEventProcessor
+    public class EventProcessorSet : List<IEventProcessor>, IEventProcessor
     {
         #region Public Methods and Operators
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventProcessorSet"/> class.
+        /// </summary>
+        public EventProcessorSet()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventProcessorSet"/> class.
+        /// </summary>
+        /// <param name="processors">set of filters</param>
+        public EventProcessorSet(IEnumerable<IEventProcessor> processors)
+            : base(processors)
+        {
+        }
 
         /// <summary>
         /// Process player move events
@@ -58,15 +75,14 @@ namespace Infusion.Gaming.LightCycles.EventProcessors
         /// </returns>
         public bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents)
         {
-            newEvents = new EventsCollection();
-            var collisionEvent = e as PlayerCollisionEvent;
-            if (collisionEvent == null)
+            foreach (IEventProcessor processor in this)
             {
-                return false;
+                if (processor.Process(e, currentState, nextState, out newEvents))
+                    return true;
             }
 
-            nextState.Map.RemovePlayer(collisionEvent.Player);
-            return true;
+            newEvents = new List<Event>();
+            return false;
         }
 
         #endregion

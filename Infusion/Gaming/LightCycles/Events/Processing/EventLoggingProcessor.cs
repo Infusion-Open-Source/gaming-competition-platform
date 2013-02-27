@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EndCondition.cs" company="Infusion">
+// <copyright file="EventLoggingProcessor.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,46 +18,34 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The game end condition.
+//   Event logging processor.
+//   Prints out event to console.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model.Defines;
+using System;
+using System.Collections.Generic;
+using Infusion.Gaming.LightCycles.Model;
 
-namespace Infusion.Gaming.LightCycles.Conditions
+namespace Infusion.Gaming.LightCycles.Events.Processing
 {
-    using System;
-
-    using Infusion.Gaming.LightCycles.Model;
-
     /// <summary>
-    ///     The game end condition.
+    ///     Event logging processor.
+    ///     Prints out event to console.
     /// </summary>
-    public class EndCondition : IEndCondition
+    public class EventLoggingProcessor : IEventProcessor
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EndCondition"/> class.
+        /// Initializes a new instance of the <see cref="EventLoggingProcessor"/> class.
         /// </summary>
-        /// <param name="condition">
-        /// The condition carried by end condition check
+        /// <param name="silent">
+        /// flag whether processor is silent or not
         /// </param>
-        /// <param name="result">
-        /// The result of the end condition when condition is met
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when condition argument is null
-        /// </exception>
-        public EndCondition(ICondition condition, GameResultEnum result)
+        public EventLoggingProcessor(bool silent)
         {
-            if (condition == null)
-            {
-                throw new ArgumentNullException("condition");
-            }
-
-            this.Condition = condition;
-            this.Result = result;
+            this.IsSilent = silent;
         }
 
         #endregion
@@ -65,31 +53,41 @@ namespace Infusion.Gaming.LightCycles.Conditions
         #region Public Properties
 
         /// <summary>
-        ///     Gets or sets the condition.
+        ///     Gets or sets a value indicating whether processor is silent or not
         /// </summary>
-        public ICondition Condition { get; protected set; }
-
-        /// <summary>
-        ///     Gets the game result when condition is met.
-        /// </summary>
-        public GameResultEnum Result { get; protected set; }
+        public bool IsSilent { get; protected set; }
 
         #endregion
 
         #region Public Methods and Operators
 
         /// <summary>
-        /// Performs condition check.
+        /// Process player move events
         /// </summary>
-        /// <param name="game">
-        /// The game on which condition check should be performed.
+        /// <param name="e">
+        /// event to process
+        /// </param>
+        /// <param name="currentState">
+        /// current game state
+        /// </param>
+        /// <param name="nextState">
+        /// next game state
+        /// </param>
+        /// <param name="newEvents">
+        /// new events produced by processor
         /// </param>
         /// <returns>
-        /// The result of the condition check.
+        /// was event processed by processor
         /// </returns>
-        public bool Check(IGame game)
+        public bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents)
         {
-            return this.Condition.Check(game);
+            newEvents = new EventsCollection();
+            if (!this.IsSilent)
+            {
+                Console.WriteLine(e);
+            }
+
+            return false;
         }
 
         #endregion

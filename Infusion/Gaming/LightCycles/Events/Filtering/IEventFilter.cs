@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PlayerCollisionEvent.cs" company="Infusion">
+// <copyright file="IEventFilter.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,53 +18,32 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The player collision event.
+//   Events processor interface
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model;
-
-namespace Infusion.Gaming.LightCycles.Events
+namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
-    using System.Text;
-
-    using Infusion.Gaming.LightCycles.Model.Data;
+    using System.Collections.Generic;
+    using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     The player collision event.
+    ///     Events filter interface
     /// </summary>
-    public class PlayerCollisionEvent : PlayerEvent
+    public interface IEventFilter
     {
-        #region Constructors and Destructors
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerCollisionEvent"/> class.
+        /// Filter game events
         /// </summary>
-        /// <param name="player">
-        /// The player which collides.
+        /// <param name="state">
+        /// current game state
         /// </param>
-        public PlayerCollisionEvent(Player player)
-            : base(player)
-        {
-        }
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        /// <summary>
-        ///     Get string.
-        /// </summary>
+        /// <param name="events">
+        /// events to filter
+        /// </param>
         /// <returns>
-        ///     The string representation of an object.
+        /// filteres events list
         /// </returns>
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-            builder.AppendFormat("{0}: collides", this.Player);
-            return builder.ToString();
-        }
-
-        #endregion
+        IList<Event> Filter(IGameState state, IEnumerable<Event> events);
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Player.cs" company="Infusion">
+// <copyright file="EndConditionSet.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,90 +18,79 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The player.
+//   The game end condition.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model.Data
+using System.Collections.Generic;
+using Infusion.Gaming.LightCycles.Model.Defines;
+
+namespace Infusion.Gaming.LightCycles.Conditions
 {
     using System;
 
+    using Infusion.Gaming.LightCycles.Model;
+
     /// <summary>
-    ///     The player.
+    ///     Set of the game end conditions.
     /// </summary>
-    public class Player
+    public class EndConditionSet : List<IEndCondition>, IEndCondition
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Player"/> class.
+        /// Initializes a new instance of the <see cref="EndCondition"/> class.
         /// </summary>
-        /// <param name="id">
-        /// The player id.
-        /// </param>
-        public Player(char id)
+        public EndConditionSet()
         {
-            id = id.ToUpper();
-            if (id < 'A' || id > 'Z')
-            {
-                throw new ArgumentOutOfRangeException("id");
-            }
+        }
 
-            this.Id = id;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EndCondition"/> class.
+        /// </summary>
+        /// <param name="conditions">
+        /// The set of game ending conditions
+        /// </param>
+        public EndConditionSet(IEnumerable<IEndCondition> conditions)
+            : base(conditions)
+        {
         }
 
         #endregion
 
         #region Public Properties
-
+        
         /// <summary>
-        ///     Gets or sets the id.
+        ///     Gets the game result when condition is met.
         /// </summary>
-        public char Id { get; protected set; }
+        public GameResultEnum Result { get; protected set; }
 
         #endregion
 
         #region Public Methods and Operators
 
         /// <summary>
-        /// Check if equals.
+        /// Performs condition check.
         /// </summary>
-        /// <param name="obj">
-        /// The object to compare to.
+        /// <param name="game">
+        /// The game on which condition check should be performed.
         /// </param>
         /// <returns>
-        /// The result of comparison.
+        /// The result of the condition check.
         /// </returns>
-        public override bool Equals(object obj)
+        public bool Check(IGame game)
         {
-            if (obj == null)
+            foreach (IEndCondition endCondition in this)
             {
-                return false;
+                if(endCondition.Check(game))
+                {
+                    this.Result = endCondition.Result;
+                    return true;
+                }
             }
 
-            return obj.GetHashCode() == this.GetHashCode();
-        }
-
-        /// <summary>
-        ///     Gets the hash code of the object.
-        /// </summary>
-        /// <returns>
-        ///     The hash code.
-        /// </returns>
-        public override int GetHashCode()
-        {
-            return this.Id;
-        }
-
-        /// <summary>
-        ///     To string.
-        /// </summary>
-        /// <returns>
-        ///     String representation of an object.
-        /// </returns>
-        public override string ToString()
-        {
-            return this.Id.ToString();
+            this.Result = GameResultEnum.Undefined;
+            return false;
         }
 
         #endregion

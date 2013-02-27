@@ -21,6 +21,10 @@
 //   The program.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using Infusion.Gaming.LightCycles.Events.Processing;
+using Infusion.Gaming.LightCycles.Model.Defines;
+
 namespace Infusion.Gaming.ServerLauncher
 {
     using System;
@@ -30,7 +34,6 @@ namespace Infusion.Gaming.ServerLauncher
 
     using Infusion.Gaming.LightCycles;
     using Infusion.Gaming.LightCycles.Conditions;
-    using Infusion.Gaming.LightCycles.EventProcessors;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
@@ -105,42 +108,17 @@ namespace Infusion.Gaming.ServerLauncher
         public static void PlayRandomGame()
         {
             // init
-            var generator = new MapStreamGenerator();
             const int NumberOfPlayers = 8;
-            string mapStream = generator.Generate(50, 20, NumberOfPlayers);
-
+            var game = new LightCyclesGame();
             var mapSerializer = new MapSerializer();
-            IMap map = mapSerializer.Read(mapStream);
-            var game = new Game();
-
-            // start
-            game.Start(
-                GameModeEnum.FreeForAll, 
-                map.Players, 
-                map, 
-                new List<EndCondition>
-                    {
-                        new EndCondition(new NumberOfPlayers(0), GameResultEnum.FinishedWithoutWinner), 
-                        new EndCondition(new NumberOfPlayers(1), GameResultEnum.FinshedWithWinner)
-                    }, 
-                new List<IEventProcessor>
-                    {
-                        new EventLoggingProcessor(true), 
-                        new PlayerMovesProcessor(), 
-                        new PlayerCollisionProcessor(), 
-                        new TrailAgingProcessor(0.2f), 
-                        new GarbageProcessor(true)
-                    });
-
+            game.StartOnRandomMap(NumberOfPlayers);
+            
             // do initial UI
             Console.Clear();
             Console.Write(mapSerializer.Write(game.CurrentState.Map));
-            while (game.GameState == GameStateEnum.Running)
+            while (game.State == GameStateEnum.Running)
             {
                 // tick
-
-                // TODO: Break down arbiter to set of EventFilter classes implementing IEventFilter and pass it into Game class
-                var eventsArbiter = new EventsArbiter();
                 var events = new List<Event>();
                 for (int p = 0; p < NumberOfPlayers; p++)
                 {
@@ -148,7 +126,7 @@ namespace Infusion.Gaming.ServerLauncher
                     events.Add(new PlayerMoveEvent(player, NextDirection(player, game.CurrentState)));
                 }
 
-                game.Step(eventsArbiter.Arbitrage(events, game.CurrentState.Map.Players));
+                game.Step(events);
 
                 // do the UI
                 Console.Clear();

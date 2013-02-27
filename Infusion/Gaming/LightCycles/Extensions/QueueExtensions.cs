@@ -1,5 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IEventProcessor.cs" company="Infusion">
+﻿// -----------------------------------------------------------------------
+// <copyright file="QueueExtensions.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,43 +18,42 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   Events processor interface
+//   The players collection.
 // </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.EventProcessors
+namespace Infusion.Gaming.LightCycles.Extensions
 {
     using System.Collections.Generic;
 
-    using Infusion.Gaming.LightCycles.Events;
-    using Infusion.Gaming.LightCycles.Model;
-
     /// <summary>
-    ///     Events processor interface
+    /// Extension of generic Queue.
     /// </summary>
-    public interface IEventProcessor
+    internal static class QueueExtensions
     {
         #region Public Methods and Operators
 
         /// <summary>
-        /// Process player move events
+        /// Enqueues collection of items
         /// </summary>
-        /// <param name="e">
-        /// event to process
+        /// <param name="queue">
+        /// Queue to extend
         /// </param>
-        /// <param name="currentState">
-        /// current game state
-        /// </param>
-        /// <param name="nextState">
-        /// next game state
-        /// </param>
-        /// <param name="newEvents">
-        /// new events produced by processor
+        /// <param name="list">
+        /// Collection of items to enqueue
         /// </param>
         /// <returns>
-        /// was event processed by processor
+        /// The queue having list of items enqueued.
         /// </returns>
-        bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents);
+        public static Queue<T> Enqueue<T>(this Queue<T> queue, IEnumerable<T> list)
+        {
+            foreach (T item in list)
+            {
+                queue.Enqueue(item);
+            }
+
+            return queue;
+        }
 
         #endregion
     }

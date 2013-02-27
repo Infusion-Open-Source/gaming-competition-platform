@@ -22,6 +22,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Infusion.Gaming.LightCycles.Model;
+
 namespace Infusion.Gaming.LightCycles.Events
 {
     using Infusion.Gaming.LightCycles.Model.Data;

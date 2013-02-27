@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GameException.cs" company="Infusion">
+// <copyright file="IEventProcessor.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,52 +18,41 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The game exception.
+//   Events processor interface
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles
+using System.Collections.Generic;
+using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles.Events.Processing
 {
-    using System;
-
     /// <summary>
-    ///     The game exception.
+    ///     Events processor interface
     /// </summary>
-    public class GameException : Exception
+    public interface IEventProcessor
     {
-        #region Constructors and Destructors
+        #region Public Methods and Operators
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="GameException" /> class.
+        /// Process player move events
         /// </summary>
-        public GameException()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GameException"/> class.
-        /// </summary>
-        /// <param name="message">
-        /// The exception message.
+        /// <param name="e">
+        /// event to process
         /// </param>
-        public GameException(string message)
-            : base(message)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GameException"/> class.
-        /// </summary>
-        /// <param name="message">
-        /// The exception message.
+        /// <param name="currentState">
+        /// current game state
         /// </param>
-        /// <param name="internalExcpetion">
-        /// The internal exception.
+        /// <param name="nextState">
+        /// next game state
         /// </param>
-        public GameException(string message, Exception internalExcpetion)
-            : base(message, internalExcpetion)
-        {
-        }
+        /// <param name="newEvents">
+        /// new events produced by processor
+        /// </param>
+        /// <returns>
+        /// was event processed by processor
+        /// </returns>
+        bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents);
 
         #endregion
     }

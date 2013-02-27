@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PlayerCollisionEvent.cs" company="Infusion">
+// <copyright file="GameResultEnum.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,53 +18,40 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The player collision event.
+//   The game result enumeration.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model;
-
-namespace Infusion.Gaming.LightCycles.Events
+namespace Infusion.Gaming.LightCycles.Model.Defines
 {
-    using System.Text;
-
-    using Infusion.Gaming.LightCycles.Model.Data;
-
     /// <summary>
-    ///     The player collision event.
+    ///     The game result enumeration.
     /// </summary>
-    public class PlayerCollisionEvent : PlayerEvent
+    public enum GameResultEnum
     {
-        #region Constructors and Destructors
+        /// <summary>
+        ///     Undefined result.
+        /// </summary>
+        Undefined = 0, 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerCollisionEvent"/> class.
+        ///     Game is still running.
         /// </summary>
-        /// <param name="player">
-        /// The player which collides.
-        /// </param>
-        public PlayerCollisionEvent(Player player)
-            : base(player)
-        {
-        }
-
-        #endregion
-
-        #region Public Methods and Operators
+        StillRunning, 
 
         /// <summary>
-        ///     Get string.
+        ///     Game finished with a winner.
         /// </summary>
-        /// <returns>
-        ///     The string representation of an object.
-        /// </returns>
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-            builder.AppendFormat("{0}: collides", this.Player);
-            return builder.ToString();
-        }
+        FinshedWithWinner, 
 
-        #endregion
+        /// <summary>
+        ///     Game finished without a winner.
+        /// </summary>
+        FinishedWithoutWinner, 
+
+        /// <summary>
+        ///     Game has been terminated.
+        /// </summary>
+        Terminated
     }
 }

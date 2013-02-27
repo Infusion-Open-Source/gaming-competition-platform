@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DirectionEnum.cs" company="Infusion">
+// <copyright file="GameModeEnum.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,40 +18,25 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The direction enumeration.
+//   The game mode enumeration.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Infusion.Gaming.LightCycles.Model
+namespace Infusion.Gaming.LightCycles.Model.Defines
 {
     /// <summary>
-    ///     The direction enumeration.
+    ///     The game mode enumeration.
     /// </summary>
-    public enum DirectionEnum
+    public enum GameModeEnum
     {
         /// <summary>
-        ///     Undefined direction.
+        ///     Undefined mode.
         /// </summary>
         Undefined = 0, 
 
         /// <summary>
-        ///     Goes up.
+        ///     Free for all.
         /// </summary>
-        Up, 
-
-        /// <summary>
-        ///     Goes down.
-        /// </summary>
-        Down, 
-
-        /// <summary>
-        ///     Goes left.
-        /// </summary>
-        Left, 
-
-        /// <summary>
-        ///     Goes right.
-        /// </summary>
-        Right
+        FreeForAll
     }
 }

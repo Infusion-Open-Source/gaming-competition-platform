@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PlayerCollisionEvent.cs" company="Infusion">
+// <copyright file="CharExtensions.cs" company="Infusion">
 //    Copyright (C) 2013 Paweł Drozdowski
 //
 //    This file is part of LightCycles Game Engine.
@@ -18,51 +18,55 @@
 //    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//   The player collision event.
+//   The char type extensions.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model;
-
-namespace Infusion.Gaming.LightCycles.Events
+namespace Infusion.Gaming.LightCycles.Extensions
 {
-    using System.Text;
-
-    using Infusion.Gaming.LightCycles.Model.Data;
-
     /// <summary>
-    ///     The player collision event.
+    ///     The char type extensions.
     /// </summary>
-    public class PlayerCollisionEvent : PlayerEvent
+    public static class CharExtensions
     {
-        #region Constructors and Destructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerCollisionEvent"/> class.
-        /// </summary>
-        /// <param name="player">
-        /// The player which collides.
-        /// </param>
-        public PlayerCollisionEvent(Player player)
-            : base(player)
-        {
-        }
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
-        ///     Get string.
+        /// Change character to lower case.
         /// </summary>
+        /// <param name="c">
+        /// The character to change.
+        /// </param>
         /// <returns>
-        ///     The string representation of an object.
+        /// The changed character.
         /// </returns>
-        public override string ToString()
+        public static char ToLower(this char c)
         {
-            var builder = new StringBuilder();
-            builder.AppendFormat("{0}: collides", this.Player);
-            return builder.ToString();
+            if (c >= 'A' && c <= 'Z')
+            {
+                return (char)(c + ('a' - 'A'));
+            }
+
+            return c;
+        }
+
+        /// <summary>
+        /// Change character to upper case.
+        /// </summary>
+        /// <param name="c">
+        /// The character to change.
+        /// </param>
+        /// <returns>
+        /// The changed character.
+        /// </returns>
+        public static char ToUpper(this char c)
+        {
+            if (c >= 'a' && c <= 'z')
+            {
+                return (char)(c + ('A' - 'a'));
+            }
+
+            return c;
         }
 
         #endregion
