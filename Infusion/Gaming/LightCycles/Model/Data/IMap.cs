@@ -70,15 +70,7 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         ///     The cloned map <see cref="IMap" />.
         /// </returns>
         IMap Clone();
-
-        /// <summary>
-        ///     Gets zero state of the map. Creates T-1 map from initial map which is helpful to find out players initial directions.
-        /// </summary>
-        /// <returns>
-        ///     The cloned map <see cref="IMap" />.
-        /// </returns>
-        IMap GetZeroStateMap();
-
+        
         /// <summary>
         /// Removes specified player from the map.
         /// </summary>

@@ -231,33 +231,6 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         }
 
         /// <summary>
-        ///     Gets zero state of the map. Creates T-1 map from initial map which is helpful to find out players initial directions.
-        /// </summary>
-        /// <returns>
-        ///     The cloned map <see cref="IMap" />.
-        /// </returns>
-        public IMap GetZeroStateMap()
-        {
-            var serializer = new MapSerializer();
-            char[] charBuffer = serializer.Write(this).ToCharArray();
-            for (int i = 0; i < charBuffer.Length; i++)
-            {
-                char c = charBuffer[i];
-                if (c >= 'A' && c <= 'Z')
-                {
-                    charBuffer[i] = ' ';
-                }
-
-                if (c >= 'a' && c <= 'z')
-                {
-                    charBuffer[i] = charBuffer[i].ToUpper();
-                }
-            }
-
-            return serializer.Read(new string(charBuffer));
-        }
-
-        /// <summary>
         /// Removes specified player from the map.
         /// </summary>
         /// <param name="player">
