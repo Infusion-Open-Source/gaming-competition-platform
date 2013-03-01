@@ -98,6 +98,12 @@ namespace Infusion.Gaming.ServerLauncher
                 return RelativeDirectionEnum.StraightForward;
             }
 
+            // if can go streight, go streight - makes it look more fancy ;)
+            if (safeDirections.Contains(RelativeDirectionEnum.StraightForward))
+            {
+                return RelativeDirectionEnum.StraightForward;
+            }
+
             // pick one randomly 
             return safeDirections[Random.Next(safeDirections.Count)];
         }
