@@ -112,28 +112,9 @@ namespace Infusion.Gaming.LightCycles.Model.Data
             {
                 int x = 1 + rnd.Next(width - 1);
                 int y = 1 + rnd.Next(height - 1);
-                int tailX = x;
-                int tailY = y;
-                switch (rnd.Next(4))
-                {
-                    case 0:
-                        tailX++;
-                        break;
-                    case 1:
-                        tailX--;
-                        break;
-                    case 2:
-                        tailY++;
-                        break;
-                    case 3:
-                        tailY--;
-                        break;
-                }
-
-                if (this.map[x, y] == ' ' && this.map[tailX, tailY] == ' ')
+                if (this.map[x, y] == ' ')
                 {
                     this.map[x, y] = (char)('A' + p);
-                    this.map[tailX, tailY] = ((char)('A' + p)).ToLower();
                 }
                 else
                 {
