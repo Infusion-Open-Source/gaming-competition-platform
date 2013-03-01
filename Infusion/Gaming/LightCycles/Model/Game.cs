@@ -253,14 +253,11 @@ namespace Infusion.Gaming.LightCycles.Model
             var playersToRemove = givenPlayers.Remove(playersInGame);
             
             initialMap.RemovePlayers(playersToRemove);
-
-            var prevState = new GameState(0, initialMap.GetZeroStateMap());
-            var initialState = new GameState(0, initialMap);
             
-            initialState.UpdatePlayersDirection(prevState);
-            initialState.UpdateTrailsAge(prevState);
-            
-            return initialState;
+            this.CurrentState = new GameState(0, initialMap);
+            this.CurrentState.RandomizePlayersDirection();
+            this.TransitToNextState(new Event[] {});
+            return this.CurrentState;
         }
 
         /// <summary>

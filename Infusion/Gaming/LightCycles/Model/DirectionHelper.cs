@@ -38,6 +38,11 @@ namespace Infusion.Gaming.LightCycles.Model
         #region Static Fields
 
         /// <summary>
+        /// Internal random nuber generator
+        /// </summary>
+        private static readonly Random Random = new Random((int)DateTime.Now.Ticks);
+
+        /// <summary>
         ///     The mappings.
         /// </summary>
         private static readonly List<DirectionHelper> Mappings = new List<DirectionHelper>
@@ -116,6 +121,27 @@ namespace Infusion.Gaming.LightCycles.Model
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        /// Gets random direction
+        /// </summary>
+        /// <returns>Random direction.</returns>
+        public static DirectionEnum RandomDirection()
+        {
+            switch (Random.Next(4))
+            {
+                case 0: 
+                    return DirectionEnum.Up;
+                case 1:
+                    return DirectionEnum.Down;
+                case 2:
+                    return DirectionEnum.Left;
+                case 3:
+                    return DirectionEnum.Right;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
         /// <summary>
         /// Changes current direction.

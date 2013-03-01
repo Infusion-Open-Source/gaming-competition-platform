@@ -63,6 +63,11 @@ namespace Infusion.Gaming.LightCycles.Model
         #region Public Methods and Operators
 
         /// <summary>
+        /// Updates direction on which players go to random values
+        /// </summary>
+        void RandomizePlayersDirection();
+
+        /// <summary>
         /// Updates direction on which players go
         /// </summary>
         /// <param name="previousState">

@@ -95,6 +95,18 @@ namespace Infusion.Gaming.LightCycles.Model
         #region Public Methods and Operators
 
         /// <summary>
+        /// Updates direction on which players go to random values
+        /// </summary>
+        public void RandomizePlayersDirection()
+        {
+            this.Directions = new Dictionary<Player, DirectionEnum>();
+            foreach (Player player in this.Map.Players)
+            {
+                this.Directions.Add(player, DirectionHelper.RandomDirection());
+            }
+        }
+
+        /// <summary>
         /// Updates direction on which players go
         /// </summary>
         /// <param name="previousState">
@@ -114,7 +126,7 @@ namespace Infusion.Gaming.LightCycles.Model
                 {
                     throw new ArgumentException("prevMap is inavlid, unable to find current player in T-1 map");
                 }
-
+                
                 this.Directions.Add(player, DirectionHelper.CheckDirection(this.Map.PlayersLocations[player], previousState.Map.PlayersLocations[player]));
             }
         }
@@ -132,43 +144,22 @@ namespace Infusion.Gaming.LightCycles.Model
                 throw new ArgumentNullException("previousState");
             }
 
-            // get previous state
             this.TrailsAge = new Dictionary<Point, int>();
-            foreach (var pair in previousState.TrailsAge)
-            {
-                this.TrailsAge.Add(pair.Key, pair.Value);
-            }
-
-            // update to current state
             for (int y = 0; y < this.Map.Height; y++)
             {
                 for (int x = 0; x < this.Map.Width; x++)
                 {
+                    Point coordinates = new Point(x, y);
                     Location currentLocation = this.Map.Locations[x, y];
-                    Location prevLocation = previousState.Map.Locations[x, y];
-                    if (prevLocation.LocationType == LocationTypeEnum.Trail
-                        && currentLocation.LocationType != LocationTypeEnum.Trail)
+                    if (currentLocation.LocationType == LocationTypeEnum.Trail)
                     {
-                        // remove trails not existing any more
-                        this.TrailsAge.Remove(new Point(x, y));
-                    }
-                    else if (prevLocation.LocationType != LocationTypeEnum.Trail
-                             && currentLocation.LocationType == LocationTypeEnum.Trail)
-                    {
-                        // add new trails with age 0
-                        this.TrailsAge.Add(new Point(x, y), 0);
+                        int age = 1;
+                        if (previousState.TrailsAge.ContainsKey(coordinates))
+                            age = previousState.TrailsAge[coordinates] + 1;
+                        this.TrailsAge.Add(new Point(x, y), age);
                     }
                 }
             }
-
-            // age trails
-            var updated = new Dictionary<Point, int>();
-            foreach (var pair in this.TrailsAge)
-            {
-                updated.Add(pair.Key, pair.Value + 1);
-            }
-
-            this.TrailsAge = updated;
         }
 
         #endregion

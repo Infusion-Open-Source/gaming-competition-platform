@@ -75,8 +75,7 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
             if (nextState.Map.Locations[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Space)
             {
                 // player moves to new loaction
-                nextState.Map.Locations[newLocation.X, newLocation.Y] = new Location(
-                    LocationTypeEnum.Player, moveEvent.Player);
+                nextState.Map.Locations[newLocation.X, newLocation.Y] = new Location(LocationTypeEnum.Player, moveEvent.Player);
                 nextState.Map.Locations[location.X, location.Y] = new Location(LocationTypeEnum.Trail, moveEvent.Player);
             }
             else if (nextState.Map.Locations[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Trail
