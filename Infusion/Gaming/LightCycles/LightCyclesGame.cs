@@ -54,7 +54,8 @@ namespace Infusion.Gaming.LightCycles
                 new EndConditionSet
                         {
                             new EndCondition(new NumberOfPlayers(0), GameResultEnum.FinishedWithoutWinner),
-                            new EndCondition(new NumberOfPlayers(1), GameResultEnum.FinshedWithWinner)
+                            new EndCondition(new NumberOfPlayers(1), GameResultEnum.FinshedWithWinner),
+                            new EndCondition(new NumberOfTeams(1), GameResultEnum.FinshedWithWinners),
                         },
                 new EventFilterSet
                         {

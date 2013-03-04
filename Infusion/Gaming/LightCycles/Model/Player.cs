@@ -42,14 +42,35 @@ namespace Infusion.Gaming.LightCycles.Model
         /// The player id.
         /// </param>
         public Player(char id)
+            : this(id, id)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Player"/> class.
+        /// </summary>
+        /// <param name="id">
+        /// The player id.
+        /// </param>
+        /// <param name="teamId">
+        /// The player team Id.
+        /// </param>
+        public Player(char id, char teamId)
         {
             id = id.ToUpper();
+            teamId = teamId.ToUpper();
             if (id < 'A' || id > 'Z')
             {
                 throw new ArgumentOutOfRangeException("id");
             }
 
+            if (teamId < 'A' || teamId > 'Z')
+            {
+                throw new ArgumentOutOfRangeException("teamId");
+            }
+
             this.Id = id;
+            this.TeamId = teamId;
         }
 
         #endregion
@@ -60,6 +81,11 @@ namespace Infusion.Gaming.LightCycles.Model
         ///     Gets or sets the id.
         /// </summary>
         public char Id { get; protected set; }
+
+        /// <summary>
+        ///     Gets or sets the team Id.
+        /// </summary>
+        public char TeamId { get; protected set; }
 
         #endregion
 

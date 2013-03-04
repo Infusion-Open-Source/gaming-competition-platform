@@ -42,7 +42,12 @@ namespace Infusion.Gaming.LightCycles.Model.Defines
         /// <summary>
         ///     Game finished with a winner.
         /// </summary>
-        FinshedWithWinner, 
+        FinshedWithWinner,
+
+        /// <summary>
+        ///     Game finished with one or more winners (for team play).
+        /// </summary>
+        FinshedWithWinners, 
 
         /// <summary>
         ///     Game finished without a winner.
