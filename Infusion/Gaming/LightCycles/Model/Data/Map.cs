@@ -96,6 +96,24 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         public Location[,] Locations { get; protected set; }
 
         /// <summary>
+        ///     Gets the teams.
+        /// </summary>
+        public List<char> Teams
+        {
+            get
+            {
+                List<char> teams = new List<char>();
+                foreach (var player in this.Players)
+                {
+                    if(!teams.Contains(player.TeamId))
+                        teams.Add(player.TeamId);
+                }
+
+                return teams;
+            }
+        }
+
+        /// <summary>
         ///     Gets the players.
         /// </summary>
         public List<Player> Players

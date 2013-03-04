@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conditions\NumberOfTeams.cs" />
     <Compile Include="Conditions\EndConditionSet.cs" />
     <Compile Include="Conditions\IEndCondition.cs" />
     <Compile Include="Conditions\EndCondition.cs" />

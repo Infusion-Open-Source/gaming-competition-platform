@@ -141,6 +141,11 @@ namespace Infusion.Gaming.ServerLauncher
             }
 
             // end
+            if (game.Result == GameResultEnum.FinshedWithWinners)
+            {
+                Console.WriteLine("End, winning team is: " + game.CurrentState.Map.Players[0].TeamId);
+            }
+
             if (game.Result == GameResultEnum.FinshedWithWinner)
             {
                 Console.WriteLine("End, winner is: " + game.CurrentState.Map.Players[0]);
