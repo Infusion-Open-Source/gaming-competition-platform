@@ -22,14 +22,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Model
 {
     using System.Collections.Generic;
     using System.Drawing;
 
     using Infusion.Gaming.LightCycles.Model.Data;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     ///     The GameState interface.

@@ -31,6 +31,9 @@ namespace Infusion.Gaming.LightCycles
     using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
 
+    /// <summary>
+    /// Game of LightCycles
+    /// </summary>
     public class LightCyclesGame : Game
     {
         /// <summary>

@@ -22,14 +22,14 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model;
-
 namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+
+    using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
     ///     Filter keeps only recent event from each player
@@ -48,7 +48,7 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
         /// events to filter
         /// </param>
         /// <returns>
-        /// filteres events list
+        /// filters events list
         /// </returns>
         public IList<Event> Filter(IGameState state, IEnumerable<Event> events)
         {

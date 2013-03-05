@@ -22,12 +22,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Globalization;
-using Infusion.Gaming.LightCycles.Extensions;
-using System;
-
 namespace Infusion.Gaming.LightCycles.Model
 {
+    using System;
+    using System.Globalization;
+
+    using Infusion.Gaming.LightCycles.Extensions;
+
     /// <summary>
     ///     The player.
     /// </summary>

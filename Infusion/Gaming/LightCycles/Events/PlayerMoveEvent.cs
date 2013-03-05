@@ -22,14 +22,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Events
 {
     using System.Text;
 
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     ///     The player move event.

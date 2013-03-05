@@ -22,14 +22,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Conditions
 {
     using System;
+    using System.Collections.Generic;
 
     using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     ///     Set of the game end conditions.
@@ -39,14 +38,14 @@ namespace Infusion.Gaming.LightCycles.Conditions
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EndCondition"/> class.
+        /// Initializes a new instance of the <see cref="EndConditionSet"/> class.
         /// </summary>
         public EndConditionSet()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EndCondition"/> class.
+        /// Initializes a new instance of the <see cref="EndConditionSet"/> class.
         /// </summary>
         /// <param name="conditions">
         /// The set of game ending conditions
@@ -61,7 +60,7 @@ namespace Infusion.Gaming.LightCycles.Conditions
         #region Public Properties
         
         /// <summary>
-        ///     Gets the game result when condition is met.
+        ///     Gets or sets the game result when condition is met.
         /// </summary>
         public GameResultEnum Result { get; protected set; }
 
@@ -82,7 +81,7 @@ namespace Infusion.Gaming.LightCycles.Conditions
         {
             foreach (IEndCondition endCondition in this)
             {
-                if(endCondition.Check(game))
+                if (endCondition.Check(game))
                 {
                     this.Result = endCondition.Result;
                     return true;

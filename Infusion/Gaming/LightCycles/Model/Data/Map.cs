@@ -22,14 +22,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Extensions;
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Model.Data
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     ///     The game map.
@@ -105,8 +104,10 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                 List<char> teams = new List<char>();
                 foreach (var player in this.Players)
                 {
-                    if(!teams.Contains(player.TeamId))
+                    if (!teams.Contains(player.TeamId))
+                    {
                         teams.Add(player.TeamId);
+                    }
                 }
 
                 return teams;

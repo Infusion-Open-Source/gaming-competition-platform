@@ -22,11 +22,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using Infusion.Gaming.LightCycles.Model;
-
 namespace Infusion.Gaming.LightCycles.Events.Processing
 {
+    using System.Collections.Generic;
+
+    using Infusion.Gaming.LightCycles.Model;
+
     /// <summary>
     ///     Events processor interface
     /// </summary>

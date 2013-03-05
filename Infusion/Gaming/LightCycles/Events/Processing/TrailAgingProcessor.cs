@@ -25,14 +25,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using Infusion.Gaming.LightCycles.Model;
-using Infusion.Gaming.LightCycles.Model.Data;
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Events.Processing
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Data;
+    using Infusion.Gaming.LightCycles.Model.Defines;
+
     /// <summary>
     ///     Trail aging processor.
     ///     Adds trail fading on time feature.

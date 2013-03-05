@@ -22,13 +22,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Conditions
 {
     using System;
 
     using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     ///     The game end condition.
@@ -70,7 +69,7 @@ namespace Infusion.Gaming.LightCycles.Conditions
         public ICondition Condition { get; protected set; }
 
         /// <summary>
-        ///     Gets the game result when condition is met.
+        ///     Gets or sets the game result when condition is met.
         /// </summary>
         public GameResultEnum Result { get; protected set; }
 

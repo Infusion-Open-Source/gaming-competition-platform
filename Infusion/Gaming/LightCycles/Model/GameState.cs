@@ -22,8 +22,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Model
 {
     using System;
@@ -31,6 +29,7 @@ namespace Infusion.Gaming.LightCycles.Model
     using System.Drawing;
 
     using Infusion.Gaming.LightCycles.Model.Data;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     ///     The game state.
@@ -155,7 +154,10 @@ namespace Infusion.Gaming.LightCycles.Model
                     {
                         int age = 1;
                         if (previousState.TrailsAge.ContainsKey(coordinates))
+                        {
                             age = previousState.TrailsAge[coordinates] + 1;
+                        }
+
                         this.TrailsAge.Add(new Point(x, y), age);
                     }
                 }

@@ -22,18 +22,19 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Events.Filtering;
-using Infusion.Gaming.LightCycles.Events.Processing;
-using Infusion.Gaming.LightCycles.Extensions;
-using System;
-using System.Collections.Generic;
-using Infusion.Gaming.LightCycles.Conditions;
-using Infusion.Gaming.LightCycles.Events;
-using Infusion.Gaming.LightCycles.Model.Data;
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Model
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Infusion.Gaming.LightCycles.Conditions;
+    using Infusion.Gaming.LightCycles.Events;
+    using Infusion.Gaming.LightCycles.Events.Filtering;
+    using Infusion.Gaming.LightCycles.Events.Processing;
+    using Infusion.Gaming.LightCycles.Extensions;
+    using Infusion.Gaming.LightCycles.Model.Data;
+    using Infusion.Gaming.LightCycles.Model.Defines;
+
     /// <summary>
     ///     The game.
     /// </summary>
@@ -69,7 +70,7 @@ namespace Infusion.Gaming.LightCycles.Model
         public IEventProcessor EventProcessor { get; protected set; }
 
         /// <summary>
-        ///     Gets the event filter.
+        ///     Gets or sets the event filter.
         /// </summary>
         public IEventFilter EventFilter { get; protected set; }
 
@@ -227,7 +228,7 @@ namespace Infusion.Gaming.LightCycles.Model
         /// </summary>
         protected void CheckEndConditions()
         {
-            if(this.EndCondition.Check(this))
+            if (this.EndCondition.Check(this))
             {
                 this.Result = this.EndCondition.Result;
                 this.State = GameStateEnum.Stopped;
@@ -256,7 +257,7 @@ namespace Infusion.Gaming.LightCycles.Model
             
             this.CurrentState = new GameState(0, initialMap);
             this.CurrentState.RandomizePlayersDirection();
-            this.TransitToNextState(new Event[] {});
+            this.TransitToNextState(new Event[] { });
             return this.CurrentState;
         }
 

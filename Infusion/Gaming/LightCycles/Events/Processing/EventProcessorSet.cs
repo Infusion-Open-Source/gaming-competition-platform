@@ -22,15 +22,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.ComponentModel;
-using Infusion.Gaming.LightCycles.Model;
-
 namespace Infusion.Gaming.LightCycles.Events.Processing
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+
+    using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
     ///     Event processor set
@@ -78,7 +74,9 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
             foreach (IEventProcessor processor in this)
             {
                 if (processor.Process(e, currentState, nextState, out newEvents))
+                {
                     return true;
+                }
             }
 
             newEvents = new List<Event>();

@@ -36,6 +36,7 @@ namespace Infusion.Gaming.LightCycles.Extensions
         /// <summary>
         /// Enqueues collection of items
         /// </summary>
+        /// <typeparam name="T">Type of item to enqueue</typeparam>
         /// <param name="queue">
         /// Queue to extend
         /// </param>

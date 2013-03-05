@@ -42,7 +42,7 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
         /// events to filter
         /// </param>
         /// <returns>
-        /// filteres events list
+        /// filters events list
         /// </returns>
         IList<Event> Filter(IGameState state, IEnumerable<Event> events);
     }
