@@ -22,9 +22,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Events.Processing;
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.ServerLauncher
 {
     using System;
@@ -33,10 +30,10 @@ namespace Infusion.Gaming.ServerLauncher
     using System.Threading;
 
     using Infusion.Gaming.LightCycles;
-    using Infusion.Gaming.LightCycles.Conditions;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     ///     The program.

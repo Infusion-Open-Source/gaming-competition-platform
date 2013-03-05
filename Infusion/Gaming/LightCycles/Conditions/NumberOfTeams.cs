@@ -22,11 +22,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model;
-
 namespace Infusion.Gaming.LightCycles.Conditions
 {
     using System;
+
+    using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
     ///     The number of teams condition

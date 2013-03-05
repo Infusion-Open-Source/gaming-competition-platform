@@ -22,10 +22,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model;
-
 namespace Infusion.Gaming.LightCycles.Conditions
 {
+    using Infusion.Gaming.LightCycles.Model;
+
     /// <summary>
     ///     The Condition interface.
     /// </summary>

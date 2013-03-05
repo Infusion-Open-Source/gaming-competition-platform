@@ -22,10 +22,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Extensions;
-
 namespace Infusion.Gaming.LightCycles.Tests.Model.Data
 {
+    using Infusion.Gaming.LightCycles.Extensions;
     using Infusion.Gaming.LightCycles.Model.Data;
 
     using NUnit.Framework;

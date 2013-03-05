@@ -52,13 +52,12 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         /// <summary>
         ///     Gets the players.
         /// </summary>
-        List < Player > Players { get; }
+        List<Player> Players { get; }
 
         /// <summary>
         ///     Gets the players locations.
         /// </summary>
-        Dictionary < Player,
-        Point > PlayersLocations
+        Dictionary<Player, Point> PlayersLocations
         {
             get;
         }
@@ -81,9 +80,7 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         /// <returns>
         ///     The cloned map <see cref="IMap" />.
         /// </returns>
-        IMap Clone 
-        ()
-        ;
+        IMap Clone();
 
         /// <summary>
         /// Removes specified player from the map.
@@ -91,10 +88,7 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         /// <param name="player">
         /// The player to be removed.
         /// </param>
-        void RemovePlayer 
-        (Player
-        player)
-        ;
+        void RemovePlayer(Player player);
 
         /// <summary>
         /// Removes specified players from the map.
@@ -102,8 +96,7 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         /// <param name="playersToRemove">
         /// The players to be removed.
         /// </param>
-        void RemovePlayers 
-        (IEnumerable < Player > playersToRemove);
+        void RemovePlayers(IEnumerable<Player> playersToRemove);
 
         #endregion
     }

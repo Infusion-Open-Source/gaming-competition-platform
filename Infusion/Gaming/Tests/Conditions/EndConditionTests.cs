@@ -22,12 +22,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Tests.Conditions
 {
     using Infusion.Gaming.LightCycles.Conditions;
     using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     using Moq;
 

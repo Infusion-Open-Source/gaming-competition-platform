@@ -22,9 +22,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model;
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System;
@@ -32,11 +29,17 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
     using System.Linq;
     using System.Text;
 
+    using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Defines;
+
     /// <summary>
     ///     Adds undefined move event for players that are idle
     /// </summary>
     public class IdlePlayerMoveEventAppender : IEventFilter
     {
+        /// <summary>
+        /// Direction to append.
+        /// </summary>
         private readonly RelativeDirectionEnum direction;
 
         #region Public Methods and Operators
@@ -60,14 +63,14 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
         /// events to filter
         /// </param>
         /// <returns>
-        /// filteres events list
+        /// filters events list
         /// </returns>
         public IList<Event> Filter(IGameState state, IEnumerable<Event> events)
         {
             var data = new EventsCollection(events);
             foreach (Player player in state.Map.Players)
             {
-                if(data.FilterBy(player).Count == 0)
+                if (data.FilterBy(player).Count == 0)
                 {
                     data.Add(new PlayerMoveEvent(player, this.direction));
                 }

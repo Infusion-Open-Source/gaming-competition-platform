@@ -22,13 +22,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Model
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     ///     The direction helper.
@@ -38,7 +38,7 @@ namespace Infusion.Gaming.LightCycles.Model
         #region Static Fields
 
         /// <summary>
-        /// Internal random nuber generator
+        /// Internal random number generator
         /// </summary>
         private static readonly Random Random = new Random((int)DateTime.Now.Ticks);
 

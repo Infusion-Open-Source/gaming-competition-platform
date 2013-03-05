@@ -24,12 +24,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using Infusion.Gaming.LightCycles.Model;
-
 namespace Infusion.Gaming.LightCycles.Events.Processing
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Infusion.Gaming.LightCycles.Model;
+
     /// <summary>
     ///     Garbage event processor.
     ///     Catches all events that weren't processed by other event processors and removes it from the queue.

@@ -22,8 +22,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Tests.Events
 {
     using System;
@@ -31,6 +29,7 @@ namespace Infusion.Gaming.LightCycles.Tests.Events
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     using NUnit.Framework;
 

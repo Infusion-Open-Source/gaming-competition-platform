@@ -23,12 +23,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using Infusion.Gaming.LightCycles.Model;
-
 namespace Infusion.Gaming.LightCycles.Events.Processing
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Infusion.Gaming.LightCycles.Model;
+
     /// <summary>
     ///     Event logging processor.
     ///     Prints out event to console.

@@ -22,10 +22,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 namespace Infusion.Gaming.LightCycles.Model
 {
+    using System;
+
     /// <summary>
     ///     The game exception.
     /// </summary>

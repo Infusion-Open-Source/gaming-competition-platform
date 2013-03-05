@@ -22,10 +22,10 @@
 // </summary>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace Infusion.Gaming.LightCycles.Extensions
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Extension of generic lists.
     /// </summary>
@@ -36,6 +36,7 @@ namespace Infusion.Gaming.LightCycles.Extensions
         /// <summary>
         /// Get collection being intersection with given collection.
         /// </summary>
+        /// <typeparam name="T">type of item to remove</typeparam>
         /// <param name="listA">
         /// First collection to intersect.
         /// </param>
@@ -62,6 +63,7 @@ namespace Infusion.Gaming.LightCycles.Extensions
         /// <summary>
         /// Removes from collection players that at given collection.        
         /// </summary>
+        /// <typeparam name="T">type of item to remove</typeparam>
         /// <param name="listA">
         /// The list from which items should be removed.
         /// </param>

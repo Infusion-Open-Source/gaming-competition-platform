@@ -22,10 +22,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Infusion.Gaming.LightCycles.Model.Defines;
-
 namespace Infusion.Gaming.LightCycles.Model.Data
 {
+    using Infusion.Gaming.LightCycles.Model.Defines;
+
     /// <summary>
     ///     The location on the map.
     /// </summary>
