@@ -1,29 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GarbageProcessor.cs" company="Infusion">
-//    Copyright (C) 2013 Paweł Drozdowski
-//
-//    This file is part of LightCycles Game Engine.
-//
-//    LightCycles Game Engine is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    LightCycles Game Engine is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
-// </copyright>
-// <summary>
-//   Garbage event processor.
-//   Catches all events that weren't processed by other event processors and removes it from the queue.
-//   Should be put at the end of processors queue.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
+﻿
 namespace Infusion.Gaming.LightCycles.Events.Processing
 {
     using System;
