@@ -1,29 +1,7 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LightCyclesGame.cs" company="Infusion">
-//    Copyright (C) 2013 Paweł Drozdowski
-//
-//    This file is part of LightCycles Game Engine.
-//
-//    LightCycles Game Engine is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    LightCycles Game Engine is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with LightCycles Game Engine.  If not, see http://www.gnu.org/licenses/.
-// </copyright>
-// <summary>
-//   The direction helper.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
+﻿
 namespace Infusion.Gaming.LightCycles
 {
+    using System;
     using Infusion.Gaming.LightCycles.Conditions;
     using Infusion.Gaming.LightCycles.Events.Filtering;
     using Infusion.Gaming.LightCycles.Events.Processing;
@@ -40,7 +18,7 @@ namespace Infusion.Gaming.LightCycles
         /// Starts game with random map
         /// </summary>
         /// <param name="numberOfPlayers">number of players in the game</param>
-        public void StartOnRandomMap(int numberOfPlayers)
+        public void StartOnRandomMap(int numberOfPlayers, GameModeEnum gameMode)
         {
             // init
             var generator = new MapStreamGenerator();
@@ -49,31 +27,41 @@ namespace Infusion.Gaming.LightCycles
             var mapSerializer = new MapSerializer();
             IMap map = mapSerializer.Read(mapStream);
 
+            EndConditionSet endConditions = new EndConditionSet();
+            endConditions.Add(new EndCondition(new NumberOfPlayers(0), GameResultEnum.FinishedWithoutWinner));
+
+            switch (gameMode)
+            {
+                case GameModeEnum.FreeForAll:
+                    endConditions.Add(new EndCondition(new NumberOfPlayers(1), GameResultEnum.FinshedWithWinner));
+                    break;
+                case GameModeEnum.TeamDeathmatch:
+                    endConditions.Add(new EndCondition(new NumberOfTeams(1), GameResultEnum.FinshedWithWinners));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("gameMode");
+            }
+
+            EventFilterSet eventFilters = new EventFilterSet();
+            eventFilters.Add(new PlayersInGameFilter());
+            eventFilters.Add(new PlayerRecentEventFilter());
+            eventFilters.Add(new IdlePlayerMoveEventAppender(RelativeDirectionEnum.Undefined));
+
+            EventProcessorSet eventProcesors = new EventProcessorSet();
+            eventProcesors.Add(new EventLoggingProcessor(true));
+            eventProcesors.Add(new PlayerMovesProcessor());
+            eventProcesors.Add(new PlayerCollisionProcessor());
+            eventProcesors.Add(new TrailAgingProcessor(0.2f));
+            eventProcesors.Add(new GarbageProcessor(true));
+
             // start
             this.Start(
                 GameModeEnum.FreeForAll,
                 map.Players,
                 map,
-                new EndConditionSet
-                        {
-                            new EndCondition(new NumberOfPlayers(0), GameResultEnum.FinishedWithoutWinner),
-                            new EndCondition(new NumberOfPlayers(1), GameResultEnum.FinshedWithWinner),
-                            new EndCondition(new NumberOfTeams(1), GameResultEnum.FinshedWithWinners),
-                        },
-                new EventFilterSet
-                        {
-                            new PlayersInGameFilter(),
-                            new PlayerRecentEventFilter(),
-                            new IdlePlayerMoveEventAppender(RelativeDirectionEnum.Undefined)
-                        },
-                new EventProcessorSet
-                        {
-                            new EventLoggingProcessor(true),
-                            new PlayerMovesProcessor(),
-                            new PlayerCollisionProcessor(),
-                            new TrailAgingProcessor(0.2f),
-                            new GarbageProcessor(true)
-                        });
+                endConditions,
+                eventFilters,
+                eventProcesors);
         }
     }
 }
