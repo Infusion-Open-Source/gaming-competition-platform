@@ -91,7 +91,7 @@ namespace Infusion.Gaming.ServerLauncher
             const int NumberOfPlayers = 8;
             var game = new LightCyclesGame();
             var mapSerializer = new MapSerializer();
-            game.StartOnRandomMap(NumberOfPlayers);
+            game.StartOnRandomMap(NumberOfPlayers, GameModeEnum.FreeForAll);
             
             // do initial UI
             Console.Clear();

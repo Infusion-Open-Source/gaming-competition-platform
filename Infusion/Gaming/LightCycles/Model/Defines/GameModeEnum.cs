@@ -14,6 +14,11 @@ namespace Infusion.Gaming.LightCycles.Model.Defines
         /// <summary>
         ///     Free for all.
         /// </summary>
-        FreeForAll
+        FreeForAll,
+
+        /// <summary>
+        ///     Team deathmatch.
+        /// </summary>
+        TeamDeathmatch
     }
 }
