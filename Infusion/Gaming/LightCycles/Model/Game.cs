@@ -205,7 +205,7 @@ namespace Infusion.Gaming.LightCycles.Model
         /// </summary>
         protected void CheckEndConditions()
         {
-            if (this.EndCondition.Check(this))
+            if (this.EndCondition.Check(this.CurrentState))
             {
                 this.Result = this.EndCondition.Result;
                 this.State = GameStateEnum.Stopped;
@@ -227,7 +227,7 @@ namespace Infusion.Gaming.LightCycles.Model
         protected IGameState CreateInitialState(IEnumerable<Player> players, IMap initialMap)
         {
             var givenPlayers = new List<Player>(players);
-            var playersData = new PlayersData(initialMap, players);
+            var playersData = new PlayersData(initialMap, givenPlayers);
             var playersInGame = givenPlayers.Intersect(playersData.Players);
             var playersToRemove = givenPlayers.Remove(playersInGame);
 

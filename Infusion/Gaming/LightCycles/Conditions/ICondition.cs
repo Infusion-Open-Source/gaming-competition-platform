@@ -13,13 +13,13 @@ namespace Infusion.Gaming.LightCycles.Conditions
         /// <summary>
         /// Performs condition check.
         /// </summary>
-        /// <param name="game">
-        /// The game on which condition check should be performed.
+        /// <param name="gameState">
+        /// The game state on which condition check should be performed.
         /// </param>
         /// <returns>
         /// The result of the condition check.
         /// </returns>
-        bool Check(IGame game);
+        bool Check(IGameState gameState);
 
         #endregion
     }

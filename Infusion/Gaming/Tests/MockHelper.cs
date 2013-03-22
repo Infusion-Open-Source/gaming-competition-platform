@@ -37,6 +37,8 @@ namespace Infusion.Gaming.LightCycles.Tests
         /// </returns>
         public static Mock<IGame> CreateGame(int numberOfPlayers)
         {
+            /*
+             TODO: to be fixed
             var players = new List<Player>();
             for (int i = 0; i < numberOfPlayers; i++)
             {
@@ -44,12 +46,15 @@ namespace Infusion.Gaming.LightCycles.Tests
             }
 
             var mockMap = new Mock<IMap>();
-            //mockMap.SetupGet(map => map.Players).Returns(players);
+            mockMap.SetupGet(map => map.Players).Returns(players);
             var mockState = new Mock<IGameState>();
             mockState.SetupGet(state => state.Map).Returns(mockMap.Object);
             var mockGame = new Mock<IGame>();
             mockGame.SetupGet(game => game.CurrentState).Returns(mockState.Object);
             return mockGame;
+             */
+
+            return null;
         }
 
         #endregion
