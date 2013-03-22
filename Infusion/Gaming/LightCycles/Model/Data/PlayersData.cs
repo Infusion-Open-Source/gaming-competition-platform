@@ -98,6 +98,30 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         }
 
         /// <summary>
+        ///     Gets the players lightcycles.
+        /// </summary>
+        public Dictionary<Player, LightCycleBike> PlayersLightCycles
+        {
+            get
+            {
+                Dictionary<Player, LightCycleBike> results = new Dictionary<Player, LightCycleBike>();
+                for (int y = 0; y < this.Height; y++)
+                {
+                    for (int x = 0; x < this.Width; x++)
+                    {
+                        LightCycleBike obj = this.Data[x, y] as LightCycleBike;
+                        if (obj != null)
+                        {
+                            results.Add(obj.Player, obj);
+                        }
+                    }
+                }
+
+                return results;
+            }
+        }
+
+        /// <summary>
         ///     Gets the players locations.
         /// </summary>
         public Dictionary<Player, Point> PlayersLocations
@@ -151,7 +175,7 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                         var startLocation = (PlayersStartingLocation)map[x, y];
                         if (playersInGame.Contains(startLocation.Player))
                         {
-                            this.Data[x, y] = new LightCycleBike(startLocation.Player);
+                            this.Data[x, y] = new LightCycleBike(startLocation.Player, DirectionHelper.RandomDirection());
                         }
                     }
                 }

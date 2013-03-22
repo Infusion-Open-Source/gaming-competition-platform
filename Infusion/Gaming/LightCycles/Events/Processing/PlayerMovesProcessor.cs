@@ -43,12 +43,13 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
             if (moveEvent != null)
             {
                 Point location = currentState.PlayersData.PlayersLocations[moveEvent.Player];
-                DirectionEnum direction = currentState.Directions[moveEvent.Player];
-                Point newLocation = DirectionHelper.NextLocation(location, direction, moveEvent.Direction);
+                DirectionEnum direction = currentState.PlayersData.PlayersLightCycles[moveEvent.Player].Direction;
+                DirectionEnum newDirection = DirectionHelper.ChangeDirection(direction, moveEvent.Direction);
+                Point newLocation = DirectionHelper.NextLocation(location, newDirection);
                 if (nextState.Map[newLocation.X, newLocation.Y].IsPassable && nextState.PlayersData[newLocation.X, newLocation.Y] == null)
                 {
                     // player moves to new loaction
-                    nextState.PlayersData[newLocation.X, newLocation.Y] = new LightCycleBike(moveEvent.Player);
+                    nextState.PlayersData[newLocation.X, newLocation.Y] = new LightCycleBike(moveEvent.Player, newDirection);
                     nextState.PlayersData[location.X, location.Y] = new Trail(moveEvent.Player, 1);
                 }
                 else

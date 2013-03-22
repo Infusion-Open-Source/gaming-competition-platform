@@ -47,18 +47,11 @@ namespace Infusion.Gaming.LightCycles.Model
             this.Turn = turn;
             this.Map = map;
             this.PlayersData = playersData;
-            this.Directions = new Dictionary<Player, DirectionEnum>();
         }
 
         #endregion
 
         #region Public Properties
-
-        /// <summary>
-        ///     Gets or sets the players directions.
-        /// </summary>
-        public Dictionary<Player, DirectionEnum> Directions { get; protected set; }
-
         /// <summary>
         ///     Gets or sets the map.
         /// </summary>
@@ -73,53 +66,6 @@ namespace Infusion.Gaming.LightCycles.Model
         ///     Gets or sets the turn.
         /// </summary>
         public int Turn { get; protected set; }
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        /// <summary>
-        /// Updates direction on which players go to random values
-        /// </summary>
-        public void RandomizePlayersDirection()
-        {
-            this.Directions = new Dictionary<Player, DirectionEnum>();
-            foreach (Player player in this.PlayersData.Players)
-            {
-                this.Directions.Add(player, DirectionHelper.RandomDirection());
-            }
-        }
-
-        /// <summary>
-        /// Updates direction on which players go
-        /// </summary>
-        /// <param name="previousState">
-        /// previous game state to compare to
-        /// </param>
-        public void UpdatePlayersDirection(IGameState previousState)
-        {
-            if (previousState == null)
-            {
-                throw new ArgumentNullException("previousState");
-            }
-
-            this.Directions = new Dictionary<Player, DirectionEnum>();
-            foreach (Player player in this.PlayersData.Players)
-            {
-                if (!previousState.PlayersData.PlayersLocations.ContainsKey(player))
-                {
-                    throw new ArgumentException("prevMap is inavlid, unable to find current player in T-1 map");
-                }
-
-                DirectionEnum direction = DirectionHelper.CheckDirection(this.PlayersData.PlayersLocations[player], previousState.PlayersData.PlayersLocations[player]);
-                if(direction == DirectionEnum.Undefined)
-                {
-                    throw new GameException("player hasn't moved!");
-                }
-
-                this.Directions.Add(player, direction);
-            }
-        }
 
         #endregion
     }
