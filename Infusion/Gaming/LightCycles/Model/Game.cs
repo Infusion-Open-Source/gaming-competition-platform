@@ -227,12 +227,13 @@ namespace Infusion.Gaming.LightCycles.Model
         protected IGameState CreateInitialState(IEnumerable<Player> players, IMap initialMap)
         {
             var givenPlayers = new List<Player>(players);
-            var playersInGame = givenPlayers.Intersect(initialMap.Players);
+            var playersData = new PlayersData(initialMap, players);
+            var playersInGame = givenPlayers.Intersect(playersData.Players);
             var playersToRemove = givenPlayers.Remove(playersInGame);
-            
-            initialMap.RemovePlayers(playersToRemove);
-            
-            this.CurrentState = new GameState(0, initialMap);
+
+            playersData.RemovePlayers(playersToRemove);
+
+            this.CurrentState = new GameState(0, initialMap, playersData);
             this.CurrentState.RandomizePlayersDirection();
             this.TransitToNextState(new Event[] { });
             return this.CurrentState;
@@ -246,7 +247,7 @@ namespace Infusion.Gaming.LightCycles.Model
         /// </param>
         protected void TransitToNextState(IEnumerable<Event> gameEvents)
         {
-            var nextState = new GameState(this.CurrentState.Turn + 1, this.CurrentState.Map.Clone());
+            var nextState = new GameState(this.CurrentState.Turn + 1, this.CurrentState.Map, new PlayersData(this.CurrentState.PlayersData));
             var eventsToProcess = new Queue<Event>();
             eventsToProcess.Enqueue(new TickEvent(nextState.Turn));
             eventsToProcess.Enqueue(this.EventFilter.Filter(this.CurrentState, gameEvents));

@@ -1,11 +1,11 @@
 ﻿
-namespace Infusion.Gaming.LightCycles.Model.Data
+using System;
+using Infusion.Gaming.LightCycles.Extensions;
+using Infusion.Gaming.LightCycles.Model.Data;
+using Infusion.Gaming.LightCycles.Model.Defines;
+
+namespace Infusion.Gaming.LightCycles.Model.Serialization
 {
-    using System;
-
-    using Infusion.Gaming.LightCycles.Extensions;
-    using Infusion.Gaming.LightCycles.Model.Defines;
-
     /// <summary>
     ///     The location serializer.
     /// </summary>
@@ -39,14 +39,9 @@ namespace Infusion.Gaming.LightCycles.Model.Data
 
             if (c >= 'A' && c <= 'Z')
             {
-                return new Location(LocationTypeEnum.Player, new Player(c));
+                return new PlayersStartingLocation(new Player(c));
             }
-
-            if (c >= 'a' && c <= 'z')
-            {
-                return new Location(LocationTypeEnum.Trail, new Player(c.ToUpper()));
-            }
-
+            
             throw new ArgumentOutOfRangeException("c");
         }
 
@@ -67,10 +62,8 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                     return '#';
                 case LocationTypeEnum.Space:
                     return ' ';
-                case LocationTypeEnum.Trail:
-                    return location.Player.Id.ToLower();
-                case LocationTypeEnum.Player:
-                    return location.Player.Id;
+                case LocationTypeEnum.PlayersStartingLocation:
+                    return ((PlayersStartingLocation)location).Player.Id;
                 default:
                     throw new ArgumentOutOfRangeException("location");
             }

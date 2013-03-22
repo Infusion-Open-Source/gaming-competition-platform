@@ -44,7 +44,7 @@ namespace Infusion.Gaming.LightCycles.Tests
             }
 
             var mockMap = new Mock<IMap>();
-            mockMap.SetupGet(map => map.Players).Returns(players);
+            //mockMap.SetupGet(map => map.Players).Returns(players);
             var mockState = new Mock<IGameState>();
             mockState.SetupGet(state => state.Map).Returns(mockMap.Object);
             var mockGame = new Mock<IGame>();

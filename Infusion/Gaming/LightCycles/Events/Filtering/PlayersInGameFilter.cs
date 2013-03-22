@@ -1,4 +1,6 @@
 ﻿
+using Infusion.Gaming.LightCycles.Model.Data;
+
 namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System;
@@ -31,7 +33,7 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
         {
             var data = new EventsCollection(events);
             var results = new List<Event>();
-            foreach (Player player in state.Map.Players)
+            foreach (Player player in state.PlayersData.Players)
             {
                 results.AddRange(data.FilterBy(player));
             }

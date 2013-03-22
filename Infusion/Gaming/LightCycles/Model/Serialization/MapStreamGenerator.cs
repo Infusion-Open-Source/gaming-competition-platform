@@ -1,9 +1,9 @@
 ﻿
-namespace Infusion.Gaming.LightCycles.Model.Data
-{
-    using System;
-    using System.Text;
+using System;
+using System.Text;
 
+namespace Infusion.Gaming.LightCycles.Model.Serialization
+{
     /// <summary>
     ///     The map stream generator.
     /// </summary>

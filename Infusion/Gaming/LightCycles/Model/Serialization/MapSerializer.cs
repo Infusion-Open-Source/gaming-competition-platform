@@ -1,10 +1,11 @@
 ﻿
-namespace Infusion.Gaming.LightCycles.Model.Data
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Infusion.Gaming.LightCycles.Model.Data;
 
+namespace Infusion.Gaming.LightCycles.Model.Serialization
+{
     /// <summary>
     ///     The map serializer.
     /// </summary>
@@ -68,7 +69,7 @@ namespace Infusion.Gaming.LightCycles.Model.Data
             {
                 for (int x = 0; x < map.Width; x++)
                 {
-                    builder.Append(serializer.Write(map.Locations[x, y]));
+                    builder.Append(serializer.Write(map[x, y]));
                 }
 
                 builder.AppendLine();

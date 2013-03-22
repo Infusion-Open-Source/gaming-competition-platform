@@ -24,7 +24,10 @@ namespace Infusion.Gaming.LightCycles.Model
         /// <param name="map">
         /// The map.
         /// </param>
-        public GameState(int turn, IMap map)
+        /// <param name="playersData">
+        /// The players data.
+        /// </param>
+        public GameState(int turn, IMap map, IPlayersData playersData)
         {
             if (turn < 0)
             {
@@ -36,8 +39,14 @@ namespace Infusion.Gaming.LightCycles.Model
                 throw new ArgumentNullException("map");
             }
 
+            if (playersData == null)
+            {
+                throw new ArgumentNullException("playersData");
+            }
+
             this.Turn = turn;
             this.Map = map;
+            this.PlayersData = playersData;
             this.Directions = new Dictionary<Player, DirectionEnum>();
             this.TrailsAge = new Dictionary<Point, int>();
         }
@@ -55,6 +64,11 @@ namespace Infusion.Gaming.LightCycles.Model
         ///     Gets or sets the map.
         /// </summary>
         public IMap Map { get; protected set; }
+
+        /// <summary>
+        ///     Gets or sets the players data.
+        /// </summary>
+        public IPlayersData PlayersData { get; protected set; }
 
         /// <summary>
         ///     Gets or sets the trails age.
@@ -76,7 +90,7 @@ namespace Infusion.Gaming.LightCycles.Model
         public void RandomizePlayersDirection()
         {
             this.Directions = new Dictionary<Player, DirectionEnum>();
-            foreach (Player player in this.Map.Players)
+            foreach (Player player in this.PlayersData.Players)
             {
                 this.Directions.Add(player, DirectionHelper.RandomDirection());
             }
@@ -96,14 +110,20 @@ namespace Infusion.Gaming.LightCycles.Model
             }
 
             this.Directions = new Dictionary<Player, DirectionEnum>();
-            foreach (Player player in this.Map.Players)
+            foreach (Player player in this.PlayersData.Players)
             {
-                if (!previousState.Map.PlayersLocations.ContainsKey(player))
+                if (!previousState.PlayersData.PlayersLocations.ContainsKey(player))
                 {
                     throw new ArgumentException("prevMap is inavlid, unable to find current player in T-1 map");
                 }
-                
-                this.Directions.Add(player, DirectionHelper.CheckDirection(this.Map.PlayersLocations[player], previousState.Map.PlayersLocations[player]));
+
+                DirectionEnum direction = DirectionHelper.CheckDirection(this.PlayersData.PlayersLocations[player], previousState.PlayersData.PlayersLocations[player]);
+                if(direction == DirectionEnum.Undefined)
+                {
+                    throw new GameException("player hasn't moved!");
+                }
+
+                this.Directions.Add(player, direction);
             }
         }
 
@@ -126,8 +146,8 @@ namespace Infusion.Gaming.LightCycles.Model
                 for (int x = 0; x < this.Map.Width; x++)
                 {
                     Point coordinates = new Point(x, y);
-                    Location currentLocation = this.Map.Locations[x, y];
-                    if (currentLocation.LocationType == LocationTypeEnum.Trail)
+                    LocationData currentLocation = this.PlayersData[x, y];
+                    if (currentLocation.PlayerDataType == PlayerDataTypeEnum.Trail)
                     {
                         int age = 1;
                         if (previousState.TrailsAge.ContainsKey(coordinates))

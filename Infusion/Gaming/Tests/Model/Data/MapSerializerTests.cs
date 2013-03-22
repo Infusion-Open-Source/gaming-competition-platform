@@ -1,4 +1,6 @@
 ﻿
+using Infusion.Gaming.LightCycles.Model.Serialization;
+
 namespace Infusion.Gaming.LightCycles.Tests.Model.Data
 {
     using System;
@@ -55,8 +57,8 @@ namespace Infusion.Gaming.LightCycles.Tests.Model.Data
         {
             var map = new Map(4, 4);
             var player = new Player('A');
-            map.Locations[2, 2] = new Location(LocationTypeEnum.Trail, player);
-            map.Locations[2, 3] = new Location(LocationTypeEnum.Player, player);
+            //map.Locations[2, 2] = new Location(LocationTypeEnum.Trail, player);
+            //map.Locations[2, 3] = new Location(LocationTypeEnum.Player, player);
 
             var serializer = new MapSerializer();
             IMap outMap = serializer.Read(serializer.Write(map));

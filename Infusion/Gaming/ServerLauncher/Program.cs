@@ -1,4 +1,6 @@
 ﻿
+using Infusion.Gaming.LightCycles.Model.Serialization;
+
 namespace Infusion.Gaming.ServerLauncher
 {
     using System;
@@ -42,12 +44,12 @@ namespace Infusion.Gaming.ServerLauncher
         /// </returns>
         public static RelativeDirectionEnum NextDirection(Player player, IGameState state)
         {
-            if (!state.Map.Players.Contains(player))
+            if (!state.PlayersData.Players.Contains(player))
             {
                 return RelativeDirectionEnum.Undefined;
             }
 
-            Point location = state.Map.PlayersLocations[player];
+            Point location = state.PlayersData.PlayersLocations[player];
             DirectionEnum direction = state.Directions[player];
 
             // get possible directions
@@ -60,7 +62,7 @@ namespace Infusion.Gaming.ServerLauncher
             for (int i = 0; i < safeDirections.Count; i++)
             {
                 Point newLocation = DirectionHelper.NextLocation(location, direction, safeDirections[i]);
-                if (state.Map.Locations[newLocation.X, newLocation.Y].LocationType != LocationTypeEnum.Space)
+                if (!state.Map[newLocation.X, newLocation.Y].IsPassable || !state.PlayersData[newLocation.X, newLocation.Y].IsPassable)
                 {
                     safeDirections.RemoveAt(i--);
                 }
@@ -90,12 +92,11 @@ namespace Infusion.Gaming.ServerLauncher
             // init
             const int NumberOfPlayers = 8;
             var game = new LightCyclesGame();
-            var mapSerializer = new MapSerializer();
+            var stateRenderer = new GameStateRenderer();
             game.StartOnRandomMap(NumberOfPlayers, GameModeEnum.FreeForAll);
             
             // do initial UI
-            Console.Clear();
-            Console.Write(mapSerializer.Write(game.CurrentState.Map));
+            stateRenderer.Render(game.CurrentState);
             while (game.State == GameStateEnum.Running)
             {
                 // tick
@@ -109,20 +110,19 @@ namespace Infusion.Gaming.ServerLauncher
                 game.Step(events);
 
                 // do the UI
-                Console.Clear();
-                Console.Write(mapSerializer.Write(game.CurrentState.Map));
+                stateRenderer.Render(game.CurrentState);
                 Thread.Sleep(100);
             }
 
             // end
             if (game.Result == GameResultEnum.FinshedWithWinners)
             {
-                Console.WriteLine("End, winning team is: " + game.CurrentState.Map.Players[0].TeamId);
+                Console.WriteLine("End, winning team is: " + game.CurrentState.PlayersData.Players[0].Team.Id);
             }
 
             if (game.Result == GameResultEnum.FinshedWithWinner)
             {
-                Console.WriteLine("End, winner is: " + game.CurrentState.Map.Players[0]);
+                Console.WriteLine("End, winner is: " + game.CurrentState.PlayersData.Players[0]);
             }
 
             if (game.Result == GameResultEnum.FinishedWithoutWinner)

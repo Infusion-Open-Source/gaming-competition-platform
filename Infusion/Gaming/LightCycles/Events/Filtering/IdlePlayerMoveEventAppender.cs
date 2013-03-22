@@ -1,4 +1,6 @@
 ﻿
+using Infusion.Gaming.LightCycles.Model.Data;
+
 namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System;
@@ -45,7 +47,7 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
         public IList<Event> Filter(IGameState state, IEnumerable<Event> events)
         {
             var data = new EventsCollection(events);
-            foreach (Player player in state.Map.Players)
+            foreach (Player player in state.PlayersData.Players)
             {
                 if (data.FilterBy(player).Count == 0)
                 {
