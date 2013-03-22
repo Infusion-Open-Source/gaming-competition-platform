@@ -234,7 +234,6 @@ namespace Infusion.Gaming.LightCycles.Model
             playersData.RemovePlayers(playersToRemove);
 
             this.CurrentState = new GameState(0, initialMap, playersData);
-            this.CurrentState.RandomizePlayersDirection();
             this.TransitToNextState(new Event[] { });
             return this.CurrentState;
         }
@@ -264,7 +263,6 @@ namespace Infusion.Gaming.LightCycles.Model
                 }
             }
 
-            nextState.UpdatePlayersDirection(this.CurrentState);
             this.PreviousState = this.CurrentState;
             this.CurrentState = nextState;
         }

@@ -40,6 +40,11 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         List<Player> Players { get; }
 
         /// <summary>
+        ///     Gets the players lightcycles.
+        /// </summary>
+        Dictionary<Player, LightCycleBike> PlayersLightCycles { get; }
+
+        /// <summary>
         ///     Gets the players locations.
         /// </summary>
         Dictionary<Player, Point> PlayersLocations { get; }

@@ -50,7 +50,7 @@ namespace Infusion.Gaming.ServerLauncher
             }
 
             Point location = state.PlayersData.PlayersLocations[player];
-            DirectionEnum direction = state.Directions[player];
+            DirectionEnum direction = state.PlayersData.PlayersLightCycles[player].Direction;
 
             // get possible directions
             var safeDirections = new List<RelativeDirectionEnum>();
@@ -61,7 +61,8 @@ namespace Infusion.Gaming.ServerLauncher
             // remove unsafe
             for (int i = 0; i < safeDirections.Count; i++)
             {
-                Point newLocation = DirectionHelper.NextLocation(location, direction, safeDirections[i]);
+                DirectionEnum newDirection = DirectionHelper.ChangeDirection(direction, safeDirections[i]);
+                Point newLocation = DirectionHelper.NextLocation(location, newDirection);
                 if (!state.Map[newLocation.X, newLocation.Y].IsPassable || state.PlayersData[newLocation.X, newLocation.Y] != null)
                 {
                     safeDirections.RemoveAt(i--);

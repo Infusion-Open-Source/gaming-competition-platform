@@ -214,17 +214,13 @@ namespace Infusion.Gaming.LightCycles.Model
         /// <param name="direction">
         /// current global direction of move
         /// </param>
-        /// <param name="relativeDirectionEnum">
-        /// relative direction to apply
-        /// </param>
         /// <returns>
         /// new location
         /// </returns>
-        public static Point NextLocation(Point location, DirectionEnum direction, RelativeDirectionEnum relativeDirectionEnum)
+        public static Point NextLocation(Point location, DirectionEnum direction)
         {
             var newLocation = new Point(location.X, location.Y);
-            DirectionEnum newDirection = ChangeDirection(direction, relativeDirectionEnum);
-            switch (newDirection)
+            switch (direction)
             {
                 case DirectionEnum.Up:
                     newLocation.Y--;
