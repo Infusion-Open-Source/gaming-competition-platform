@@ -78,7 +78,7 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
             {
                 if (pair.Value >= tickEvent.Turn * (1 - this.FadingSpeed))
                 {
-                    nextState.Map.Locations[pair.Key.X, pair.Key.Y] = new Location(LocationTypeEnum.Space);
+                    nextState.PlayersData[pair.Key.X, pair.Key.Y] = new LocationData();
                 }
             }
 

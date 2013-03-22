@@ -12,8 +12,6 @@ namespace Infusion.Gaming.LightCycles.Model.Data
     /// </summary>
     public class Map : IMap
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Map"/> class.
         /// </summary>
@@ -56,211 +54,56 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                 }
             }
         }
-
-        #endregion
-
-        #region Public Properties
-
+        
         /// <summary>
         ///     Gets or sets the height of the map.
         /// </summary>
         public int Height { get; protected set; }
 
         /// <summary>
+        /// Get location data for specified loaction
+        /// </summary>
+        /// <param name="x">x coordinate</param>
+        /// <param name="y">y coordinate</param>
+        /// <returns>location data at specified point</returns>
+        public Location this[int x, int y]
+        {
+            get
+            {
+                return this.Locations[x, y];
+            }
+        }
+
+        /// <summary>
         ///     Gets or sets the map locations.
         /// </summary>
         public Location[,] Locations { get; protected set; }
-
-        /// <summary>
-        ///     Gets the teams.
-        /// </summary>
-        public List<char> Teams
-        {
-            get
-            {
-                List<char> teams = new List<char>();
-                foreach (var player in this.Players)
-                {
-                    if (!teams.Contains(player.TeamId))
-                    {
-                        teams.Add(player.TeamId);
-                    }
-                }
-
-                return teams;
-            }
-        }
-
-        /// <summary>
-        ///     Gets the players.
-        /// </summary>
-        public List<Player> Players
-        {
-            get
-            {
-                var players = new List<Player>();
-                for (int y = 0; y < this.Height; y++)
-                {
-                    for (int x = 0; x < this.Width; x++)
-                    {
-                        Location location = this.Locations[x, y];
-                        if (location.LocationType == LocationTypeEnum.Player)
-                        {
-                            players.Add(location.Player);
-                        }
-                    }
-                }
-
-                return players;
-            }
-        }
-
-        /// <summary>
-        ///     Gets the players locations.
-        /// </summary>
-        public Dictionary<Player, Point> PlayersLocations
-        {
-            get
-            {
-                var playerLocations = new Dictionary<Player, Point>();
-                for (int y = 0; y < this.Height; y++)
-                {
-                    for (int x = 0; x < this.Width; x++)
-                    {
-                        Location location = this.Locations[x, y];
-                        if (location.LocationType == LocationTypeEnum.Player)
-                        {
-                            playerLocations.Add(location.Player, new Point(x, y));
-                        }
-                    }
-                }
-
-                return playerLocations;
-            }
-        }
-
+        
         /// <summary>
         ///     Gets or sets the width of the map.
         /// </summary>
         public int Width { get; protected set; }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     Clone the map.
+        /// Gets the players starting locations.
         /// </summary>
-        /// <returns>
-        ///     The cloned map <see cref="IMap" />.
-        /// </returns>
-        public IMap Clone()
+        public Dictionary<PlayersStartingLocation, Point> StartingLocations
         {
-            var serializer = new MapSerializer();
-            return serializer.Read(serializer.Write(this));
-        }
-
-        /// <summary>
-        /// Check if equals.
-        /// </summary>
-        /// <param name="obj">
-        /// The object to compare to.
-        /// </param>
-        /// <returns>
-        /// The result of comparison.
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            var objMap = obj as Map;
-            if (objMap != null)
+            get
             {
-                if (obj.GetHashCode() != this.GetHashCode())
-                {
-                    return false;
-                }
-
-                if (this.Width != objMap.Width)
-                {
-                    return false;
-                }
-
-                if (this.Height != objMap.Height)
-                {
-                    return false;
-                }
-
+                Dictionary<PlayersStartingLocation, Point> results = new Dictionary<PlayersStartingLocation, Point>();
                 for (int y = 0; y < this.Height; y++)
                 {
                     for (int x = 0; x < this.Width; x++)
                     {
-                        if (!this.Locations[x, y].Equals(objMap.Locations[x, y]))
+                        if (this.Locations[x, y].LocationType == LocationTypeEnum.PlayersStartingLocation)
                         {
-                            return false;
+                            results.Add(((PlayersStartingLocation)this.Locations[x, y]), new Point(x, y));
                         }
                     }
                 }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Gets the hash code of the object.
-        /// </summary>
-        /// <returns>
-        ///     The hash code.
-        /// </returns>
-        public override int GetHashCode()
-        {
-            int hash = 1;
-            for (int y = 0; y < this.Height; y++)
-            {
-                for (int x = 0; x < this.Width; x++)
-                {
-                    hash += (x * y) + this.Locations[x, y].GetHashCode();
-                }
-            }
-
-            return hash;
-        }
-
-        /// <summary>
-        /// Removes specified player from the map.
-        /// </summary>
-        /// <param name="player">
-        /// The player to be removed.
-        /// </param>
-        public void RemovePlayer(Player player)
-        {
-            for (int y = 0; y < this.Height; y++)
-            {
-                for (int x = 0; x < this.Width; x++)
-                {
-                    Location location = this.Locations[x, y];
-                    if (location.Player != null && location.Player.Equals(player))
-                    {
-                        this.Locations[x, y] = new Location(LocationTypeEnum.Space);
-                    }
-                }
+                return results;
             }
         }
-
-        /// <summary>
-        /// Removes specified players from the map.
-        /// </summary>
-        /// <param name="playersToRemove">
-        /// The players to be removed.
-        /// </param>
-        public void RemovePlayers(IEnumerable<Player> playersToRemove)
-        {
-            foreach (Player player in playersToRemove)
-            {
-                this.RemovePlayer(player);
-            }
-        }
-
-        #endregion
     }
 }

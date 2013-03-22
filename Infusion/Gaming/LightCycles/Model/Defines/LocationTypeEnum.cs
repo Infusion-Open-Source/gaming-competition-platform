@@ -7,6 +7,11 @@ namespace Infusion.Gaming.LightCycles.Model.Defines
     public enum LocationTypeEnum
     {
         /// <summary>
+        ///     Undefined location type.
+        /// </summary>
+        Undefined = 0, 
+
+        /// <summary>
         ///     The impassable wall.
         /// </summary>
         Wall, 
@@ -15,15 +20,10 @@ namespace Infusion.Gaming.LightCycles.Model.Defines
         ///     The free space.
         /// </summary>
         Space, 
-
+        
         /// <summary>
-        ///     The players' trail.
+        ///     The players starting location.
         /// </summary>
-        Trail, 
-
-        /// <summary>
-        ///     The player.
-        /// </summary>
-        Player
+        PlayersStartingLocation
     }
 }

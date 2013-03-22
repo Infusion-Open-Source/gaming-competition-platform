@@ -40,7 +40,7 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
                 return false;
             }
 
-            nextState.Map.RemovePlayer(collisionEvent.Player);
+            nextState.PlayersData.RemovePlayer(collisionEvent.Player);
             return true;
         }
 

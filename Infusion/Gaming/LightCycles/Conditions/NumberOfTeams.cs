@@ -80,7 +80,7 @@ namespace Infusion.Gaming.LightCycles.Conditions
         /// </returns>
         public bool Check(IGame game)
         {
-            int count = game.CurrentState.Map.Teams.Count;
+            int count = game.CurrentState.PlayersData.Teams.Count;
             return this.Min <= count && count <= this.Max;
         }
 

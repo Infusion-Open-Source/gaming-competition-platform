@@ -25,6 +25,11 @@ namespace Infusion.Gaming.LightCycles.Model
         IMap Map { get; }
 
         /// <summary>
+        ///     Gets the players data.
+        /// </summary>
+        IPlayersData PlayersData { get; }
+
+        /// <summary>
         ///     Gets the trails age.
         /// </summary>
         Dictionary<Point, int> TrailsAge { get; }

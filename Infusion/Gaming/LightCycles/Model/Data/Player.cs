@@ -1,11 +1,10 @@
 ﻿
-namespace Infusion.Gaming.LightCycles.Model
+using System;
+using System.Globalization;
+using Infusion.Gaming.LightCycles.Extensions;
+
+namespace Infusion.Gaming.LightCycles.Model.Data
 {
-    using System;
-    using System.Globalization;
-
-    using Infusion.Gaming.LightCycles.Extensions;
-
     /// <summary>
     ///     The player.
     /// </summary>
@@ -20,7 +19,7 @@ namespace Infusion.Gaming.LightCycles.Model
         /// The player id.
         /// </param>
         public Player(char id)
-            : this(id, id)
+            : this(id, null)
         {
         }
 
@@ -30,25 +29,19 @@ namespace Infusion.Gaming.LightCycles.Model
         /// <param name="id">
         /// The player id.
         /// </param>
-        /// <param name="teamId">
-        /// The player team Id.
+        /// <param name="team">
+        /// The player team assignment.
         /// </param>
-        public Player(char id, char teamId)
+        public Player(char id, Team team)
         {
             id = id.ToUpper();
-            teamId = teamId.ToUpper();
             if (id < 'A' || id > 'Z')
             {
                 throw new ArgumentOutOfRangeException("id");
             }
 
-            if (teamId < 'A' || teamId > 'Z')
-            {
-                throw new ArgumentOutOfRangeException("teamId");
-            }
-
             this.Id = id;
-            this.TeamId = teamId;
+            this.Team = team;
         }
 
         #endregion
@@ -61,10 +54,10 @@ namespace Infusion.Gaming.LightCycles.Model
         public char Id { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the team Id.
+        ///     Gets or sets the team.
         /// </summary>
-        public char TeamId { get; protected set; }
-
+        public Team Team { get; protected set; }
+        
         #endregion
 
         #region Public Methods and Operators

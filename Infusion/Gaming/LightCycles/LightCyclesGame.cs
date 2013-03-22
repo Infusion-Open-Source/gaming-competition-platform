@@ -1,4 +1,7 @@
 ﻿
+using System.Collections.Generic;
+using Infusion.Gaming.LightCycles.Model.Serialization;
+
 namespace Infusion.Gaming.LightCycles
 {
     using System;
@@ -18,6 +21,7 @@ namespace Infusion.Gaming.LightCycles
         /// Starts game with random map
         /// </summary>
         /// <param name="numberOfPlayers">number of players in the game</param>
+        /// <param name="gameMode">game mode to be played</param>
         public void StartOnRandomMap(int numberOfPlayers, GameModeEnum gameMode)
         {
             // init
@@ -54,10 +58,14 @@ namespace Infusion.Gaming.LightCycles
             eventProcesors.Add(new TrailAgingProcessor(0.2f));
             eventProcesors.Add(new GarbageProcessor(true));
 
+            List<Player> players = new List<Player>();
+            foreach (PlayersStartingLocation startingLocation in map.StartingLocations.Keys)
+                players.Add(startingLocation.Player);
+
             // start
             this.Start(
                 GameModeEnum.FreeForAll,
-                map.Players,
+                players,
                 map,
                 endConditions,
                 eventFilters,

@@ -68,6 +68,12 @@
     <Compile Include="Events\Processing\TrailAgingProcessor.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />
     <Compile Include="LightCyclesGame.cs" />
+    <Compile Include="Model\Data\Team.cs" />
+    <Compile Include="Model\Data\LocationData.cs" />
+    <Compile Include="Model\Data\IPlayersData.cs" />
+    <Compile Include="Model\Data\PlayersData.cs" />
+    <Compile Include="Model\Data\PlayersStartingLocation.cs" />
+    <Compile Include="Model\Defines\PlayerDataTypeEnum.cs" />
     <Compile Include="Model\IGame.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventsCollection.cs" />
@@ -81,10 +87,11 @@
     <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Model\Data\IMap.cs" />
     <Compile Include="Model\Data\Location.cs" />
-    <Compile Include="Model\Data\LocationSerializer.cs" />
+    <Compile Include="Model\Serialization\GameStateRenderer.cs" />
+    <Compile Include="Model\Serialization\LocationSerializer.cs" />
     <Compile Include="Model\Defines\LocationTypeEnum.cs" />
-    <Compile Include="Model\Data\MapStreamGenerator.cs" />
-    <Compile Include="Model\Data\MapSerializer.cs" />
+    <Compile Include="Model\Serialization\MapStreamGenerator.cs" />
+    <Compile Include="Model\Serialization\MapSerializer.cs" />
     <Compile Include="Model\DirectionHelper.cs" />
     <Compile Include="Model\Defines\DirectionEnum.cs" />
     <Compile Include="Model\Game.cs" />
@@ -93,7 +100,7 @@
     <Compile Include="Model\GameState.cs" />
     <Compile Include="Model\Defines\GameStateEnum.cs" />
     <Compile Include="Model\Data\Map.cs" />
-    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\Data\Player.cs" />
     <Compile Include="Model\Defines\RelativeDirectionEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
