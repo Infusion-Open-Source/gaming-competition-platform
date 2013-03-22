@@ -265,7 +265,6 @@ namespace Infusion.Gaming.LightCycles.Model
             }
 
             nextState.UpdatePlayersDirection(this.CurrentState);
-            nextState.UpdateTrailsAge(this.CurrentState);
             this.PreviousState = this.CurrentState;
             this.CurrentState = nextState;
         }

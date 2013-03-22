@@ -68,12 +68,14 @@
     <Compile Include="Events\Processing\TrailAgingProcessor.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />
     <Compile Include="LightCyclesGame.cs" />
+    <Compile Include="Model\Data\LightCycleBike.cs" />
+    <Compile Include="Model\Data\PlayerGameObject.cs" />
     <Compile Include="Model\Data\Team.cs" />
-    <Compile Include="Model\Data\LocationData.cs" />
+    <Compile Include="Model\Data\GameObject.cs" />
     <Compile Include="Model\Data\IPlayersData.cs" />
     <Compile Include="Model\Data\PlayersData.cs" />
     <Compile Include="Model\Data\PlayersStartingLocation.cs" />
-    <Compile Include="Model\Defines\PlayerDataTypeEnum.cs" />
+    <Compile Include="Model\Data\Trail.cs" />
     <Compile Include="Model\IGame.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventsCollection.cs" />

@@ -48,7 +48,6 @@ namespace Infusion.Gaming.LightCycles.Model
             this.Map = map;
             this.PlayersData = playersData;
             this.Directions = new Dictionary<Player, DirectionEnum>();
-            this.TrailsAge = new Dictionary<Point, int>();
         }
 
         #endregion
@@ -69,12 +68,7 @@ namespace Infusion.Gaming.LightCycles.Model
         ///     Gets or sets the players data.
         /// </summary>
         public IPlayersData PlayersData { get; protected set; }
-
-        /// <summary>
-        ///     Gets or sets the trails age.
-        /// </summary>
-        public Dictionary<Point, int> TrailsAge { get; protected set; }
-
+        
         /// <summary>
         ///     Gets or sets the turn.
         /// </summary>
@@ -124,40 +118,6 @@ namespace Infusion.Gaming.LightCycles.Model
                 }
 
                 this.Directions.Add(player, direction);
-            }
-        }
-
-        /// <summary>
-        /// Updates age of players trails
-        /// </summary>
-        /// <param name="previousState">
-        /// previous game state to compare to
-        /// </param>
-        public void UpdateTrailsAge(IGameState previousState)
-        {
-            if (previousState == null)
-            {
-                throw new ArgumentNullException("previousState");
-            }
-
-            this.TrailsAge = new Dictionary<Point, int>();
-            for (int y = 0; y < this.Map.Height; y++)
-            {
-                for (int x = 0; x < this.Map.Width; x++)
-                {
-                    Point coordinates = new Point(x, y);
-                    LocationData currentLocation = this.PlayersData[x, y];
-                    if (currentLocation.PlayerDataType == PlayerDataTypeEnum.Trail)
-                    {
-                        int age = 1;
-                        if (previousState.TrailsAge.ContainsKey(coordinates))
-                        {
-                            age = previousState.TrailsAge[coordinates] + 1;
-                        }
-
-                        this.TrailsAge.Add(new Point(x, y), age);
-                    }
-                }
             }
         }
 

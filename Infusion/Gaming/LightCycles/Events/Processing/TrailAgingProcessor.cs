@@ -74,14 +74,18 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
                 return false;
             }
 
-            foreach (var pair in currentState.TrailsAge)
+            for (int y = 0; y < nextState.Map.Height; y++)
             {
-                if (pair.Value >= tickEvent.Turn * (1 - this.FadingSpeed))
+                for (int x = 0; x < nextState.Map.Width; x++)
                 {
-                    nextState.PlayersData[pair.Key.X, pair.Key.Y] = new LocationData();
+                    Trail obj = nextState.PlayersData[x, y] as Trail;
+                    if (obj != null && obj.Age >= tickEvent.Turn * (1 - this.FadingSpeed))
+                    {
+                        nextState.PlayersData[x, y] = null;
+                    }
                 }
             }
-
+            
             // don't remove tick event from processing queue
             return false;
         }

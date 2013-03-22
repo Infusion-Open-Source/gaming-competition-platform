@@ -45,30 +45,30 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
                 Point location = currentState.PlayersData.PlayersLocations[moveEvent.Player];
                 DirectionEnum direction = currentState.Directions[moveEvent.Player];
                 Point newLocation = DirectionHelper.NextLocation(location, direction, moveEvent.Direction);
-                if (nextState.Map[newLocation.X, newLocation.Y].IsPassable && nextState.PlayersData[newLocation.X, newLocation.Y].IsPassable)
+                if (nextState.Map[newLocation.X, newLocation.Y].IsPassable && nextState.PlayersData[newLocation.X, newLocation.Y] == null)
                 {
                     // player moves to new loaction
-                    nextState.PlayersData[newLocation.X, newLocation.Y] = new LocationData(moveEvent.Player, PlayerDataTypeEnum.Player);
-                    nextState.PlayersData[location.X, location.Y] = new LocationData(moveEvent.Player, PlayerDataTypeEnum.Trail);
+                    nextState.PlayersData[newLocation.X, newLocation.Y] = new LightCycleBike(moveEvent.Player);
+                    nextState.PlayersData[location.X, location.Y] = new Trail(moveEvent.Player, 1);
                 }
                 else
                 {
                     // collision detected
-                    if (nextState.PlayersData[newLocation.X, newLocation.Y].PlayerDataType == PlayerDataTypeEnum.Trail)
+                    if (nextState.Map[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Wall)
+                    {
+                        // player-wall collision 
+                        events.Add(new PlayerCollisionEvent(moveEvent.Player));
+                    }
+                    else if (nextState.PlayersData[newLocation.X, newLocation.Y] is Trail)
                     {
                         // player-trail collision 
                         events.Add(new PlayerCollisionEvent(moveEvent.Player));
                     }
-                    else if (nextState.PlayersData[newLocation.X, newLocation.Y].PlayerDataType == PlayerDataTypeEnum.Player)
+                    else if (nextState.PlayersData[newLocation.X, newLocation.Y] is LightCycleBike)
                     {
                         // player-player collision 
                         events.Add(new PlayerCollisionEvent(moveEvent.Player));
-                        events.Add(new PlayerCollisionEvent(nextState.PlayersData[newLocation.X, newLocation.Y].Player));
-                    }
-                    else if (nextState.Map[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Wall)
-                    {
-                        // player-wall collision 
-                        events.Add(new PlayerCollisionEvent(moveEvent.Player));
+                        events.Add(new PlayerCollisionEvent(((LightCycleBike)nextState.PlayersData[newLocation.X, newLocation.Y]).Player));
                     }
                 }
 

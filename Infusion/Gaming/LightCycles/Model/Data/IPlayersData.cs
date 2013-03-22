@@ -27,7 +27,7 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         /// <param name="x">x coordinate</param>
         /// <param name="y">y coordinate</param>
         /// <returns>location data at specified point</returns>
-        LocationData this[int x, int y] { get; set; }
+        GameObject this[int x, int y] { get; set; }
 
         /// <summary>
         ///     Gets the teams.

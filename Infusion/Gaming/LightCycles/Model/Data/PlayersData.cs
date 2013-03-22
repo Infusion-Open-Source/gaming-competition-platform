@@ -25,7 +25,7 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         /// <summary>
         ///     Gets or sets the players data.
         /// </summary>
-        public LocationData[,] Data { get; protected set; }
+        public GameObject[,] Data { get; protected set; }
 
         /// <summary>
         /// Get location data for specified loaction
@@ -33,7 +33,7 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         /// <param name="x">x coordinate</param>
         /// <param name="y">y coordinate</param>
         /// <returns>location data at specified point</returns>
-        public LocationData this[int x, int y]
+        public GameObject this[int x, int y]
         {
             get
             {
@@ -57,9 +57,10 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                 {
                     for (int x = 0; x < this.Width; x++)
                     {
-                        if (this.Data[x, y].PlayerDataType == PlayerDataTypeEnum.Player)
+                        LightCycleBike obj = this.Data[x, y] as LightCycleBike;
+                        if (obj != null)
                         {
-                            Team team = this.Data[x, y].Player.Team;
+                            Team team = obj.Player.Team;
                             if (!results.Contains(team))
                             {
                                 results.Add(team);
@@ -84,9 +85,10 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                 {
                     for (int x = 0; x < this.Width; x++)
                     {
-                        if (this.Data[x, y].PlayerDataType == PlayerDataTypeEnum.Player)
+                        LightCycleBike obj = this.Data[x, y] as LightCycleBike;
+                        if (obj != null)
                         {
-                            results.Add(this.Data[x, y].Player);
+                            results.Add(obj.Player);
                         }
                     }
                 }
@@ -107,9 +109,10 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                 {
                     for (int x = 0; x < this.Width; x++)
                     {
-                        if(this.Data[x, y].PlayerDataType == PlayerDataTypeEnum.Player)
+                        LightCycleBike obj = this.Data[x, y] as LightCycleBike;
+                        if (obj != null)
                         {
-                            results.Add(this.Data[x,y].Player, new Point(x, y));
+                            results.Add(obj.Player, new Point(x, y));
                         }
                     }
                 }
@@ -137,22 +140,20 @@ namespace Infusion.Gaming.LightCycles.Model.Data
             var playersInGame = new List<Player>(players);
             this.Width = map.Width;
             this.Height = map.Height;
-            this.Data = new LocationData[this.Width, this.Height];
+            this.Data = new GameObject[this.Width, this.Height];
             for (int y = 0; y < this.Height; y++)
             {
                 for (int x = 0; x < this.Width; x++)
                 {
+                    this.Data[x, y] = null;
                     if(map[x,y].LocationType == LocationTypeEnum.PlayersStartingLocation)
                     {
                         var startLocation = (PlayersStartingLocation)map[x, y];
                         if (playersInGame.Contains(startLocation.Player))
                         {
-                            this.Data[x, y] = new LocationData(startLocation.Player, PlayerDataTypeEnum.Player);
-                            continue;
+                            this.Data[x, y] = new LightCycleBike(startLocation.Player);
                         }
                     }
-                    
-                    this.Data[x, y] = new LocationData();
                 }
             }
         }
@@ -167,12 +168,12 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         {
             this.Width = data.Width;
             this.Height = data.Height;
-            this.Data = new LocationData[this.Width, this.Height];
+            this.Data = new GameObject[this.Width, this.Height];
             for (int y = 0; y < this.Height; y++)
             {
                 for (int x = 0; x < this.Width; x++)
                 {
-                    this.Data[x, y] = new LocationData(data[x, y]);
+                    this.Data[x, y] = data[x, y] != null ? data[x, y].Clone() : null;
                 }
             }
         }
@@ -189,10 +190,10 @@ namespace Infusion.Gaming.LightCycles.Model.Data
             {
                 for (int x = 0; x < this.Width; x++)
                 {
-                    LocationData location = this.Data[x, y];
-                    if (player.Equals(location.Player))
+                    PlayerGameObject obj = this.Data[x, y] as PlayerGameObject;
+                    if (obj != null && obj.Player.Equals(player))
                     {
-                        this.Data[x, y] = new LocationData();
+                        this.Data[x, y] = null;
                     }
                 }
             }
