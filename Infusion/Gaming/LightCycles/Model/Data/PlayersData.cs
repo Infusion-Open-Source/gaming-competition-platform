@@ -148,9 +148,11 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                         if (playersInGame.Contains(startLocation.Player))
                         {
                             this.Data[x, y] = new LocationData(startLocation.Player, PlayerDataTypeEnum.Player);
+                            continue;
                         }
                     }
-                    else this.Data[x, y] = new LocationData();
+                    
+                    this.Data[x, y] = new LocationData();
                 }
             }
         }
