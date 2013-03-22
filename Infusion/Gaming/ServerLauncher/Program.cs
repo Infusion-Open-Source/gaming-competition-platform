@@ -62,7 +62,7 @@ namespace Infusion.Gaming.ServerLauncher
             for (int i = 0; i < safeDirections.Count; i++)
             {
                 Point newLocation = DirectionHelper.NextLocation(location, direction, safeDirections[i]);
-                if (!state.Map[newLocation.X, newLocation.Y].IsPassable || !state.PlayersData[newLocation.X, newLocation.Y].IsPassable)
+                if (!state.Map[newLocation.X, newLocation.Y].IsPassable || state.PlayersData[newLocation.X, newLocation.Y] != null)
                 {
                     safeDirections.RemoveAt(i--);
                 }

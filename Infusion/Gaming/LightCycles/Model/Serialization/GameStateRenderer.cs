@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Infusion.Gaming.LightCycles.Model.Data;
@@ -25,29 +24,29 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
             {
                 for (int x = 0; x < gameState.Map.Width; x++)
                 {
-                    switch(gameState.PlayersData[x,y].PlayerDataType)
+                    if(gameState.PlayersData[x,y] is Trail)
                     {
-                        case PlayerDataTypeEnum.Trail:
-                            builder.Append(gameState.PlayersData[x, y].Player.Id.ToLower());
-                            break;
-                        case PlayerDataTypeEnum.Player:
-                            builder.Append(gameState.PlayersData[x, y].Player.Id.ToUpper());
-                            break;
-                        default:
-                            switch (gameState.Map[x,y].LocationType)
-                            {
-                                case LocationTypeEnum.Wall:
-                                    builder.Append("#");
-                                    break;
-                                case LocationTypeEnum.Space:
-                                case LocationTypeEnum.PlayersStartingLocation:
-                                    builder.Append(" ");
-                                    break;
-                                default:
-                                    builder.Append("!");
-                                    break;
-                            }
-                            break;
+                        builder.Append(((Trail)gameState.PlayersData[x, y]).Player.Id.ToLower());
+                    }
+                    else if(gameState.PlayersData[x,y] is LightCycleBike)
+                    {
+                        builder.Append(((LightCycleBike)gameState.PlayersData[x, y]).Player.Id.ToUpper());
+                    }
+                    else
+                    {
+                        switch (gameState.Map[x, y].LocationType)
+                        {
+                            case LocationTypeEnum.Wall:
+                                builder.Append("#");
+                                break;
+                            case LocationTypeEnum.Space:
+                            case LocationTypeEnum.PlayersStartingLocation:
+                                builder.Append(" ");
+                                break;
+                            default:
+                                builder.Append("!");
+                                break;
+                        }
                     }
                 }
 

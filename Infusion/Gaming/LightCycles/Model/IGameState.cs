@@ -30,11 +30,6 @@ namespace Infusion.Gaming.LightCycles.Model
         IPlayersData PlayersData { get; }
 
         /// <summary>
-        ///     Gets the trails age.
-        /// </summary>
-        Dictionary<Point, int> TrailsAge { get; }
-
-        /// <summary>
         ///     Gets the turn.
         /// </summary>
         int Turn { get; }
@@ -55,15 +50,7 @@ namespace Infusion.Gaming.LightCycles.Model
         /// previous game state to compare to
         /// </param>
         void UpdatePlayersDirection(IGameState previousState);
-
-        /// <summary>
-        /// Updates age of players trails
-        /// </summary>
-        /// <param name="previousState">
-        /// previous game state to compare to
-        /// </param>
-        void UpdateTrailsAge(IGameState previousState);
-
+        
         #endregion
     }
 }

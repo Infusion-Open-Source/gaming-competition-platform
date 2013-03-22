@@ -59,10 +59,8 @@ namespace Infusion.Gaming.LightCycles
             eventProcesors.Add(new GarbageProcessor(true));
 
             List<Player> players = new List<Player>();
-            players.Add(new Player('A'));
-            players.Add(new Player('B'));
-            //foreach (PlayersStartingLocation startingLocation in map.StartingLocations.Keys)
-            //    players.Add(startingLocation.Player);
+            foreach (PlayersStartingLocation startingLocation in map.StartingLocations.Keys)
+                players.Add(startingLocation.Player);
 
             // start
             this.Start(
