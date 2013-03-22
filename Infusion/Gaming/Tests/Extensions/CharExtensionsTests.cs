@@ -1,11 +1,9 @@
 ﻿
-namespace Infusion.Gaming.LightCycles.Tests.Model.Data
+using Infusion.Gaming.LightCycles.Extensions;
+using NUnit.Framework;
+
+namespace Infusion.Gaming.LightCycles.Tests.Extensions
 {
-    using Infusion.Gaming.LightCycles.Extensions;
-    using Infusion.Gaming.LightCycles.Model.Data;
-
-    using NUnit.Framework;
-
     /// <summary>
     ///     The char extensions tests.
     /// </summary>

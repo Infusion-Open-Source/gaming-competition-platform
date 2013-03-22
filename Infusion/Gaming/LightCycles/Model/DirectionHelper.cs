@@ -165,16 +165,6 @@ namespace Infusion.Gaming.LightCycles.Model
         /// </returns>
         public static DirectionEnum CheckDirection(int currentX, int currentY, int prevX, int prevY)
         {
-            if (currentX == 0 && currentY == 0)
-            {
-                throw new ArgumentOutOfRangeException("currentX");
-            }
-
-            if(prevX == 0 && prevY == 0)
-            {
-                throw new ArgumentOutOfRangeException("currentX");
-            }
-
             if (currentX > prevX && currentY == prevY)
             {
                 return DirectionEnum.Right;

@@ -22,46 +22,25 @@ namespace Infusion.Gaming.LightCycles.Tests.Model.Data
         [Test]
         public void ChangeDirectionChecks()
         {
-            Assert.AreEqual(
-                DirectionEnum.Left, 
-                DirectionHelper.ChangeDirection(DirectionEnum.Left, RelativeDirectionEnum.StraightForward));
-            Assert.AreEqual(
-                DirectionEnum.Right, 
-                DirectionHelper.ChangeDirection(DirectionEnum.Right, RelativeDirectionEnum.StraightForward));
-            Assert.AreEqual(
-                DirectionEnum.Up, 
-                DirectionHelper.ChangeDirection(DirectionEnum.Up, RelativeDirectionEnum.StraightForward));
-            Assert.AreEqual(
-                DirectionEnum.Down, 
-                DirectionHelper.ChangeDirection(DirectionEnum.Down, RelativeDirectionEnum.StraightForward));
+            Assert.AreEqual(DirectionEnum.Left, DirectionHelper.ChangeDirection(DirectionEnum.Left, RelativeDirectionEnum.StraightForward));
+            Assert.AreEqual(DirectionEnum.Right, DirectionHelper.ChangeDirection(DirectionEnum.Right, RelativeDirectionEnum.StraightForward));
+            Assert.AreEqual(DirectionEnum.Up, DirectionHelper.ChangeDirection(DirectionEnum.Up, RelativeDirectionEnum.StraightForward));
+            Assert.AreEqual(DirectionEnum.Down, DirectionHelper.ChangeDirection(DirectionEnum.Down, RelativeDirectionEnum.StraightForward));
 
-            Assert.AreEqual(
-                DirectionEnum.Left, DirectionHelper.ChangeDirection(DirectionEnum.Left, RelativeDirectionEnum.Undefined));
-            Assert.AreEqual(
-                DirectionEnum.Right, 
-                DirectionHelper.ChangeDirection(DirectionEnum.Right, RelativeDirectionEnum.Undefined));
-            Assert.AreEqual(
-                DirectionEnum.Up, DirectionHelper.ChangeDirection(DirectionEnum.Up, RelativeDirectionEnum.Undefined));
-            Assert.AreEqual(
-                DirectionEnum.Down, DirectionHelper.ChangeDirection(DirectionEnum.Down, RelativeDirectionEnum.Undefined));
+            Assert.AreEqual(DirectionEnum.Left, DirectionHelper.ChangeDirection(DirectionEnum.Left, RelativeDirectionEnum.Undefined));
+            Assert.AreEqual(DirectionEnum.Right, DirectionHelper.ChangeDirection(DirectionEnum.Right, RelativeDirectionEnum.Undefined));
+            Assert.AreEqual(DirectionEnum.Up, DirectionHelper.ChangeDirection(DirectionEnum.Up, RelativeDirectionEnum.Undefined));
+            Assert.AreEqual(DirectionEnum.Down, DirectionHelper.ChangeDirection(DirectionEnum.Down, RelativeDirectionEnum.Undefined));
 
-            Assert.AreEqual(
-                DirectionEnum.Down, DirectionHelper.ChangeDirection(DirectionEnum.Left, RelativeDirectionEnum.Left));
-            Assert.AreEqual(
-                DirectionEnum.Up, DirectionHelper.ChangeDirection(DirectionEnum.Right, RelativeDirectionEnum.Left));
-            Assert.AreEqual(
-                DirectionEnum.Left, DirectionHelper.ChangeDirection(DirectionEnum.Up, RelativeDirectionEnum.Left));
-            Assert.AreEqual(
-                DirectionEnum.Right, DirectionHelper.ChangeDirection(DirectionEnum.Down, RelativeDirectionEnum.Left));
+            Assert.AreEqual(DirectionEnum.Down, DirectionHelper.ChangeDirection(DirectionEnum.Left, RelativeDirectionEnum.Left));
+            Assert.AreEqual(DirectionEnum.Up, DirectionHelper.ChangeDirection(DirectionEnum.Right, RelativeDirectionEnum.Left));
+            Assert.AreEqual(DirectionEnum.Left, DirectionHelper.ChangeDirection(DirectionEnum.Up, RelativeDirectionEnum.Left));
+            Assert.AreEqual(DirectionEnum.Right, DirectionHelper.ChangeDirection(DirectionEnum.Down, RelativeDirectionEnum.Left));
 
-            Assert.AreEqual(
-                DirectionEnum.Up, DirectionHelper.ChangeDirection(DirectionEnum.Left, RelativeDirectionEnum.Right));
-            Assert.AreEqual(
-                DirectionEnum.Down, DirectionHelper.ChangeDirection(DirectionEnum.Right, RelativeDirectionEnum.Right));
-            Assert.AreEqual(
-                DirectionEnum.Right, DirectionHelper.ChangeDirection(DirectionEnum.Up, RelativeDirectionEnum.Right));
-            Assert.AreEqual(
-                DirectionEnum.Left, DirectionHelper.ChangeDirection(DirectionEnum.Down, RelativeDirectionEnum.Right));
+            Assert.AreEqual(DirectionEnum.Up, DirectionHelper.ChangeDirection(DirectionEnum.Left, RelativeDirectionEnum.Right));
+            Assert.AreEqual(DirectionEnum.Down, DirectionHelper.ChangeDirection(DirectionEnum.Right, RelativeDirectionEnum.Right));
+            Assert.AreEqual(DirectionEnum.Right, DirectionHelper.ChangeDirection(DirectionEnum.Up, RelativeDirectionEnum.Right));
+            Assert.AreEqual(DirectionEnum.Left, DirectionHelper.ChangeDirection(DirectionEnum.Down, RelativeDirectionEnum.Right));
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace Infusion.Gaming.LightCycles.Conditions
     /// <summary>
     ///     Set of the game end conditions.
     /// </summary>
-    public class EndConditionSet : List<IEndCondition>, IEndCondition
+    internal class EndConditionSet : List<IEndCondition>, IEndCondition
     {
         #region Constructors and Destructors
 
