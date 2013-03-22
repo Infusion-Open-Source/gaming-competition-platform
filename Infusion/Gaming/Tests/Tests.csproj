@@ -48,13 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conditions\NumberOfTeamsTests.cs" />
     <Compile Include="Conditions\NumberOfPlayersTests.cs" />
     <Compile Include="Conditions\EndConditionTests.cs" />
     <Compile Include="Events\EventsTests.cs" />
     <Compile Include="MockHelper.cs" />
-    <Compile Include="Model\Data\CharExtensionsTests.cs" />
+    <Compile Include="Extensions\CharExtensionsTests.cs" />
     <Compile Include="Model\Data\DirectionHelperTests.cs" />
-    <Compile Include="Model\Data\MapSerializerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +66,11 @@
       <Project>{9753941F-A627-4D65-967C-A0472AFD9B5F}</Project>
       <Name>LightCycles</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Events\Filtering\" />
+    <Folder Include="Events\Processing\" />
+    <Folder Include="Model\Serialization\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

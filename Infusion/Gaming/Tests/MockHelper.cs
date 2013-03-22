@@ -29,32 +29,38 @@ namespace Infusion.Gaming.LightCycles.Tests
         /// <summary>
         /// Creates game mock with given number of players.
         /// </summary>
-        /// <param name="numberOfPlayers">
-        /// The number of players.
-        /// </param>
         /// <returns>
         /// The mocked game.
         /// </returns>
-        public static Mock<IGame> CreateGame(int numberOfPlayers)
+        public static Mock<IGame> CreateGame()
         {
-            /*
-             TODO: to be fixed
-            var players = new List<Player>();
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                players.Add(new Player((char)('A' + i)));
-            }
-
-            var mockMap = new Mock<IMap>();
-            mockMap.SetupGet(map => map.Players).Returns(players);
-            var mockState = new Mock<IGameState>();
-            mockState.SetupGet(state => state.Map).Returns(mockMap.Object);
             var mockGame = new Mock<IGame>();
-            mockGame.SetupGet(game => game.CurrentState).Returns(mockState.Object);
+            mockGame.SetupGet(x => x.CurrentState).Returns(MockHelper.CreateGameState().Object);
             return mockGame;
-             */
+        }
+        
+        public static Mock<IGameState> CreateGameState()
+        {
+            var gameState = new Mock<IGameState>();
+            gameState.SetupGet(x => x.Map).Returns(MockHelper.CreateMap().Object);
+            gameState.SetupGet(x => x.PlayersData).Returns(MockHelper.CreatePlayersData().Object);
+            return gameState;
+        }
 
-            return null;
+        public static Mock<IPlayersData> CreatePlayersData()
+        {
+            var players = new List<Player>();
+            var teams = new List<Team>();
+            var playersData = new Mock<IPlayersData>();
+            playersData.SetupGet(x => x.Players).Returns(players);
+            playersData.SetupGet(x => x.Teams).Returns(teams);
+            return playersData;
+        }
+
+        public static Mock<IMap> CreateMap()
+        {
+            var mockMap = new Mock<IMap>();
+            return mockMap;
         }
 
         #endregion

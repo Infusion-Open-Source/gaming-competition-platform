@@ -11,7 +11,7 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
     /// <summary>
     ///     Event filter set
     /// </summary>
-    public class EventFilterSet : List<IEventFilter>, IEventFilter
+    internal class EventFilterSet : List<IEventFilter>, IEventFilter
     {
         #region Public Methods and Operators
 

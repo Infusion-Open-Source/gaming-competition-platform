@@ -8,7 +8,7 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
     /// <summary>
     ///     Event processor set
     /// </summary>
-    public class EventProcessorSet : List<IEventProcessor>, IEventProcessor
+    internal class EventProcessorSet : List<IEventProcessor>, IEventProcessor
     {
         #region Public Methods and Operators
 

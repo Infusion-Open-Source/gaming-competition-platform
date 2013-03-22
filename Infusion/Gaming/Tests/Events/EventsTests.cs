@@ -36,15 +36,10 @@ namespace Infusion.Gaming.LightCycles.Tests.Events
         {
             var player = new Player('A');
             Assert.AreEqual(player, new PlayerMoveEvent(player, RelativeDirectionEnum.Left).Player);
-            Assert.AreEqual(
-                RelativeDirectionEnum.Left, new PlayerMoveEvent(player, RelativeDirectionEnum.Left).Direction);
-            Assert.AreEqual(
-                RelativeDirectionEnum.Right, new PlayerMoveEvent(player, RelativeDirectionEnum.Right).Direction);
-            Assert.AreEqual(
-                RelativeDirectionEnum.StraightForward, 
-                new PlayerMoveEvent(player, RelativeDirectionEnum.StraightForward).Direction);
-            Assert.AreEqual(
-                RelativeDirectionEnum.Undefined, new PlayerMoveEvent(player, RelativeDirectionEnum.Undefined).Direction);
+            Assert.AreEqual(RelativeDirectionEnum.Left, new PlayerMoveEvent(player, RelativeDirectionEnum.Left).Direction);
+            Assert.AreEqual(RelativeDirectionEnum.Right, new PlayerMoveEvent(player, RelativeDirectionEnum.Right).Direction);
+            Assert.AreEqual(RelativeDirectionEnum.StraightForward, new PlayerMoveEvent(player, RelativeDirectionEnum.StraightForward).Direction);
+            Assert.AreEqual(RelativeDirectionEnum.Undefined, new PlayerMoveEvent(player, RelativeDirectionEnum.Undefined).Direction);
         }
 
         /// <summary>
