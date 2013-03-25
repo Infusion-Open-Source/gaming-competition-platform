@@ -1,11 +1,7 @@
-﻿
-using Infusion.Gaming.LightCycles.Model.MapData;
-
-namespace Infusion.Gaming.LightCycles.Model
+﻿namespace Infusion.Gaming.LightCycles.Model
 {
     using System;
     using System.Collections.Generic;
-
     using Infusion.Gaming.LightCycles.Conditions;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Events.Filtering;
@@ -13,72 +9,63 @@ namespace Infusion.Gaming.LightCycles.Model
     using Infusion.Gaming.LightCycles.Extensions;
     using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCycles.Model.MapData;
 
     /// <summary>
-    ///     The game.
+    /// The game.
     /// </summary>
     public class Game : IGame
     {
-        #region Constructors and Destructors
-
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Game" /> class.
+        /// Initializes a new instance of the <see cref="Game" /> class.
         /// </summary>
         public Game()
         {
             this.Reset();
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets the current game state.
+        /// Gets or sets the current game state.
         /// </summary>
         public IGameState CurrentState { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the end conditions.
+        /// Gets or sets the end conditions.
         /// </summary>
         public IEndCondition EndCondition { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the event processors collection.
+        /// Gets or sets the event processors collection.
         /// </summary>
         public IEventProcessor EventProcessor { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the event filter.
+        /// Gets or sets the event filter.
         /// </summary>
         public IEventFilter EventFilter { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the state of the game.
+        /// Gets or sets the state of the game.
         /// </summary>
         public GameStateEnum State { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the game mode.
+        /// Gets or sets the game mode.
         /// </summary>
         public GameModeEnum Mode { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the previous game state.
+        /// Gets or sets the previous game state.
         /// </summary>
         public IGameState PreviousState { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the result of the game.
+        /// Gets or sets the result of the game.
         /// </summary>
         public GameResultEnum Result { get; protected set; }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     Resets the game.
+        /// Resets the game.
         /// </summary>
         public void Reset()
         {
@@ -186,7 +173,7 @@ namespace Infusion.Gaming.LightCycles.Model
         }
 
         /// <summary>
-        ///     Stops the game.
+        /// Stops the game.
         /// </summary>
         public void Stop()
         {
@@ -198,12 +185,8 @@ namespace Infusion.Gaming.LightCycles.Model
             this.Result = GameResultEnum.Terminated;
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
-        ///     The check of end conditions.
+        /// The check of end conditions.
         /// </summary>
         protected void CheckEndConditions()
         {
@@ -268,7 +251,5 @@ namespace Infusion.Gaming.LightCycles.Model
             this.PreviousState = this.CurrentState;
             this.CurrentState = nextState;
         }
-
-        #endregion
     }
 }

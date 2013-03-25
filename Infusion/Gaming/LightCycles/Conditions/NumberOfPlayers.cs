@@ -5,12 +5,10 @@
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     The number of players condition
+    /// The number of players condition
     /// </summary>
     public class NumberOfPlayers : ICondition
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberOfPlayers"/> class.
         /// </summary>
@@ -50,23 +48,15 @@
             this.Max = maxNumber;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets the max number of players.
+        /// Gets or sets the max number of players.
         /// </summary>
         public int Max { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the min number of players.
+        /// Gets or sets the min number of players.
         /// </summary>
         public int Min { get; protected set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Performs condition check.
@@ -82,7 +72,5 @@
             int count = gameState.PlayersData.Players.Count;
             return this.Min <= count && count <= this.Max;
         }
-
-        #endregion
     }
 }

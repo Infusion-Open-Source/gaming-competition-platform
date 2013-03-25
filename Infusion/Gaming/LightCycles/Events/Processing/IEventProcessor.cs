@@ -5,12 +5,10 @@
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Events processor interface
+    /// Events processor interface
     /// </summary>
     public interface IEventProcessor
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Process player move events
         /// </summary>
@@ -30,7 +28,5 @@
         /// was event processed by processor
         /// </returns>
         bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents);
-
-        #endregion
     }
 }

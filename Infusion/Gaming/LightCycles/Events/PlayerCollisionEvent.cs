@@ -1,18 +1,13 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events
+﻿namespace Infusion.Gaming.LightCycles.Events
 {
     using System.Text;
-
-    using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
 
     /// <summary>
-    ///     The player collision event.
+    /// The player collision event.
     /// </summary>
     public class PlayerCollisionEvent : PlayerEvent
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerCollisionEvent"/> class.
         /// </summary>
@@ -24,15 +19,11 @@ namespace Infusion.Gaming.LightCycles.Events
         {
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     Get string.
+        /// Get string.
         /// </summary>
         /// <returns>
-        ///     The string representation of an object.
+        /// The string representation of an object.
         /// </returns>
         public override string ToString()
         {
@@ -40,7 +31,5 @@ namespace Infusion.Gaming.LightCycles.Events
             builder.AppendFormat("{0}: collides", this.Player);
             return builder.ToString();
         }
-
-        #endregion
     }
 }

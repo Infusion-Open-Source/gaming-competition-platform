@@ -1,17 +1,14 @@
-﻿
-using System;
-using System.Globalization;
-using Infusion.Gaming.LightCycles.Extensions;
-
-namespace Infusion.Gaming.LightCycles.Model.Data
+﻿namespace Infusion.Gaming.LightCycles.Model.Data
 {
+    using System;
+    using System.Globalization;
+    using Infusion.Gaming.LightCycles.Extensions;
+
     /// <summary>
-    ///     The player.
+    /// The player.
     /// </summary>
     public class Player
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Player"/> class.
         /// </summary>
@@ -44,24 +41,16 @@ namespace Infusion.Gaming.LightCycles.Model.Data
             this.Team = team;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets the id.
+        /// Gets or sets the id.
         /// </summary>
         public char Id { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the team.
+        /// Gets or sets the team.
         /// </summary>
         public Team Team { get; protected set; }
         
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
         /// Check if equals.
         /// </summary>
@@ -82,10 +71,10 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         }
 
         /// <summary>
-        ///     Gets the hash code of the object.
+        /// Gets the hash code of the object.
         /// </summary>
         /// <returns>
-        ///     The hash code.
+        /// The hash code.
         /// </returns>
         public override int GetHashCode()
         {
@@ -93,16 +82,14 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         }
 
         /// <summary>
-        ///     To string.
+        /// To string.
         /// </summary>
         /// <returns>
-        ///     String representation of an object.
+        /// String representation of an object.
         /// </returns>
         public override string ToString()
         {
             return this.Id.ToString(CultureInfo.InvariantCulture);
         }
-
-        #endregion
     }
 }

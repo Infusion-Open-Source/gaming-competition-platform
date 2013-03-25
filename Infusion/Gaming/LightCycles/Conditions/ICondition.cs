@@ -3,12 +3,10 @@
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     The Condition interface.
+    /// The Condition interface.
     /// </summary>
     public interface ICondition
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Performs condition check.
         /// </summary>
@@ -19,7 +17,5 @@
         /// The result of the condition check.
         /// </returns>
         bool Check(IGameState gameState);
-
-        #endregion
     }
 }

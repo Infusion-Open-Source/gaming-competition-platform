@@ -6,14 +6,12 @@
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Garbage event processor.
-    ///     Catches all events that weren't processed by other event processors and removes it from the queue.
-    ///     Should be put at the end of processors queue.
+    /// Garbage event processor.
+    /// Catches all events that weren't processed by other event processors and removes it from the queue.
+    /// Should be put at the end of processors queue.
     /// </summary>
     public class GarbageProcessor : IEventProcessor
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GarbageProcessor"/> class.
         /// </summary>
@@ -25,18 +23,10 @@
             this.IsSilent = silent;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///      Gets or sets a value indicating whether processor is silent or not
+        ///  Gets or sets a value indicating whether processor is silent or not
         /// </summary>
         public bool IsSilent { get; protected set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Process player move events
@@ -66,7 +56,5 @@
 
             return true;
         }
-
-        #endregion
     }
 }

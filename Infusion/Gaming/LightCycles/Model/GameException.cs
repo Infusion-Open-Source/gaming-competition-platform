@@ -1,18 +1,15 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Model
+﻿namespace Infusion.Gaming.LightCycles.Model
 {
     using System;
 
     /// <summary>
-    ///     The game exception.
+    /// The game exception.
     /// </summary>
     [Serializable]
     public class GameException : Exception
     {
-        #region Constructors and Destructors
-
         /// <summary>
-        ///     Initializes a new instance of the <see cref="GameException" /> class.
+        /// Initializes a new instance of the <see cref="GameException" /> class.
         /// </summary>
         public GameException()
         {
@@ -42,7 +39,5 @@ namespace Infusion.Gaming.LightCycles.Model
             : base(message, internalExcpetion)
         {
         }
-
-        #endregion
     }
 }

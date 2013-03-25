@@ -1,17 +1,12 @@
-﻿using Infusion.Gaming.LightCycles.Model.Data;
-
-namespace Infusion.Gaming.LightCycles.Events.Filtering
+﻿namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
-    ///     Adds undefined move event for players that are idle
+    /// Adds undefined move event for players that are idle
     /// </summary>
     public class IdlePlayerMoveEventAppender : IEventFilter
     {
@@ -20,8 +15,6 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
         /// </summary>
         private readonly RelativeDirectionEnum direction;
 
-        #region Public Methods and Operators
-        
         /// <summary>
         /// Initializes a new instance of the <see cref="IdlePlayerMoveEventAppender"/> class.
         /// </summary>
@@ -56,7 +49,5 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
 
             return data;
         }
-
-        #endregion
     }
 }

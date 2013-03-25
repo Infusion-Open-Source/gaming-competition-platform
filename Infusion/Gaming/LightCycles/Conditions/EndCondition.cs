@@ -6,12 +6,10 @@
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
-    ///     The game end condition.
+    /// The game end condition.
     /// </summary>
     public class EndCondition : IEndCondition
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EndCondition"/> class.
         /// </summary>
@@ -35,23 +33,15 @@
             this.Result = result;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets the condition.
+        /// Gets or sets the condition.
         /// </summary>
         public ICondition Condition { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the game result when condition is met.
+        /// Gets or sets the game result when condition is met.
         /// </summary>
         public GameResultEnum Result { get; protected set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Performs condition check.
@@ -66,7 +56,5 @@
         {
             return this.Condition.Check(gameState);
         }
-
-        #endregion
     }
 }

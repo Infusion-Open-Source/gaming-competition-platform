@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using Infusion.Gaming.LightCycles.Model.MapData;
-using Infusion.Gaming.LightCycles.Model.Serialization;
-
-namespace Infusion.Gaming.LightCycles
+﻿namespace Infusion.Gaming.LightCycles
 {
     using System;
+    using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Conditions;
     using Infusion.Gaming.LightCycles.Events.Filtering;
     using Infusion.Gaming.LightCycles.Events.Processing;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCycles.Model.MapData;
+    using Infusion.Gaming.LightCycles.Model.Serialization;
 
     /// <summary>
     /// Game of LightCycles
@@ -39,7 +38,7 @@ namespace Infusion.Gaming.LightCycles
                 case GameModeEnum.FreeForAll:
                     endConditions.Add(new EndCondition(new NumberOfPlayers(1), GameResultEnum.FinshedWithWinner));
                     break;
-                case GameModeEnum.TeamDeathmatch:
+                case GameModeEnum.TeamDeathMatch:
                     endConditions.Add(new EndCondition(new NumberOfTeams(1), GameResultEnum.FinshedWithWinners));
                     break;
                 default:
@@ -60,7 +59,9 @@ namespace Infusion.Gaming.LightCycles
 
             List<Player> players = new List<Player>();
             foreach (PlayersStartingLocation startingLocation in map.StartingLocations.Keys)
+            {
                 players.Add(startingLocation.Player);
+            }
 
             // start
             this.Start(

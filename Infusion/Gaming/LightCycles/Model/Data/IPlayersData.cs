@@ -1,53 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-
-namespace Infusion.Gaming.LightCycles.Model.Data
+﻿namespace Infusion.Gaming.LightCycles.Model.Data
 {
+    using System.Collections.Generic;
+    using System.Drawing;
+
     /// <summary>
     /// interface for players data map 
     /// </summary>
     public interface IPlayersData
     {
         /// <summary>
-        ///     Gets the height of the players data map.
+        /// Gets the height of the players data map.
         /// </summary>
         int Height { get; }
 
         /// <summary>
-        ///     Gets the width of the players data map.
+        /// Gets the width of the players data map.
         /// </summary>
         int Width { get; }
+        
+        /// <summary>
+        /// Gets the teams.
+        /// </summary>
+        List<Team> Teams { get; }
 
         /// <summary>
-        /// Get location data for specified loaction
+        /// Gets the players.
+        /// </summary>
+        List<Player> Players { get; }
+
+        /// <summary>
+        /// Gets the players light cycles.
+        /// </summary>
+        Dictionary<Player, LightCycleBike> PlayersLightCycles { get; }
+
+        /// <summary>
+        /// Gets the players locations.
+        /// </summary>
+        Dictionary<Player, Point> PlayersLocations { get; }
+
+        /// <summary>
+        /// Get location data for specified location
         /// </summary>
         /// <param name="x">x coordinate</param>
         /// <param name="y">y coordinate</param>
         /// <returns>location data at specified point</returns>
         GameObject this[int x, int y] { get; set; }
-
-        /// <summary>
-        ///     Gets the teams.
-        /// </summary>
-        List<Team> Teams { get; }
-
-        /// <summary>
-        ///     Gets the players.
-        /// </summary>
-        List<Player> Players { get; }
-
-        /// <summary>
-        ///     Gets the players lightcycles.
-        /// </summary>
-        Dictionary<Player, LightCycleBike> PlayersLightCycles { get; }
-
-        /// <summary>
-        ///     Gets the players locations.
-        /// </summary>
-        Dictionary<Player, Point> PlayersLocations { get; }
 
         /// <summary>
         /// Removes specified player from the map.

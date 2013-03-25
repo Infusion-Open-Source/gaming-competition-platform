@@ -1,24 +1,18 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Tests.Conditions
+﻿namespace Infusion.Gaming.LightCycles.Tests.Conditions
 {
     using Infusion.Gaming.LightCycles.Conditions;
-    using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Defines;
-
     using Moq;
-
     using NUnit.Framework;
 
     /// <summary>
-    ///     The end condition tests.
+    /// The end condition tests.
     /// </summary>
     [TestFixture]
     public class EndConditionTests
     {
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     The check end condition setup.
+        /// The check end condition setup.
         /// </summary>
         [Test]
         public void CheckEndConditionSetup()
@@ -40,7 +34,5 @@ namespace Infusion.Gaming.LightCycles.Tests.Conditions
             mockCondition.Setup(condition => condition.Check(mockGameState.Object)).Returns(false);
             Assert.IsFalse(endCondition.Check(mockGameState.Object));
         }
-
-        #endregion
     }
 }

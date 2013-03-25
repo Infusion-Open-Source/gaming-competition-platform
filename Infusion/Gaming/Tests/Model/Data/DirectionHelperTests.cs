@@ -1,5 +1,4 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Tests.Model.Data
+﻿namespace Infusion.Gaming.LightCycles.Tests.Model.Data
 {
     using System.Drawing;
 
@@ -9,15 +8,13 @@ namespace Infusion.Gaming.LightCycles.Tests.Model.Data
     using NUnit.Framework;
 
     /// <summary>
-    ///     The direction helper tests.
+    /// The direction helper tests.
     /// </summary>
     [TestFixture]
     public class DirectionHelperTests
     {
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     Change direction checks.
+        /// Change direction checks.
         /// </summary>
         [Test]
         public void ChangeDirectionChecks()
@@ -44,7 +41,7 @@ namespace Infusion.Gaming.LightCycles.Tests.Model.Data
         }
 
         /// <summary>
-        ///     The direction checking checks.
+        /// The direction checking checks.
         /// </summary>
         [Test]
         public void DirectionCheckingChecks()
@@ -61,7 +58,5 @@ namespace Infusion.Gaming.LightCycles.Tests.Model.Data
             Assert.AreEqual(DirectionEnum.Down, DirectionHelper.CheckDirection(new Point(0, 1), new Point(0, 0)));
             Assert.AreEqual(DirectionEnum.Undefined, DirectionHelper.CheckDirection(new Point(0, 0), new Point(0, 0)));
         }
-
-        #endregion
     }
 }

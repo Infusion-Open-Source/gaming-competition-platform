@@ -1,19 +1,15 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Infusion.Gaming.LightCycles.Model.Data;
-using Infusion.Gaming.LightCycles.Model.MapData;
-
-namespace Infusion.Gaming.LightCycles.Model.Serialization
+﻿namespace Infusion.Gaming.LightCycles.Model.Serialization
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using Infusion.Gaming.LightCycles.Model.MapData;
+
     /// <summary>
-    ///     The map serializer.
+    /// The map serializer.
     /// </summary>
     public class MapSerializer
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Reads text representation of the map.
         /// </summary>
@@ -79,10 +75,6 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
             return builder.ToString();
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         /// Gets map dimensions from the text.
         /// </summary>
@@ -130,7 +122,5 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
 
             return lines.ToArray();
         }
-
-        #endregion
     }
 }

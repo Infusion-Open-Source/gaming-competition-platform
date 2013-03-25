@@ -1,24 +1,17 @@
-﻿
-using Infusion.Gaming.LightCycles.Model;
-using Infusion.Gaming.LightCycles.Model.Data;
-using Moq;
-
-namespace Infusion.Gaming.LightCycles.Tests.Conditions
+﻿namespace Infusion.Gaming.LightCycles.Tests.Conditions
 {
     using Infusion.Gaming.LightCycles.Conditions;
-
+    using Infusion.Gaming.LightCycles.Model.Data;
     using NUnit.Framework;
 
     /// <summary>
-    ///     The number of teams tests.
+    /// The number of teams tests.
     /// </summary>
     [TestFixture]
     public class NumberOfTeamsTests
     {
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     The exact number of teams check.
+        /// The exact number of teams check.
         /// </summary>
         [Test]
         public void ExactNumberOfTeamsChecks()
@@ -40,7 +33,7 @@ namespace Infusion.Gaming.LightCycles.Tests.Conditions
         }
         
         /// <summary>
-        ///     The range of teams checks.
+        /// The range of teams checks.
         /// </summary>
         [Test]
         public void RangeOfTeamsChecks()
@@ -64,7 +57,5 @@ namespace Infusion.Gaming.LightCycles.Tests.Conditions
             gameState.Object.PlayersData.Teams.Add(new Team('E'));
             Assert.IsFalse(condition.Check(gameState.Object));
         }
-
-        #endregion
     }
 }

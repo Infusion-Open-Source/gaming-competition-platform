@@ -1,12 +1,10 @@
-﻿
-using Infusion.Gaming.LightCycles.Model.Data;
-using System.Collections.Generic;
-using System.Drawing;
-
-namespace Infusion.Gaming.LightCycles.Model.MapData
+﻿namespace Infusion.Gaming.LightCycles.Model.MapData
 {
+    using System.Collections.Generic;
+    using System.Drawing;
+
     /// <summary>
-    ///     The Map interface.
+    /// The Map interface.
     /// </summary>
     public interface IMap
     {
@@ -19,6 +17,11 @@ namespace Infusion.Gaming.LightCycles.Model.MapData
         /// Gets the width of the map.
         /// </summary>
         int Width { get; }
+        
+        /// <summary>
+        /// Gets the players starting locations.
+        /// </summary>
+        Dictionary<PlayersStartingLocation, Point> StartingLocations { get; }
 
         /// <summary>
         /// Get location type for specified coordinates
@@ -27,10 +30,5 @@ namespace Infusion.Gaming.LightCycles.Model.MapData
         /// <param name="y">y coordinate</param>
         /// <returns>location type at specified point</returns>
         Location this[int x, int y] { get; }
-
-        /// <summary>
-        /// Gets the players starting locations.
-        /// </summary>
-        Dictionary<PlayersStartingLocation, Point> StartingLocations { get; }
     }
 }

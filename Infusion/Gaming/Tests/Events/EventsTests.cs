@@ -1,25 +1,21 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Tests.Events
+﻿namespace Infusion.Gaming.LightCycles.Tests.Events
 {
     using System;
 
     using Infusion.Gaming.LightCycles.Events;
-    using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     using NUnit.Framework;
 
     /// <summary>
-    ///     The events tests.
+    /// The events tests.
     /// </summary>
     [TestFixture]
     public class EventsTests
     {
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     The player collision event checks.
+        /// The player collision event checks.
         /// </summary>
         [Test]
         public void PlayerCollisionEventChecks()
@@ -29,7 +25,7 @@ namespace Infusion.Gaming.LightCycles.Tests.Events
         }
 
         /// <summary>
-        ///     The player move event checks.
+        /// The player move event checks.
         /// </summary>
         [Test]
         public void PlayerMoveEventChecks()
@@ -43,7 +39,7 @@ namespace Infusion.Gaming.LightCycles.Tests.Events
         }
 
         /// <summary>
-        ///     The tick event checks.
+        /// The tick event checks.
         /// </summary>
         [Test]
         public void TickEventChecks()
@@ -54,7 +50,5 @@ namespace Infusion.Gaming.LightCycles.Tests.Events
             Assert.AreEqual(6, new TickEvent(6).Turn);
             Assert.AreEqual(12, new TickEvent(12).Turn);
         }
-
-        #endregion
     }
 }

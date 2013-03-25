@@ -8,15 +8,13 @@
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
-    ///     Trail aging processor.
-    ///     Adds trail fading on time feature.
-    ///     Speed of trail fading can be controlled by parameter.
-    ///     This processors hooks up to new turn event so will always run once per game turn.
+    /// Trail aging processor.
+    /// Adds trail fading on time feature.
+    /// Speed of trail fading can be controlled by parameter.
+    /// This processors hooks up to new turn event so will always run once per game turn.
     /// </summary>
     public class TrailAgingProcessor : IEventProcessor
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TrailAgingProcessor"/> class.
         /// </summary>
@@ -33,18 +31,10 @@
             this.FadingSpeed = fadingSpeed;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets speed of trail fading
+        /// Gets or sets speed of trail fading
         /// </summary>
         public float FadingSpeed { get; protected set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Process player move events
@@ -88,7 +78,5 @@
             // don't remove tick event from processing queue
             return false;
         }
-
-        #endregion
     }
 }

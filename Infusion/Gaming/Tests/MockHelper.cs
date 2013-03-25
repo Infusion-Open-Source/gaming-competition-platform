@@ -1,32 +1,22 @@
-﻿
-using Infusion.Gaming.LightCycles.Model.MapData;
-
-namespace Infusion.Gaming.LightCycles.Tests
+﻿namespace Infusion.Gaming.LightCycles.Tests
 {
     using System.Collections.Generic;
-
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
-
+    using Infusion.Gaming.LightCycles.Model.MapData;
     using Moq;
 
     /// <summary>
-    ///     The mock helper.
+    /// The mock helper.
     /// </summary>
     public class MockHelper
     {
-        #region Constructors and Destructors
-
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MockHelper" /> class.
+        /// Initializes a new instance of the <see cref="MockHelper" /> class.
         /// </summary>
         protected MockHelper()
         {
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Creates game mock with given number of players.
@@ -41,6 +31,10 @@ namespace Infusion.Gaming.LightCycles.Tests
             return mockGame;
         }
         
+        /// <summary>
+        /// Create game state mock
+        /// </summary>
+        /// <returns>game state mock object</returns>
         public static Mock<IGameState> CreateGameState()
         {
             var gameState = new Mock<IGameState>();
@@ -49,6 +43,10 @@ namespace Infusion.Gaming.LightCycles.Tests
             return gameState;
         }
 
+        /// <summary>
+        /// Create players data mock
+        /// </summary>
+        /// <returns>players data mock</returns>
         public static Mock<IPlayersData> CreatePlayersData()
         {
             var players = new List<Player>();
@@ -59,12 +57,14 @@ namespace Infusion.Gaming.LightCycles.Tests
             return playersData;
         }
 
+        /// <summary>
+        /// Creates map mock object
+        /// </summary>
+        /// <returns>map mock object</returns>
         public static Mock<IMap> CreateMap()
         {
             var mockMap = new Mock<IMap>();
             return mockMap;
         }
-
-        #endregion
     }
 }

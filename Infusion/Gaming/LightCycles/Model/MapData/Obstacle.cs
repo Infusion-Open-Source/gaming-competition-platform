@@ -1,10 +1,19 @@
 ﻿namespace Infusion.Gaming.LightCycles.Model.MapData
 {
-    public class Space : Location
+    /// <summary>
+    /// Class represents impassable obstacle on a map
+    /// </summary>
+    public class Obstacle : Location
     {
         /// <summary>
-        /// Is location passable
+        /// Gets a value indicating whether location is passable
         /// </summary>
-        public override bool IsPassable { get { return true; } }
+        public override bool IsPassable
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }

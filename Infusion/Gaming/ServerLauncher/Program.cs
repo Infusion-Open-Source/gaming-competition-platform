@@ -1,34 +1,25 @@
-﻿
-using Infusion.Gaming.LightCycles.Model.Serialization;
-
-namespace Infusion.Gaming.ServerLauncher
+﻿namespace Infusion.Gaming.ServerLauncher
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Threading;
-
     using Infusion.Gaming.LightCycles;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCycles.Model.Serialization;
 
     /// <summary>
-    ///     The program.
+    /// The program.
     /// </summary>
     internal class Program
     {
-        #region Static Fields
-
         /// <summary>
-        ///     The random number generator.
+        /// The random number generator.
         /// </summary>
         private static readonly Random Random = new Random(1);
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// The next random direction.
@@ -86,7 +77,7 @@ namespace Infusion.Gaming.ServerLauncher
         }
 
         /// <summary>
-        ///     Plays random game.
+        /// Plays random game.
         /// </summary>
         public static void PlayRandomGame()
         {
@@ -137,10 +128,6 @@ namespace Infusion.Gaming.ServerLauncher
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         /// Program main method.
         /// </summary>
@@ -151,8 +138,7 @@ namespace Infusion.Gaming.ServerLauncher
         {
             Console.WriteLine("LightCycles Game Engine Server - Copyright (C) 2013 Paweł Drozdowski");
             Console.WriteLine("This program comes with ABSOLUTELY NO WARRANTY; for details check License.txt file.");
-            Console.WriteLine(
-                "This is free software, and you are welcome to redistribute it under certain conditions; check License.txt file for the details.");
+            Console.WriteLine("This is free software, and you are welcome to redistribute it under certain conditions; check License.txt file for the details.");
 
             while (true)
             {
@@ -160,7 +146,5 @@ namespace Infusion.Gaming.ServerLauncher
                 Console.ReadKey();
             }
         }
-
-        #endregion
     }
 }

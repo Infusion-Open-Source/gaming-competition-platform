@@ -1,16 +1,13 @@
 ﻿namespace Infusion.Gaming.LightCycles.Conditions
 {
     using System;
-
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     The number of teams condition
+    /// The number of teams condition
     /// </summary>
     public class NumberOfTeams : ICondition
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberOfTeams"/> class.
         /// </summary>
@@ -50,23 +47,15 @@
             this.Max = maxNumber;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets the max number of teams.
+        /// Gets or sets the max number of teams.
         /// </summary>
         public int Max { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the min number of teams.
+        /// Gets or sets the min number of teams.
         /// </summary>
         public int Min { get; protected set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Performs condition check.
@@ -82,7 +71,5 @@
             int count = gameState.PlayersData.Teams.Count;
             return this.Min <= count && count <= this.Max;
         }
-
-        #endregion
     }
 }

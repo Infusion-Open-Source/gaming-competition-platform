@@ -8,12 +8,10 @@
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Event filter set
+    /// Event filter set
     /// </summary>
     internal class EventFilterSet : List<IEventFilter>, IEventFilter
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EventFilterSet"/> class.
         /// </summary>
@@ -52,7 +50,5 @@
 
             return results;
         }
-
-        #endregion
     }
 }

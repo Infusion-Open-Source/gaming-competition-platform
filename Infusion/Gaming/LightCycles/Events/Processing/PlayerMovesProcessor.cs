@@ -8,14 +8,12 @@
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
-    ///     Processor for player move events.
-    ///     Reflects result of player move events.
-    ///     I player collides with something then feeds with new collision events.
+    /// Processor for player move events.
+    /// Reflects result of player move events.
+    /// I player collides with something then feeds with new collision events.
     /// </summary>
     public class PlayerMovesProcessor : IEventProcessor
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Process player move events
         /// </summary>
@@ -78,7 +76,5 @@
             newEvents = events;
             return processed;
         }
-
-        #endregion
     }
 }

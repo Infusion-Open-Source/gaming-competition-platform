@@ -7,8 +7,6 @@
     /// </summary>
     internal static class QueueExtensions
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Enqueues collection of items
         /// </summary>
@@ -31,7 +29,5 @@
 
             return queue;
         }
-
-        #endregion
     }
 }

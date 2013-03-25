@@ -1,13 +1,12 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Model.MapData
+﻿namespace Infusion.Gaming.LightCycles.Model.MapData
 {
     /// <summary>
-    ///     The location on the map.
+    /// The location on the map.
     /// </summary>
     public abstract class Location
     {
         /// <summary>
-        /// Is location passable
+        /// Gets a value indicating whether location is passable
         /// </summary>
         public abstract bool IsPassable { get; }
     }

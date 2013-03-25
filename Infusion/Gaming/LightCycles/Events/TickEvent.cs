@@ -1,16 +1,13 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events
+﻿namespace Infusion.Gaming.LightCycles.Events
 {
     using System;
     using System.Text;
 
     /// <summary>
-    ///     The tick event.
+    /// The tick event.
     /// </summary>
     public class TickEvent : Event
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TickEvent"/> class.
         /// </summary>
@@ -27,24 +24,16 @@ namespace Infusion.Gaming.LightCycles.Events
             this.Turn = turn;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets game turn.
+        /// Gets or sets game turn.
         /// </summary>
         public int Turn { get; protected set; }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     To string.
+        /// To string.
         /// </summary>
         /// <returns>
-        ///     String representation of an object.
+        /// String representation of an object.
         /// </returns>
         public override string ToString()
         {
@@ -52,7 +41,5 @@ namespace Infusion.Gaming.LightCycles.Events
             builder.AppendFormat("Turn {0} starts", this.Turn);
             return builder.ToString();
         }
-
-        #endregion
     }
 }

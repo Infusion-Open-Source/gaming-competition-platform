@@ -1,19 +1,14 @@
-﻿
-using System;
-using Infusion.Gaming.LightCycles.Extensions;
-using Infusion.Gaming.LightCycles.Model.Data;
-using Infusion.Gaming.LightCycles.Model.Defines;
-using Infusion.Gaming.LightCycles.Model.MapData;
-
-namespace Infusion.Gaming.LightCycles.Model.Serialization
+﻿namespace Infusion.Gaming.LightCycles.Model.Serialization
 {
+    using System;
+    using Infusion.Gaming.LightCycles.Model.Data;
+    using Infusion.Gaming.LightCycles.Model.MapData;
+
     /// <summary>
-    ///     The location serializer.
+    /// The location serializer.
     /// </summary>
     public class LocationSerializer
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Reads location from character.
         /// </summary>
@@ -70,12 +65,10 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
             var playersStartingLocation = location as PlayersStartingLocation;
             if (playersStartingLocation != null)
             {
-                return (playersStartingLocation).Player.Id;
+                return playersStartingLocation.Player.Id;
             }
             
             throw new ArgumentOutOfRangeException("location");
         }
-
-        #endregion
     }
 }

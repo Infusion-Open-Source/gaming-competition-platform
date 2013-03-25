@@ -1,19 +1,16 @@
-﻿
-using Infusion.Gaming.LightCycles.Extensions;
-using NUnit.Framework;
-
-namespace Infusion.Gaming.LightCycles.Tests.Extensions
+﻿namespace Infusion.Gaming.LightCycles.Tests.Extensions
 {
+    using Infusion.Gaming.LightCycles.Extensions;
+    using NUnit.Framework;
+
     /// <summary>
-    ///     The char extensions tests.
+    /// The char extensions tests.
     /// </summary>
     [TestFixture]
     public class CharExtensionsTests
     {
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     To lower checks.
+        /// To lower checks.
         /// </summary>
         [Test]
         public void ToLowerChecks()
@@ -29,7 +26,7 @@ namespace Infusion.Gaming.LightCycles.Tests.Extensions
         }
 
         /// <summary>
-        ///     To upper checks.
+        /// To upper checks.
         /// </summary>
         [Test]
         public void ToUpperChecks()
@@ -43,7 +40,5 @@ namespace Infusion.Gaming.LightCycles.Tests.Extensions
             Assert.AreEqual('1', '1'.ToUpper());
             Assert.AreEqual('!', '!'.ToUpper());
         }
-
-        #endregion
     }
 }

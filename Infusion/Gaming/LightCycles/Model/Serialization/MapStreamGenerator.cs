@@ -1,24 +1,17 @@
-﻿
-using System;
-using System.Text;
-
-namespace Infusion.Gaming.LightCycles.Model.Serialization
+﻿namespace Infusion.Gaming.LightCycles.Model.Serialization
 {
+    using System;
+    using System.Text;
+
     /// <summary>
-    ///     The map stream generator.
+    /// The map stream generator.
     /// </summary>
     public class MapStreamGenerator
     {
-        #region Fields
-
         /// <summary>
-        ///     The internal map representation.
+        /// The internal map representation.
         /// </summary>
         private char[,] map;
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Generates map.
@@ -63,10 +56,6 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
 
             return mapStreamBuilder.ToString();
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Adds players to the map in random locations.
@@ -126,7 +115,5 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
                 }
             }
         }
-
-        #endregion
     }
 }

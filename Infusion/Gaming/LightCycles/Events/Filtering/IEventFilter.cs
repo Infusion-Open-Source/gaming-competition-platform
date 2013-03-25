@@ -4,7 +4,7 @@
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Events filter interface
+    /// Events filter interface
     /// </summary>
     public interface IEventFilter
     {

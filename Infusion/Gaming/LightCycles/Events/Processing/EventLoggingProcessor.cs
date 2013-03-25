@@ -6,13 +6,11 @@
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Event logging processor.
-    ///     Prints out event to console.
+    /// Event logging processor.
+    /// Prints out event to console.
     /// </summary>
     public class EventLoggingProcessor : IEventProcessor
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EventLoggingProcessor"/> class.
         /// </summary>
@@ -24,18 +22,10 @@
             this.IsSilent = silent;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets a value indicating whether processor is silent or not
+        /// Gets or sets a value indicating whether processor is silent or not
         /// </summary>
         public bool IsSilent { get; protected set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Process player move events
@@ -65,7 +55,5 @@
 
             return false;
         }
-
-        #endregion
     }
 }

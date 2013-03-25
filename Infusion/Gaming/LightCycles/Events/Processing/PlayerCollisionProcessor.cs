@@ -5,13 +5,11 @@
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Player collision event processor.
-    ///     When player collides with something then he/she is removed (with the trail) from the map.
+    /// Player collision event processor.
+    /// When player collides with something then he/she is removed (with the trail) from the map.
     /// </summary>
     public class PlayerCollisionProcessor : IEventProcessor
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Process player move events
         /// </summary>
@@ -42,7 +40,5 @@
             nextState.PlayersData.RemovePlayer(collisionEvent.Player);
             return true;
         }
-
-        #endregion
     }
 }

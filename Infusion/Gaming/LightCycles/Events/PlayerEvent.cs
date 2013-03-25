@@ -1,16 +1,12 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events
+﻿namespace Infusion.Gaming.LightCycles.Events
 {
-    using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
 
     /// <summary>
-    ///     The base class for player event.
+    /// The base class for player event.
     /// </summary>
     public abstract class PlayerEvent : Event
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerEvent"/> class.
         /// </summary>
@@ -22,15 +18,9 @@ namespace Infusion.Gaming.LightCycles.Events
             this.Player = player;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets the player.
+        /// Gets or sets the player.
         /// </summary>
         public Player Player { get; protected set; }
-
-        #endregion
     }
 }

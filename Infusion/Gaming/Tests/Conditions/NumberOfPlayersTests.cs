@@ -1,24 +1,17 @@
-﻿
-using Infusion.Gaming.LightCycles.Model;
-using Infusion.Gaming.LightCycles.Model.Data;
-using Moq;
-
-namespace Infusion.Gaming.LightCycles.Tests.Conditions
+﻿namespace Infusion.Gaming.LightCycles.Tests.Conditions
 {
     using Infusion.Gaming.LightCycles.Conditions;
-
+    using Infusion.Gaming.LightCycles.Model.Data;
     using NUnit.Framework;
 
     /// <summary>
-    ///     The number of players tests.
+    /// The number of players tests.
     /// </summary>
     [TestFixture]
     public class NumberOfPlayersTests
     {
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     The exact number of players check.
+        /// The exact number of players check.
         /// </summary>
         [Test]
         public void ExactNumberOfPlayersChecks()
@@ -40,7 +33,7 @@ namespace Infusion.Gaming.LightCycles.Tests.Conditions
         }
         
         /// <summary>
-        ///     The range of players checks.
+        /// The range of players checks.
         /// </summary>
         [Test]
         public void RangeOfPlayersChecks()
@@ -64,7 +57,5 @@ namespace Infusion.Gaming.LightCycles.Tests.Conditions
             gameState.Object.PlayersData.Players.Add(new Player('E'));
             Assert.IsFalse(condition.Check(gameState.Object));
         }
-        
-        #endregion
     }
 }

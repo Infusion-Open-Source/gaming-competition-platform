@@ -1,13 +1,11 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using Infusion.Gaming.LightCycles.Model.Data;
-
-namespace Infusion.Gaming.LightCycles.Model.MapData
+﻿namespace Infusion.Gaming.LightCycles.Model.MapData
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+
     /// <summary>
-    ///     The game map.
+    /// The game map.
     /// </summary>
     public class Map : IMap
     {
@@ -55,31 +53,17 @@ namespace Infusion.Gaming.LightCycles.Model.MapData
         }
         
         /// <summary>
-        ///     Gets or sets the height of the map.
+        /// Gets or sets the height of the map.
         /// </summary>
         public int Height { get; protected set; }
-
+        
         /// <summary>
-        /// Get location data for specified loaction
-        /// </summary>
-        /// <param name="x">x coordinate</param>
-        /// <param name="y">y coordinate</param>
-        /// <returns>location data at specified point</returns>
-        public Location this[int x, int y]
-        {
-            get
-            {
-                return this.Locations[x, y];
-            }
-        }
-
-        /// <summary>
-        ///     Gets or sets the map locations.
+        /// Gets or sets the map locations.
         /// </summary>
         public Location[,] Locations { get; protected set; }
         
         /// <summary>
-        ///     Gets or sets the width of the map.
+        /// Gets or sets the width of the map.
         /// </summary>
         public int Width { get; protected set; }
 
@@ -102,7 +86,22 @@ namespace Infusion.Gaming.LightCycles.Model.MapData
                         }
                     }
                 }
+
                 return results;
+            }
+        }
+
+        /// <summary>
+        /// Get location data for specified location
+        /// </summary>
+        /// <param name="x">x coordinate</param>
+        /// <param name="y">y coordinate</param>
+        /// <returns>location data at specified point</returns>
+        public Location this[int x, int y]
+        {
+            get
+            {
+                return this.Locations[x, y];
             }
         }
     }

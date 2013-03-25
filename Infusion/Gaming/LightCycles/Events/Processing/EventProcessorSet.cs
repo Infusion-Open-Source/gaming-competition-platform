@@ -5,12 +5,10 @@
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Event processor set
+    /// Event processor set
     /// </summary>
     internal class EventProcessorSet : List<IEventProcessor>, IEventProcessor
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EventProcessorSet"/> class.
         /// </summary>
@@ -58,7 +56,5 @@
             newEvents = new List<Event>();
             return false;
         }
-
-        #endregion
     }
 }
