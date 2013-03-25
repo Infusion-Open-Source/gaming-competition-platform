@@ -92,9 +92,10 @@
     <Compile Include="Model\MapData\IMap.cs" />
     <Compile Include="Model\MapData\Location.cs" />
     <Compile Include="Model\Serialization\GameStateRenderer.cs" />
-    <Compile Include="Model\Serialization\LocationSerializer.cs" />
-    <Compile Include="Model\Serialization\MapStreamGenerator.cs" />
-    <Compile Include="Model\Serialization\MapSerializer.cs" />
+    <Compile Include="Model\Serialization\ImageMapSerializer.cs" />
+    <Compile Include="Model\Serialization\IMapSerializer.cs" />
+    <Compile Include="Model\Serialization\MapGenerator.cs" />
+    <Compile Include="Model\Serialization\PlainTextMapSerializer.cs" />
     <Compile Include="Model\DirectionHelper.cs" />
     <Compile Include="Model\Defines\DirectionEnum.cs" />
     <Compile Include="Model\Game.cs" />

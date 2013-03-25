@@ -24,11 +24,7 @@
         public void StartOnRandomMap(int numberOfPlayers, GameModeEnum gameMode)
         {
             // init
-            var generator = new MapStreamGenerator();
-            string mapStream = generator.Generate(50, 20, numberOfPlayers);
-
-            var mapSerializer = new MapSerializer();
-            IMap map = mapSerializer.Read(mapStream);
+            IMap map = new MapGenerator().GenerateMap(50, 20, numberOfPlayers, numberOfPlayers);
 
             EndConditionSet endConditions = new EndConditionSet();
             endConditions.Add(new EndCondition(new NumberOfPlayers(0), GameResultEnum.FinishedWithoutWinner));

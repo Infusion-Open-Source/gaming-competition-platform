@@ -18,9 +18,6 @@
         /// <param name="height">
         /// The height of the map.
         /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// Height and/or width are too small. Must be at least zero
-        /// </exception>
         public Map(int width, int height)
         {
             if (width < 0)
@@ -52,6 +49,31 @@
             }
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Map"/> class.
+        /// </summary>
+        /// <param name="locations">
+        /// The locations with the map data.
+        /// </param>
+        public Map(Location[,] locations)
+        {
+            if (locations == null)
+            {
+                throw new ArgumentNullException("locations");
+            }
+
+            this.Width = locations.GetLength(0);
+            this.Height = locations.GetLength(1);
+            this.Locations = new Location[this.Width, this.Height];
+            for (int y = 0; y < this.Height; y++)
+            {
+                for (int x = 0; x < this.Width; x++)
+                {
+                    this.Locations[x, y] = locations[x, y];
+                }
+            }
+        }
+
         /// <summary>
         /// Gets or sets the height of the map.
         /// </summary>

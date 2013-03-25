@@ -24,7 +24,7 @@
         Dictionary<PlayersStartingLocation, Point> StartingLocations { get; }
 
         /// <summary>
-        /// Get location type for specified coordinates
+        /// Gets or sets location type for specified coordinates
         /// </summary>
         /// <param name="x">x coordinate</param>
         /// <param name="y">y coordinate</param>
