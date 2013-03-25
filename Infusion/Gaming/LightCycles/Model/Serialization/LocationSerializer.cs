@@ -3,6 +3,7 @@ using System;
 using Infusion.Gaming.LightCycles.Extensions;
 using Infusion.Gaming.LightCycles.Model.Data;
 using Infusion.Gaming.LightCycles.Model.Defines;
+using Infusion.Gaming.LightCycles.Model.MapData;
 
 namespace Infusion.Gaming.LightCycles.Model.Serialization
 {
@@ -29,12 +30,12 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
         {
             if (c == '#')
             {
-                return new Location(LocationTypeEnum.Wall);
+                return new Obstacle();
             }
 
             if (c == ' ')
             {
-                return new Location(LocationTypeEnum.Space);
+                return new Space();
             }
 
             if (c >= 'A' && c <= 'Z')
@@ -56,17 +57,23 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
         /// </returns>
         public char Write(Location location)
         {
-            switch (location.LocationType)
+            if (location is Obstacle)
             {
-                case LocationTypeEnum.Wall:
-                    return '#';
-                case LocationTypeEnum.Space:
-                    return ' ';
-                case LocationTypeEnum.PlayersStartingLocation:
-                    return ((PlayersStartingLocation)location).Player.Id;
-                default:
-                    throw new ArgumentOutOfRangeException("location");
+                return '#';
             }
+            
+            if (location is Space)
+            {
+                return ' ';
+            }
+
+            var playersStartingLocation = location as PlayersStartingLocation;
+            if (playersStartingLocation != null)
+            {
+                return (playersStartingLocation).Player.Id;
+            }
+            
+            throw new ArgumentOutOfRangeException("location");
         }
 
         #endregion

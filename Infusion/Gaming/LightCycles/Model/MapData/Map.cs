@@ -1,12 +1,11 @@
 ﻿
-namespace Infusion.Gaming.LightCycles.Model.Data
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using Infusion.Gaming.LightCycles.Model.Data;
+
+namespace Infusion.Gaming.LightCycles.Model.MapData
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-
-    using Infusion.Gaming.LightCycles.Model.Defines;
-
     /// <summary>
     ///     The game map.
     /// </summary>
@@ -45,11 +44,11 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                 {
                     if (x == 0 || y == 0 || x + 1 == this.Width || y + 1 == this.Height)
                     {
-                        this.Locations[x, y] = new Location(LocationTypeEnum.Wall);
+                        this.Locations[x, y] = new Obstacle();
                     }
                     else
                     {
-                        this.Locations[x, y] = new Location(LocationTypeEnum.Space);
+                        this.Locations[x, y] = new Space();
                     }
                 }
             }
@@ -96,9 +95,10 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                 {
                     for (int x = 0; x < this.Width; x++)
                     {
-                        if (this.Locations[x, y].LocationType == LocationTypeEnum.PlayersStartingLocation)
+                        var location = this.Locations[x, y] as PlayersStartingLocation;
+                        if (location != null)
                         {
-                            results.Add(((PlayersStartingLocation)this.Locations[x, y]), new Point(x, y));
+                            results.Add(location, new Point(x, y));
                         }
                     }
                 }

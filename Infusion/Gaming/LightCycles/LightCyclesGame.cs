@@ -1,5 +1,5 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Infusion.Gaming.LightCycles.Model.MapData;
 using Infusion.Gaming.LightCycles.Model.Serialization;
 
 namespace Infusion.Gaming.LightCycles

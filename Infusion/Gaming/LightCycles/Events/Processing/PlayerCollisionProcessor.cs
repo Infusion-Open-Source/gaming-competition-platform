@@ -1,5 +1,4 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events.Processing
+﻿namespace Infusion.Gaming.LightCycles.Events.Processing
 {
     using System.Collections.Generic;
 

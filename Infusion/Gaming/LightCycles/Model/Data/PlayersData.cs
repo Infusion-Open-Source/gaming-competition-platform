@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using Infusion.Gaming.LightCycles.Model.Defines;
+using Infusion.Gaming.LightCycles.Model.MapData;
 
 namespace Infusion.Gaming.LightCycles.Model.Data
 {
@@ -170,13 +171,10 @@ namespace Infusion.Gaming.LightCycles.Model.Data
                 for (int x = 0; x < this.Width; x++)
                 {
                     this.Data[x, y] = null;
-                    if(map[x,y].LocationType == LocationTypeEnum.PlayersStartingLocation)
+                    var startLocation = map[x, y] as PlayersStartingLocation;
+                    if (startLocation != null && playersInGame.Contains(startLocation.Player))
                     {
-                        var startLocation = (PlayersStartingLocation)map[x, y];
-                        if (playersInGame.Contains(startLocation.Player))
-                        {
-                            this.Data[x, y] = new LightCycleBike(startLocation.Player, DirectionHelper.RandomDirection());
-                        }
+                        this.Data[x, y] = new LightCycleBike(startLocation.Player, DirectionHelper.RandomDirection());
                     }
                 }
             }

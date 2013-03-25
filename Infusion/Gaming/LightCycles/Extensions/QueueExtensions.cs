@@ -1,5 +1,4 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Extensions
+﻿namespace Infusion.Gaming.LightCycles.Extensions
 {
     using System.Collections.Generic;
 

@@ -1,5 +1,4 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Conditions
+﻿namespace Infusion.Gaming.LightCycles.Conditions
 {
     using Infusion.Gaming.LightCycles.Model;
 

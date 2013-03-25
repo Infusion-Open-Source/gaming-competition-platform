@@ -1,4 +1,6 @@
 ﻿
+using Infusion.Gaming.LightCycles.Model.MapData;
+
 namespace Infusion.Gaming.LightCycles.Model
 {
     using System;

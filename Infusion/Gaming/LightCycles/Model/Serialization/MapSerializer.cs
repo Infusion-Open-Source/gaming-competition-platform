@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Infusion.Gaming.LightCycles.Model.Data;
+using Infusion.Gaming.LightCycles.Model.MapData;
 
 namespace Infusion.Gaming.LightCycles.Model.Serialization
 {

@@ -1,5 +1,4 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events.Processing
+﻿namespace Infusion.Gaming.LightCycles.Events.Processing
 {
     using System.Collections.Generic;
     using System.Drawing;
@@ -55,9 +54,9 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
                 else
                 {
                     // collision detected
-                    if (nextState.Map[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Wall)
+                    if (!nextState.Map[newLocation.X, newLocation.Y].IsPassable)
                     {
-                        // player-wall collision 
+                        // player-obstacle collision 
                         events.Add(new PlayerCollisionEvent(moveEvent.Player));
                     }
                     else if (nextState.PlayersData[newLocation.X, newLocation.Y] is Trail)

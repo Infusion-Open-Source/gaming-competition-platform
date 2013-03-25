@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Infusion.Gaming.LightCycles.Model.Defines;
+using Infusion.Gaming.LightCycles.Model.Data;
 
-namespace Infusion.Gaming.LightCycles.Model.Data
+namespace Infusion.Gaming.LightCycles.Model.MapData
 {
     public class PlayersStartingLocation : Location
     {
@@ -12,7 +9,12 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         ///     Gets or sets the player which should start in this location.
         /// </summary>
         public Player Player { get; protected set; }
-        
+
+        /// <summary>
+        /// Is location passable
+        /// </summary>
+        public override bool IsPassable { get { return true; } }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayersStartingLocation"/> class.
         /// </summary>
@@ -20,7 +22,6 @@ namespace Infusion.Gaming.LightCycles.Model.Data
         /// The player which should start in this location.
         /// </param>
         public PlayersStartingLocation(Player player)
-            : base(LocationTypeEnum.PlayersStartingLocation)
         {
             if(player == null)
             {

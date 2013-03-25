@@ -1,5 +1,4 @@
-﻿
-using Infusion.Gaming.LightCycles.Model.Data;
+﻿using Infusion.Gaming.LightCycles.Model.Data;
 
 namespace Infusion.Gaming.LightCycles.Events.Filtering
 {

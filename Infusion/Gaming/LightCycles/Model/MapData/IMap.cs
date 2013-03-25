@@ -1,11 +1,10 @@
 ﻿
-using Infusion.Gaming.LightCycles.Model.Defines;
+using Infusion.Gaming.LightCycles.Model.Data;
+using System.Collections.Generic;
+using System.Drawing;
 
-namespace Infusion.Gaming.LightCycles.Model.Data
+namespace Infusion.Gaming.LightCycles.Model.MapData
 {
-    using System.Collections.Generic;
-    using System.Drawing;
-
     /// <summary>
     ///     The Map interface.
     /// </summary>

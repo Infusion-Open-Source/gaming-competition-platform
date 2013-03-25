@@ -4,6 +4,7 @@ using System.Text;
 using Infusion.Gaming.LightCycles.Model.Data;
 using Infusion.Gaming.LightCycles.Model.Defines;
 using Infusion.Gaming.LightCycles.Extensions;
+using Infusion.Gaming.LightCycles.Model.MapData;
 
 namespace Infusion.Gaming.LightCycles.Model.Serialization
 {
@@ -34,18 +35,13 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
                     }
                     else
                     {
-                        switch (gameState.Map[x, y].LocationType)
+                        if(gameState.Map[x, y] is Obstacle)
                         {
-                            case LocationTypeEnum.Wall:
-                                builder.Append("#");
-                                break;
-                            case LocationTypeEnum.Space:
-                            case LocationTypeEnum.PlayersStartingLocation:
-                                builder.Append(" ");
-                                break;
-                            default:
-                                builder.Append("!");
-                                break;
+                            builder.Append("#");
+                        }
+                        else
+                        {
+                            builder.Append(" ");
                         }
                     }
                 }
