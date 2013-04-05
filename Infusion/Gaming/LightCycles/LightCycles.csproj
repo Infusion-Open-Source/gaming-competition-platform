@@ -48,6 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bots\BotFactory.cs" />
+    <Compile Include="Bots\RandomPigBot.cs" />
+    <Compile Include="Bots\IBot.cs" />
+    <Compile Include="Bots\LineFollowerBot.cs" />
     <Compile Include="Conditions\NumberOfTeams.cs" />
     <Compile Include="Conditions\EndConditionSet.cs" />
     <Compile Include="Conditions\IEndCondition.cs" />
@@ -67,6 +71,7 @@
     <Compile Include="Events\Processing\PlayerMovesProcessor.cs" />
     <Compile Include="Events\Processing\TrailAgingProcessor.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />
+    <Compile Include="GameRunner.cs" />
     <Compile Include="LightCyclesGame.cs" />
     <Compile Include="Model\MapData\Space.cs" />
     <Compile Include="Model\Data\LightCycleBike.cs" />
