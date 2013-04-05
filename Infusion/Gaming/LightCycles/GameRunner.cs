@@ -50,7 +50,10 @@
                 this.bots.Add(botsFactory.CreateBot(player));
             }
 
-            this.ShowGameState();
+            if (this.ConsoleOutputEnabled)
+            {
+                this.ShowGameState();
+            }
         }
 
         /// <summary>
@@ -68,7 +71,10 @@
                 }
 
                 this.Game.Step(events);
-                this.ShowGameState();
+                if (this.ConsoleOutputEnabled)
+                {
+                    this.ShowGameState();
+                }
             }
 
             return this.Game.State == GameStateEnum.Running;
@@ -79,7 +85,10 @@
         /// </summary>
         public void EndGame()
         {
-            this.ShowGameResultMessage();
+            if (this.ConsoleOutputEnabled)
+            {
+                this.ShowGameResultMessage();
+            }
         }
         
         /// <summary>
