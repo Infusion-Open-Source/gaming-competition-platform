@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles
+﻿using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles
 {
     using System;
     using System.Collections.Generic;
@@ -28,7 +30,7 @@
         /// <summary>
         /// Gets or sets game main object
         /// </summary>
-        public LightCyclesGame Game { get; protected set; }
+        public IGame Game { get; protected set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether console output is enabled
@@ -44,7 +46,7 @@
         {
             var botsFactory = new BotFactory();
             this.Game = new LightCyclesGame();
-            this.Game.StartOnRandomMap(numberOfPlayers, gameMode);
+            ((LightCyclesGame)this.Game).StartOnRandomMap(numberOfPlayers, gameMode);
             foreach (var player in this.Game.CurrentState.PlayersData.Players)
             {
                 this.bots.Add(botsFactory.CreateBot(player));
