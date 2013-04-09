@@ -23,7 +23,7 @@
             Color.YellowGreen,
             Color.Green,
             Color.Violet,
-            Color.Wheat,
+            Color.Orange,
             Color.Tomato,
             Color.Aqua,
             Color.Coral

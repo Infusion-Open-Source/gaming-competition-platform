@@ -1,11 +1,10 @@
-﻿using Infusion.Gaming.LightCycles.Model;
-
-namespace Infusion.Gaming.LightCycles
+﻿namespace Infusion.Gaming.LightCycles
 {
     using System;
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Bots;
     using Infusion.Gaming.LightCycles.Events;
+    using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Defines;
     using Infusion.Gaming.LightCycles.Model.Serialization;
 
