@@ -15,12 +15,12 @@
         /// <summary>
         /// opacity of the grid
         /// </summary>
-        private const float GridOpacity = 0.1f;
+        private const float GridOpacity = 0.2f;
 
         /// <summary>
         /// color of the grid
         /// </summary>
-        private readonly Color4 gridColor = new Color4(1.0f, 1.0f, 1.0f);
+        private readonly Color4 gridColor = new Color4(0.0f, 1.0f, 1.0f);
         
         /// <summary>
         /// brush for grid drawing
@@ -86,26 +86,23 @@
                     {
                         if (hasN)
                         {
-                            renderTarget.DrawLine(this.solidBrush, p.X + n.X, p.Y + n.Y, p.X + c.X, p.Y + c.Y, 2);
+                            renderTarget.DrawLine(this.solidBrush, p.X + n.X, p.Y + n.Y, p.X + c.X, p.Y + c.Y, 1f);
                         }
 
                         if (hasS)
                         {
-                            renderTarget.DrawLine(this.solidBrush, p.X + s.X, p.Y + s.Y, p.X + c.X, p.Y + c.Y, 2);
+                            renderTarget.DrawLine(this.solidBrush, p.X + s.X, p.Y + s.Y, p.X + c.X, p.Y + c.Y, 1f);
                         }
 
                         if (hasE)
                         {
-                            renderTarget.DrawLine(this.solidBrush, p.X + e.X, p.Y + e.Y, p.X + c.X, p.Y + c.Y, 2);
+                            renderTarget.DrawLine(this.solidBrush, p.X + e.X, p.Y + e.Y, p.X + c.X, p.Y + c.Y, 1f);
                         }
 
                         if (hasW)
                         {
-                            renderTarget.DrawLine(this.solidBrush, p.X + w.X, p.Y + w.Y, p.X + c.X, p.Y + c.Y, 2);
+                            renderTarget.DrawLine(this.solidBrush, p.X + w.X, p.Y + w.Y, p.X + c.X, p.Y + c.Y, 1f);
                         }
-
-                        renderTarget.DrawLine(this.solidBrush, p.X - 1, p.Y, p.X + 1, p.Y, 2);
-                        renderTarget.DrawLine(this.solidBrush, p.X, p.Y - 1, p.X, p.Y + 1, 2);
                     }
                 }
             }

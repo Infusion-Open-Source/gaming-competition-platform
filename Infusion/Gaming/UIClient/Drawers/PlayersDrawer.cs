@@ -24,16 +24,18 @@
         /// </summary>
         private Dictionary<char, Color> teamColors = new Dictionary<char, Color>
         {
-            { 'A', Color.Red },
-            { 'B', Color.Blue },
-            { 'C', Color.Yellow },
-            { 'D', Color.YellowGreen },
-            { 'E', Color.Green },
-            { 'F', Color.Violet },
-            { 'G', Color.Orange },
-            { 'H', Color.Tomato },
-            { 'I', Color.Aqua },
-            { 'J', Color.Coral }
+            { 'A', Color.FromArgb(255, 0, 0) },
+            { 'B', Color.FromArgb(0, 255, 0) },
+            { 'C', Color.FromArgb(0, 0, 255) },
+            { 'D', Color.FromArgb(255, 255, 0) },
+            { 'E', Color.FromArgb(255, 0, 255) },
+            { 'F', Color.FromArgb(0, 255, 255) },
+            { 'G', Color.FromArgb(255, 127, 0) },
+            { 'H', Color.FromArgb(255, 0, 127) },
+            { 'I', Color.FromArgb(127, 0, 255) },
+            { 'J', Color.FromArgb(0, 255, 127) },
+            { 'K', Color.FromArgb(0, 127, 255) },
+            { 'L', Color.FromArgb(127, 255, 0) },
         };
 
         /// <summary>
@@ -87,6 +89,7 @@
         public void Render(RenderTarget renderTarget, VisualState visualState)
         {
             float w2 = visualState.GridSize / 2;
+            float w4 = visualState.GridSize / 4;
             var playersAndTeams = this.GetPlayers(visualState);
             foreach (KeyValuePair<char, List<Point>> playerTrailPair in this.GetTrailPaths(visualState, playersAndTeams))
             {
@@ -94,8 +97,7 @@
                 PointF p = new PointF(
                     visualState.BorderSize + (playerTrailPair.Value[0].X * visualState.GridSize),
                     visualState.BorderSize + (playerTrailPair.Value[0].Y * visualState.GridSize));
-                var destRect = new RectangleF(p.X - w2, p.Y - w2, visualState.GridSize, visualState.GridSize);
-
+                
                 int prevPIndex = (playerTrailPair.Value.Count > 1) ? 1 : 0;
 
                 PointF prevP = new PointF(
@@ -103,31 +105,43 @@
                     visualState.BorderSize + (playerTrailPair.Value[prevPIndex].Y * visualState.GridSize));
 
                 bool isHorizontal;
+                SlimDX.Direct2D.Bitmap bitmapToDraw;
                 if (p.X < prevP.X)
                 {
                     isHorizontal = true;
-                    renderTarget.DrawBitmap(this.bikeW, destRect);
+                    bitmapToDraw = this.bikeW;
                 }
                 else if (p.Y > prevP.Y)
                 {
                     isHorizontal = false;
-                    renderTarget.DrawBitmap(this.bikeS, destRect);
+                    bitmapToDraw = this.bikeS;
                 }
                 else if (p.Y < prevP.Y)
                 {
                     isHorizontal = false;
-                    renderTarget.DrawBitmap(this.bikeN, destRect);
+                    bitmapToDraw = this.bikeN;
                 }
                 else
                 {
                     isHorizontal = true;
-                    renderTarget.DrawBitmap(this.bikeE, destRect);
+                    bitmapToDraw = this.bikeE;
                 }
 
-                this.solidBrush.Opacity = 0.2f;
+                RectangleF destRect;
+                if (isHorizontal)
+                {
+                    destRect = new RectangleF(p.X - w2, p.Y - w4, visualState.GridSize, visualState.GridSize / 2);
+                }
+                else
+                {
+                    destRect = new RectangleF(p.X - w4, p.Y - w2, visualState.GridSize / 2, visualState.GridSize);
+                }
+
+                renderTarget.DrawBitmap(bitmapToDraw, destRect);
+
+                this.solidBrush.Opacity = 0.3f;
                 this.solidBrush.Color = color;
-                renderTarget.FillEllipse(this.solidBrush, new Ellipse() { Center = p, RadiusX = isHorizontal ? 20 : 15, RadiusY = isHorizontal ? 15 : 20 });
-                renderTarget.FillEllipse(this.solidBrush, new Ellipse() { Center = p, RadiusX = isHorizontal ? 15 : 10, RadiusY = isHorizontal ? 10 : 15 });
+                renderTarget.FillEllipse(this.solidBrush, new Ellipse() { Center = p, RadiusX = isHorizontal ? 17 : 10, RadiusY = isHorizontal ? 10 : 17 });
                 renderTarget.FillEllipse(this.solidBrush, new Ellipse() { Center = p, RadiusX = isHorizontal ? 10 : 5, RadiusY = isHorizontal ? 5 : 10 }); 
             }
         }

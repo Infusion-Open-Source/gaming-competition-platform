@@ -22,12 +22,13 @@
             Console.WriteLine("This is free software, and you are welcome to redistribute it under certain conditions; check License.txt file for the details.");
 
             const int NumberOfPlayers = 8;
+            const int NumberOfTeams = 8;
             const GameModeEnum GameMode = GameModeEnum.FreeForAll;
 
             while (true)
             {
                 var gameRunner = new GameRunner();
-                gameRunner.StartGame(NumberOfPlayers, GameMode);
+                gameRunner.StartGame(NumberOfPlayers, NumberOfTeams, GameMode);
                 while (gameRunner.RunGame())
                 {
                     System.Threading.Thread.Sleep(100);

@@ -20,11 +20,22 @@
         /// Starts game with random map
         /// </summary>
         /// <param name="numberOfPlayers">number of players in the game</param>
+        /// <param name="numberOfTeams">number of teams in the game</param>
         /// <param name="gameMode">game mode to be played</param>
-        public void StartOnRandomMap(int numberOfPlayers, GameModeEnum gameMode)
+        public void StartOnRandomMap(int numberOfPlayers, int numberOfTeams, GameModeEnum gameMode)
         {
+            if (gameMode == GameModeEnum.TeamDeathMatch && numberOfTeams >= numberOfPlayers)
+            {
+                throw new ArgumentOutOfRangeException("numberOfTeams", "in TeamDeatchMatch game number of teams must be the less than a number of players");
+            }
+
+            if (gameMode == GameModeEnum.FreeForAll && numberOfTeams != numberOfPlayers)
+            {
+                throw new ArgumentOutOfRangeException("numberOfTeams", "in FreeForAll game number of teams must be the same as number of players");
+            }
+            
             // init
-            IMap map = new MapGenerator().GenerateMap(50, 20, numberOfPlayers, numberOfPlayers);
+            IMap map = new MapGenerator().GenerateMap(50, 20, numberOfPlayers, numberOfTeams);
 
             EndConditionSet endConditions = new EndConditionSet();
             endConditions.Add(new EndCondition(new NumberOfPlayers(0), GameResultEnum.FinishedWithoutWinner));

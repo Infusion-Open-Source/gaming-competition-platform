@@ -25,16 +25,18 @@
         /// </summary>
         private Dictionary<char, Color> teamColors = new Dictionary<char, Color>
         {
-            { 'A', Color.Red },
-            { 'B', Color.Blue },
-            { 'C', Color.Yellow },
-            { 'D', Color.YellowGreen },
-            { 'E', Color.Green },
-            { 'F', Color.Violet },
-            { 'G', Color.Orange },
-            { 'H', Color.Tomato },
-            { 'I', Color.Aqua },
-            { 'J', Color.Coral }
+            { 'A', Color.FromArgb(255, 0, 0) },
+            { 'B', Color.FromArgb(0, 255, 0) },
+            { 'C', Color.FromArgb(0, 0, 255) },
+            { 'D', Color.FromArgb(255, 255, 0) },
+            { 'E', Color.FromArgb(255, 0, 255) },
+            { 'F', Color.FromArgb(0, 255, 255) },
+            { 'G', Color.FromArgb(255, 127, 0) },
+            { 'H', Color.FromArgb(255, 0, 127) },
+            { 'I', Color.FromArgb(127, 0, 255) },
+            { 'J', Color.FromArgb(0, 255, 127) },
+            { 'K', Color.FromArgb(0, 127, 255) },
+            { 'L', Color.FromArgb(127, 255, 0) },
         };
 
         /// <summary>
@@ -79,8 +81,9 @@
                     }
 
                     var color = this.teamColors[playersAndTeams[playerTrailPair.Key]];
-                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(0, 0), i, playerTrailPair.Value.Count);
-                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(2, 6), i, playerTrailPair.Value.Count);
+                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(0, 0), i, playerTrailPair.Value.Count, 1.0f);
+                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(1.5f, 3), i, playerTrailPair.Value.Count, 0.3f);
+                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(3, 6), i, playerTrailPair.Value.Count, 1.0f);
                     prevP = p;
                 }
             }
@@ -190,7 +193,8 @@
         /// <param name="shiftVector">vector of trail shift</param>
         /// <param name="partNumber">index of trail in sequence</param>
         /// <param name="numberOfparts">length of trail</param>
-        private void DrawTrailPart(RenderTarget renderTarget, PointF prevP, PointF p, Color color, PointF shiftVector, int partNumber, int numberOfparts)
+        /// <param name="opacityModifier">modifies overall opacity of trail</param>
+        private void DrawTrailPart(RenderTarget renderTarget, PointF prevP, PointF p, Color color, PointF shiftVector, int partNumber, int numberOfparts, float opacityModifier)
         {
             float pathProgress = 1;
             const int TailLength = 10;
@@ -201,14 +205,13 @@
             }
 
             this.solidBrush.Color = color;
-            this.solidBrush.Opacity = 0.2f * pathProgress;
+            this.solidBrush.Opacity = 0.1f * pathProgress * opacityModifier;
             renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 9.0f);
-            this.solidBrush.Opacity = 0.2f * pathProgress;
+            this.solidBrush.Opacity = 0.2f * pathProgress * opacityModifier;
             renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 7.0f);
-            this.solidBrush.Opacity = 0.4f * pathProgress;
+            this.solidBrush.Opacity = 0.3f * pathProgress * opacityModifier;
             renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 3.0f);
-            this.solidBrush.Color = Color.White;
-            this.solidBrush.Opacity = 0.8f * pathProgress;
+            this.solidBrush.Opacity = 1.0f * pathProgress * opacityModifier;
             renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 1.0f);
         }
     }

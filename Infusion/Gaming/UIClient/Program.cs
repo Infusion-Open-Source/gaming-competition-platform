@@ -77,13 +77,14 @@
         {
             GameView view = (GameView)arg;
             const int NumberOfPlayers = 8;
+            const int NumberOfTeams = 8;
             const GameModeEnum GameMode = GameModeEnum.FreeForAll;
             while (true)
             {
                 var visualStateBuilder = new VisualStateBuilder();
                 var gameRunner = new GameRunner();
                 gameRunner.ConsoleOutputEnabled = false;
-                gameRunner.StartGame(NumberOfPlayers, GameMode);
+                gameRunner.StartGame(NumberOfPlayers, NumberOfTeams, GameMode);
 
                 view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game));
                 while (gameRunner.RunGame())
