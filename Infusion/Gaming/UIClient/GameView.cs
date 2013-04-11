@@ -1,6 +1,7 @@
 ﻿namespace UIClient
 {
     using System.Collections.Generic;
+    using System.Drawing;
     using SlimDX.SampleFramework;
     using SlimDX.SampleFramework.Rendering;
     using UIClient.Assets;
@@ -93,8 +94,8 @@
         {
             return new ViewConfiguration()
             {
-                WindowWidth = 1575,
-                WindowHeight = 675,
+                WindowWidth = 1280,
+                WindowHeight = 800,
                 WindowTitle = "LightCycles UI"
             };
         }
@@ -112,15 +113,17 @@
 
             this.InitializeDevice(settings);
             this.assetProvider = new AssetProvider(AssetsPath);
-            this.visualstateDrawer = new VisualStateDrawer(new List<IDrawer> 
-            {
-                new BackgroundDrawer(),
-                new ObstaclesDrawer(),
-                new GridDrawer(),
-                new TrailsDrawer(),
-                new PlayersDrawer(),
-                new UserInterfaceDrawer()
-            });
+            this.visualstateDrawer = new VisualStateDrawer(
+                new List<IDrawer> 
+                {
+                    new BackgroundDrawer(),
+                    new ObstaclesDrawer(),
+                    new GridDrawer(),
+                    new TrailsDrawer(),
+                    new PlayersDrawer(),
+                    new UserInterfaceDrawer()
+                },
+                new RectangleF(0, 0, settings.Width, settings.Height));
 
             this.visualstateDrawer.Initialize(Context2D.RenderTarget, this.assetProvider);
         }
@@ -131,7 +134,7 @@
         protected override void OnRenderBegin()
         {
             this.MoveVisualStateToDrawing();
-            if (this.visualstateDrawer != null)
+            if (this.visualstateDrawer != null && this.visualStateToDraw != null)
             {
                 this.visualstateDrawer.RenderBegin(Context2D.RenderTarget, this.visualStateToDraw);
             }
@@ -142,7 +145,7 @@
         /// </summary>
         protected override void OnRender()
         {
-            if (this.visualstateDrawer != null)
+            if (this.visualstateDrawer != null && this.visualStateToDraw != null)
             {
                 this.visualstateDrawer.Render(Context2D.RenderTarget, this.visualStateToDraw);
             }
@@ -153,7 +156,7 @@
         /// </summary>
         protected override void OnRenderEnd()
         {
-            if (this.visualstateDrawer != null)
+            if (this.visualstateDrawer != null && this.visualStateToDraw != null)
             {
                 this.visualstateDrawer.RenderEnd(Context2D.RenderTarget, this.visualStateToDraw);
             }

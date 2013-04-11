@@ -123,18 +123,7 @@
                 }
             }
 
-            locations[4, 3] = new Obstacle();
-            locations[4, 4] = new Obstacle();
-            locations[4, 5] = new Obstacle();
-            locations[3, 4] = new Obstacle();
-            locations[5, 4] = new Obstacle();
-            locations[10, 10] = new Obstacle();
-            locations[15, 10] = new Obstacle();
-            locations[15, 11] = new Obstacle();
-            locations[5, 14] = new Obstacle();
-            locations[6, 15] = new Obstacle();
-            locations[13, 14] = new Obstacle();
-            locations[12, 15] = new Obstacle();
+            // TODO: Generate random obstacles on the map
             return locations;
         }
     }

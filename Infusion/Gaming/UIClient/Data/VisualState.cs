@@ -5,17 +5,34 @@
     /// <summary>
     /// Game visual state implementation
     /// </summary>
-    public class VisualState 
+    public class VisualState
     {
         /// <summary>
-        /// Gets or sets border size
-        /// </summary>
-        public float BorderSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets grid size
+        /// Gets or sets size of the grid in pixels
         /// </summary>
         public float GridSize { get; set; }
+
+        /// <summary>
+        /// Gets half size of the grid
+        /// </summary>
+        public float GridSize2
+        {
+            get
+            {
+                return this.GridSize / 2;
+            }
+        }
+
+        /// <summary>
+        /// Gets quarter size of the grid
+        /// </summary>
+        public float GridSize4
+        {
+            get
+            {
+                return this.GridSize / 4;
+            }
+        }
 
         /// <summary>
         /// Gets or sets background layer

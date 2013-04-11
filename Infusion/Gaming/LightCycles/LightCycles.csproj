@@ -13,8 +13,6 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bots\BotFactory.cs" />
+    <Compile Include="Bots\AlwaysLeftBot.cs" />
     <Compile Include="Bots\RandomPigBot.cs" />
     <Compile Include="Bots\IBot.cs" />
     <Compile Include="Bots\LineFollowerBot.cs" />
@@ -60,6 +59,7 @@
     <Compile Include="Conditions\EndCondition.cs" />
     <Compile Include="Conditions\ICondition.cs" />
     <Compile Include="Conditions\NumberOfPlayers.cs" />
+    <Compile Include="GameInfoCollection.cs" />
     <Compile Include="Events\Filtering\IdlePlayerMoveEventAppender.cs" />
     <Compile Include="Events\Filtering\EventFilterSet.cs" />
     <Compile Include="Events\Filtering\PlayerRecentEventFilter.cs" />
@@ -73,6 +73,7 @@
     <Compile Include="Events\Processing\PlayerMovesProcessor.cs" />
     <Compile Include="Events\Processing\TrailAgingProcessor.cs" />
     <Compile Include="Extensions\QueueExtensions.cs" />
+    <Compile Include="GameInfo.cs" />
     <Compile Include="GameRunner.cs" />
     <Compile Include="LightCyclesGame.cs" />
     <Compile Include="Model\MapData\Space.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Model\MapData\Map.cs" />
     <Compile Include="Model\Data\Player.cs" />
     <Compile Include="Model\Defines\RelativeDirectionEnum.cs" />
+    <Compile Include="Model\TeamColors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -150,5 +152,4 @@
   <PropertyGroup>
     <PrepareForBuildDependsOn Condition="!Exists('$(StyleCopMSBuildTargetsFile)')">StyleCopMSBuildTargetsNotFound;$(PrepareForBuildDependsOn)</PrepareForBuildDependsOn>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

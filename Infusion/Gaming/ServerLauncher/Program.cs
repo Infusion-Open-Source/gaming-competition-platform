@@ -24,11 +24,21 @@
             const int NumberOfPlayers = 8;
             const int NumberOfTeams = 8;
             const GameModeEnum GameMode = GameModeEnum.FreeForAll;
+            var gameInfo = new GameInfo(NumberOfPlayers, NumberOfTeams, GameMode, 50, 22);
 
+            /*
+             * TODO: Server should work in following cycle:
+             * - waiting for clients mode, broadcasting info about clients connected and free slots on next game + game and players/teams assignemnts
+             *   - after all slots are filled game starts in X seconds, counter is broadcasted
+             *   - or when there are still empty slots after X seconds of wait timeout game fills empty places with bots and starts the game
+             * - game runs as per normal
+             * - at the end info about winner is broadcasted and persistes for x seconds
+             * - start again
+             */ 
             while (true)
             {
                 var gameRunner = new GameRunner();
-                gameRunner.StartGame(NumberOfPlayers, NumberOfTeams, GameMode);
+                gameRunner.StartGame(gameInfo);
                 while (gameRunner.RunGame())
                 {
                     System.Threading.Thread.Sleep(100);

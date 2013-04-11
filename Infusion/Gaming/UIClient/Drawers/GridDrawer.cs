@@ -15,7 +15,7 @@
         /// <summary>
         /// opacity of the grid
         /// </summary>
-        private const float GridOpacity = 0.2f;
+        private const float GridOpacity = 0.25f;
 
         /// <summary>
         /// color of the grid
@@ -59,23 +59,21 @@
         /// <param name="visualState">visual state of the game</param>
         public void Render(RenderTarget renderTarget, VisualState visualState)
         {
-            float w2 = visualState.GridSize / 2;
-            float h2 = visualState.GridSize / 2;
             PointF c = new PointF(0, 0);
-            PointF nw = new PointF(-w2, -h2);
-            PointF n = new PointF(0, -h2);
-            PointF ne = new PointF(w2, -h2);
-            PointF se = new PointF(w2, h2);
-            PointF s = new PointF(0, h2);
-            PointF sw = new PointF(-w2, h2);
-            PointF e = new PointF(w2, 0);
-            PointF w = new PointF(-w2, 0);
+            PointF nw = new PointF(-visualState.GridSize2, -visualState.GridSize2);
+            PointF n = new PointF(0, -visualState.GridSize2);
+            PointF ne = new PointF(visualState.GridSize2, -visualState.GridSize2);
+            PointF se = new PointF(visualState.GridSize2, visualState.GridSize2);
+            PointF s = new PointF(0, visualState.GridSize2);
+            PointF sw = new PointF(-visualState.GridSize2, visualState.GridSize2);
+            PointF e = new PointF(visualState.GridSize2, 0);
+            PointF w = new PointF(-visualState.GridSize2, 0);
 
             for (int x = 0; x < visualState.GridLayer.Width; x++)
             {
                 for (int y = 0; y < visualState.GridLayer.Height; y++)
                 {
-                    PointF p = new PointF(visualState.BorderSize + (x * visualState.GridSize), visualState.BorderSize + (y * visualState.GridSize));
+                    PointF p = new PointF(x * visualState.GridSize, y * visualState.GridSize);
                     bool hasC = visualState.GridLayer[x, y] is Visuals.Grid;
                     bool hasN = visualState.GridLayer.IsInRange(x, y - 1) && visualState.GridLayer[x, y - 1] is Visuals.Grid;
                     bool hasS = visualState.GridLayer.IsInRange(x, y + 1) && visualState.GridLayer[x, y + 1] is Visuals.Grid;

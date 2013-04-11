@@ -72,12 +72,11 @@
         /// <param name="visualState">visual state of the game</param>
         public void Render(RenderTarget renderTarget, VisualState visualState)
         {
-            float w2 = visualState.GridSize / 2;
             for (int x = 0; x < visualState.GridLayer.Width; x++)
             {
                 for (int y = 0; y < visualState.GridLayer.Height; y++)
                 {
-                    PointF p = new PointF(visualState.BorderSize + (x * visualState.GridSize), visualState.BorderSize + (y * visualState.GridSize));
+                    PointF p = new PointF(x * visualState.GridSize, y * visualState.GridSize);
                     bool obstacle = visualState.ObstaclesLayer[x, y] is Data.Visuals.Obstacle;
                     bool obstacleInN = !visualState.ObstaclesLayer.IsInRange(x, y - 1) || visualState.ObstaclesLayer[x, y - 1] is Data.Visuals.Obstacle;
                     bool obstacleInS = !visualState.ObstaclesLayer.IsInRange(x, y + 1) || visualState.ObstaclesLayer[x, y + 1] is Data.Visuals.Obstacle;
@@ -98,7 +97,7 @@
                         // +--+--+
                         // |  |  |
                         // +--+--+
-                        var destRect = new RectangleF(p.X - w2, p.Y - w2, visualState.GridSize / 2, visualState.GridSize / 2);
+                        var destRect = new RectangleF(p.X - visualState.GridSize2, p.Y - visualState.GridSize2, visualState.GridSize2, visualState.GridSize2);
                         if (obstacleInNW)
                         {
                             if (obstacleInW && obstacleInN)
@@ -142,7 +141,7 @@
                         // +--+--+
                         // |  |  |
                         // +--+--+
-                        destRect = new RectangleF(p.X, p.Y - w2, visualState.GridSize / 2, visualState.GridSize / 2);
+                        destRect = new RectangleF(p.X, p.Y - visualState.GridSize2, visualState.GridSize2, visualState.GridSize2);
                         if (obstacleInNE)
                         {
                             if (obstacleInE && obstacleInN)
@@ -186,7 +185,7 @@
                         // +--+--+
                         // |##|  |
                         // +--+--+
-                        destRect = new RectangleF(p.X - w2, p.Y, visualState.GridSize / 2, visualState.GridSize / 2);
+                        destRect = new RectangleF(p.X - visualState.GridSize2, p.Y, visualState.GridSize2, visualState.GridSize2);
                         if (obstacleInSW)
                         {
                             if (obstacleInW && obstacleInS)
@@ -230,7 +229,7 @@
                         // +--+--+
                         // |  |##|
                         // +--+--+
-                        destRect = new RectangleF(p.X, p.Y, visualState.GridSize / 2, visualState.GridSize / 2);
+                        destRect = new RectangleF(p.X, p.Y, visualState.GridSize2, visualState.GridSize2);
                         if (obstacleInSE)
                         {
                             if (obstacleInE && obstacleInS)

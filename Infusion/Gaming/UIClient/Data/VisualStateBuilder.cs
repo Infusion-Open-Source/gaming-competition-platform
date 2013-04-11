@@ -1,6 +1,7 @@
 ﻿namespace UIClient.Data
 {
     using System;
+    using System.Drawing;
     using Infusion.Gaming.LightCycles.Model;
     using UIClient.Data.Visuals;
     using GameData = Infusion.Gaming.LightCycles.Model.Data;
@@ -15,8 +16,9 @@
         /// Create visual state from game state
         /// </summary>
         /// <param name="game">game state to consider</param>
+        /// <param name="windowRect">game window dimensions</param>
         /// <returns>visual state of the game</returns>
-        public VisualState CreateVisualState(IGame game)
+        public VisualState CreateVisualState(IGame game, RectangleF windowRect)
         {
             if (game == null)
             {
@@ -24,10 +26,13 @@
             }
 
             VisualState result = new VisualState();
-            result.BorderSize = 50;
-            result.GridSize = 30;
             result = this.AddMapData(game.CurrentState.Map, result);
             result = this.AddPlayerData(game.CurrentState.PlayersData, result);
+
+            // adjust size of the grid accordingly to size of the map
+            float widthRatio = windowRect.Width / result.GridLayer.Width;
+            float heightRatio = windowRect.Height / result.GridLayer.Height;
+            result.GridSize = (int)(0.99f * Math.Min(widthRatio, heightRatio));
             
             /*
             TODO: add as visuals on user interface layer

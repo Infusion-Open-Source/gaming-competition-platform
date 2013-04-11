@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Threading;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
@@ -31,6 +32,7 @@
 
             this.Player = player;
             this.random = new Random((int)DateTime.Now.Ticks);
+            Thread.Sleep(0);
         }
 
         /// <summary>

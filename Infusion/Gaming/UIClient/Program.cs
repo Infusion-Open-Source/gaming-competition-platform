@@ -1,6 +1,7 @@
 ﻿namespace UIClient
 {
     using System;
+    using System.Drawing;
     using System.Threading;
     using Infusion.Gaming.LightCycles;
     using Infusion.Gaming.LightCycles.Model.Defines;
@@ -76,20 +77,36 @@
         public static void GameThread(object arg)
         {
             GameView view = (GameView)arg;
-            const int NumberOfPlayers = 8;
-            const int NumberOfTeams = 8;
-            const GameModeEnum GameMode = GameModeEnum.FreeForAll;
+
+            GameInfoCollection gameInfoCycle = new GameInfoCollection
+            {
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, 30, 20),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\infusion_logo.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\pac_man.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\pac_man2.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\spiral.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\world.png"),
+
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, 30, 20),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\infusion_logo.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\pac_man.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\pac_man2.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\spiral.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\world.png"),
+            };
+            
             while (true)
             {
                 var visualStateBuilder = new VisualStateBuilder();
                 var gameRunner = new GameRunner();
                 gameRunner.ConsoleOutputEnabled = false;
-                gameRunner.StartGame(NumberOfPlayers, NumberOfTeams, GameMode);
+                gameRunner.StartGame(gameInfoCycle.Cycle());
 
-                view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game));
+                var windowRect = new RectangleF(0, 0, view.WindowWidth, view.WindowHeight);
+                view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
                 while (gameRunner.RunGame())
                 {
-                    view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game));
+                    view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
                     if (AbortGameThread)
                     {
                         break;
@@ -98,7 +115,7 @@
                     System.Threading.Thread.Sleep(100);
                 }
 
-                view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game));
+                view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
                 gameRunner.EndGame();
                 if (AbortGameThread)
                 {

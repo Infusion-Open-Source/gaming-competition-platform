@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
+    using Infusion.Gaming.LightCycles.Model;
     using SlimDX;
     using SlimDX.Direct2D;
     using UIClient.Assets;
@@ -18,27 +19,7 @@
         /// brush used for drawing
         /// </summary>
         private SolidColorBrush solidBrush;
-
-        /// <summary>
-        /// TODO: this needs to be moved to separate common class
-        /// dictionary with team colors
-        /// </summary>
-        private Dictionary<char, Color> teamColors = new Dictionary<char, Color>
-        {
-            { 'A', Color.FromArgb(255, 0, 0) },
-            { 'B', Color.FromArgb(0, 255, 0) },
-            { 'C', Color.FromArgb(0, 0, 255) },
-            { 'D', Color.FromArgb(255, 255, 0) },
-            { 'E', Color.FromArgb(255, 0, 255) },
-            { 'F', Color.FromArgb(0, 255, 255) },
-            { 'G', Color.FromArgb(255, 127, 0) },
-            { 'H', Color.FromArgb(255, 0, 127) },
-            { 'I', Color.FromArgb(127, 0, 255) },
-            { 'J', Color.FromArgb(0, 255, 127) },
-            { 'K', Color.FromArgb(0, 127, 255) },
-            { 'L', Color.FromArgb(127, 255, 0) },
-        };
-
+        
         /// <summary>
         /// Initialize drawer, create managed resources
         /// </summary>
@@ -72,7 +53,7 @@
                 for (int i = 0; i < playerTrailPair.Value.Count; i++)
                 {
                     Point point = playerTrailPair.Value[i];
-                    PointF p = new PointF(visualState.BorderSize + (point.X * visualState.GridSize), visualState.BorderSize + (point.Y * visualState.GridSize));
+                    PointF p = new PointF(point.X * visualState.GridSize, point.Y * visualState.GridSize);
 
                     if (prevP == PointF.Empty)
                     {
@@ -80,10 +61,15 @@
                         continue;
                     }
 
-                    var color = this.teamColors[playersAndTeams[playerTrailPair.Key]];
-                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(0, 0), i, playerTrailPair.Value.Count, 1.0f);
-                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(1.5f, 3), i, playerTrailPair.Value.Count, 0.3f);
-                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(3, 6), i, playerTrailPair.Value.Count, 1.0f);
+                    float trailLarge = 3.0f;
+                    float trailSmall = 1.5f;
+                    float trail = visualState.GridSize > 7 ? trailLarge : trailSmall;
+                    float trail2 = trail / 2;
+
+                    var color = TeamColors.Data[playersAndTeams[playerTrailPair.Key]];
+                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(-trail2, -trail), i, playerTrailPair.Value.Count, 1.0f);
+                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(0.0f, 0.0f), i, playerTrailPair.Value.Count, 0.3f);
+                    this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(trail2, trail), i, playerTrailPair.Value.Count, 1.0f);
                     prevP = p;
                 }
             }
@@ -204,15 +190,17 @@
                 pathProgress = (float)Math.Pow((1.0f * tail) / TailLength, 1);
             }
 
+            var strokeStyle = new StrokeStyle(renderTarget.Factory, new StrokeStyleProperties { LineJoin = LineJoin.Round });
+
             this.solidBrush.Color = color;
             this.solidBrush.Opacity = 0.1f * pathProgress * opacityModifier;
-            renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 9.0f);
+            renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 9.0f, strokeStyle);
             this.solidBrush.Opacity = 0.2f * pathProgress * opacityModifier;
-            renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 7.0f);
+            renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 7.0f, strokeStyle);
             this.solidBrush.Opacity = 0.3f * pathProgress * opacityModifier;
-            renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 3.0f);
+            renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 3.0f, strokeStyle);
             this.solidBrush.Opacity = 1.0f * pathProgress * opacityModifier;
-            renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 1.0f);
+            renderTarget.DrawLine(this.solidBrush, prevP.X + shiftVector.X, prevP.Y + shiftVector.Y, p.X + shiftVector.X, p.Y + shiftVector.Y, 1.0f, strokeStyle);
         }
     }
 }

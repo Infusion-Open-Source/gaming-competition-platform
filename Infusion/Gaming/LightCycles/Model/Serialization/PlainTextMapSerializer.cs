@@ -81,7 +81,7 @@
             Location[,] data = new Location[this.Width, this.Height];
             for (int x = 0; x < this.Width; x++)
             {
-                for (int y = 0; y < this.Width; y++)
+                for (int y = 0; y < this.Height; y++)
                 {
                     data[x, y] = this.Read(x, y);
                 }
@@ -104,7 +104,7 @@
             this.Create(map.Width, map.Height);
             for (int x = 0; x < map.Width; x++)
             {
-                for (int y = 0; y < map.Width; y++)
+                for (int y = 0; y < map.Height; y++)
                 {
                     this.Write(x, y, map[x, y]);
                 }
@@ -145,7 +145,7 @@
             {
                 for (int x = 0; x < this.Width; x++)
                 {
-                    for (int y = 0; y < this.Width; y++)
+                    for (int y = 0; y < this.Height; y++)
                     {
                         writer.Write(this.buffer[x, y]);
                     }
@@ -171,7 +171,7 @@
                 throw new ArgumentOutOfRangeException("x");
             }
 
-            if (y <= 0 || x >= this.Height)
+            if (y <= 0 || y >= this.Height)
             {
                 throw new ArgumentOutOfRangeException("y");
             }
@@ -208,7 +208,7 @@
                 throw new ArgumentOutOfRangeException("x");
             }
 
-            if (y <= 0 || x >= this.Height)
+            if (y <= 0 || y >= this.Height)
             {
                 throw new ArgumentOutOfRangeException("y");
             }

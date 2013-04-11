@@ -3,8 +3,10 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
+    using Infusion.Gaming.LightCycles.Model;
     using SlimDX;
     using SlimDX.Direct2D;
+    using SlimDX.DirectWrite;
     using UIClient.Assets;
     using UIClient.Data;
 
@@ -14,30 +16,15 @@
     public class PlayersDrawer : IDrawer
     {
         /// <summary>
+        /// DirectWrite factory for creation of rendered text
+        /// </summary>
+        private SlimDX.DirectWrite.Factory factory;
+
+        /// <summary>
         /// brush to draw bike
         /// </summary>
         private SolidColorBrush solidBrush;
-
-        /// <summary>
-        /// TODO: this need to be moved to common separate class
-        /// dictionary of team colors
-        /// </summary>
-        private Dictionary<char, Color> teamColors = new Dictionary<char, Color>
-        {
-            { 'A', Color.FromArgb(255, 0, 0) },
-            { 'B', Color.FromArgb(0, 255, 0) },
-            { 'C', Color.FromArgb(0, 0, 255) },
-            { 'D', Color.FromArgb(255, 255, 0) },
-            { 'E', Color.FromArgb(255, 0, 255) },
-            { 'F', Color.FromArgb(0, 255, 255) },
-            { 'G', Color.FromArgb(255, 127, 0) },
-            { 'H', Color.FromArgb(255, 0, 127) },
-            { 'I', Color.FromArgb(127, 0, 255) },
-            { 'J', Color.FromArgb(0, 255, 127) },
-            { 'K', Color.FromArgb(0, 127, 255) },
-            { 'L', Color.FromArgb(127, 255, 0) },
-        };
-
+        
         /// <summary>
         /// bitmap with a bike 
         /// </summary>
@@ -70,6 +57,8 @@
             this.bikeE = assetProvider.LoadBitmap("bikeE.png", renderTarget);
             this.bikeW = assetProvider.LoadBitmap("bikeW.png", renderTarget);
             this.solidBrush = new SolidColorBrush(renderTarget, new Color4(1.0f, 0.0f, 0.0f), new BrushProperties { Opacity = 0.7f });
+
+            this.factory = new SlimDX.DirectWrite.Factory(SlimDX.DirectWrite.FactoryType.Isolated);
         }
 
         /// <summary>
@@ -88,21 +77,15 @@
         /// <param name="visualState">visual state of the game</param>
         public void Render(RenderTarget renderTarget, VisualState visualState)
         {
-            float w2 = visualState.GridSize / 2;
-            float w4 = visualState.GridSize / 4;
             var playersAndTeams = this.GetPlayers(visualState);
             foreach (KeyValuePair<char, List<Point>> playerTrailPair in this.GetTrailPaths(visualState, playersAndTeams))
             {
-                var color = this.teamColors[playersAndTeams[playerTrailPair.Key]];
-                PointF p = new PointF(
-                    visualState.BorderSize + (playerTrailPair.Value[0].X * visualState.GridSize),
-                    visualState.BorderSize + (playerTrailPair.Value[0].Y * visualState.GridSize));
-                
+                var color = TeamColors.Data[playersAndTeams[playerTrailPair.Key]];
+                PointF p = new PointF(playerTrailPair.Value[0].X * visualState.GridSize, playerTrailPair.Value[0].Y * visualState.GridSize);
+
                 int prevPIndex = (playerTrailPair.Value.Count > 1) ? 1 : 0;
 
-                PointF prevP = new PointF(
-                    visualState.BorderSize + (playerTrailPair.Value[prevPIndex].X * visualState.GridSize),
-                    visualState.BorderSize + (playerTrailPair.Value[prevPIndex].Y * visualState.GridSize));
+                PointF prevP = new PointF(playerTrailPair.Value[prevPIndex].X * visualState.GridSize, playerTrailPair.Value[prevPIndex].Y * visualState.GridSize);
 
                 bool isHorizontal;
                 SlimDX.Direct2D.Bitmap bitmapToDraw;
@@ -130,19 +113,28 @@
                 RectangleF destRect;
                 if (isHorizontal)
                 {
-                    destRect = new RectangleF(p.X - w2, p.Y - w4, visualState.GridSize, visualState.GridSize / 2);
+                    destRect = new RectangleF(p.X - visualState.GridSize2, p.Y - visualState.GridSize4, visualState.GridSize, visualState.GridSize2);
                 }
                 else
                 {
-                    destRect = new RectangleF(p.X - w4, p.Y - w2, visualState.GridSize / 2, visualState.GridSize);
+                    destRect = new RectangleF(p.X - visualState.GridSize4, p.Y - visualState.GridSize2, visualState.GridSize2, visualState.GridSize);
                 }
 
                 renderTarget.DrawBitmap(bitmapToDraw, destRect);
 
                 this.solidBrush.Opacity = 0.3f;
                 this.solidBrush.Color = color;
-                renderTarget.FillEllipse(this.solidBrush, new Ellipse() { Center = p, RadiusX = isHorizontal ? 17 : 10, RadiusY = isHorizontal ? 10 : 17 });
-                renderTarget.FillEllipse(this.solidBrush, new Ellipse() { Center = p, RadiusX = isHorizontal ? 10 : 5, RadiusY = isHorizontal ? 5 : 10 }); 
+                float elypseLarge = visualState.GridSize2 + 2;
+                float elypseMid = visualState.GridSize4 + 2;
+                float elypseSmall = visualState.GridSize4 - 2;
+                renderTarget.FillEllipse(this.solidBrush, new Ellipse() { Center = p, RadiusX = isHorizontal ? elypseLarge : elypseMid, RadiusY = isHorizontal ? elypseMid : elypseLarge });
+                renderTarget.FillEllipse(this.solidBrush, new Ellipse() { Center = p, RadiusX = isHorizontal ? elypseMid : elypseSmall, RadiusY = isHorizontal ? elypseSmall : elypseMid });
+                this.solidBrush.Opacity = 0.5f;
+                renderTarget.DrawText(
+                    "Player " + playerTrailPair.Key,
+                    new TextFormat(this.factory, "Courier", FontWeight.ExtraBold, SlimDX.DirectWrite.FontStyle.Normal, FontStretch.Normal, visualState.GridSize2, string.Empty),
+                    new RectangleF(p.X + 20, p.Y - 20, 400, 50),
+                    this.solidBrush);
             }
         }
 
@@ -165,6 +157,7 @@
             this.bikeE.Dispose();
             this.bikeW.Dispose();
             this.solidBrush.Dispose();
+            this.factory.Dispose();
         }
 
         /// <summary>

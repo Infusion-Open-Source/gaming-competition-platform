@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using SlimDX;
     using SlimDX.Direct2D;
     using UIClient.Assets;
@@ -16,7 +17,8 @@
         /// Initializes a new instance of the <see cref="VisualStateDrawer" /> class.
         /// </summary>
         /// <param name="internalDrawers">set of internal drawers</param>
-        public VisualStateDrawer(IEnumerable<IDrawer> internalDrawers)
+        /// <param name="windowDimensions">window dimensions rectangle</param>
+        public VisualStateDrawer(IEnumerable<IDrawer> internalDrawers, RectangleF windowDimensions)
         {
             if (internalDrawers == null)
             {
@@ -24,6 +26,45 @@
             }
 
             this.InternalDrawers = new List<IDrawer>(internalDrawers);
+            this.GameDimensions = new RectangleF(0, 0, 0, 0);
+            this.WindowDimensions = windowDimensions;
+        }
+
+        /// <summary>
+        /// Gets or sets game view focus point
+        /// </summary>
+        public PointF FocusPoint { get; protected set; }
+        
+        /// <summary>
+        /// Gets or sets game dimensions
+        /// </summary>
+        public RectangleF GameDimensions { get; protected set; }
+
+        /// <summary>
+        /// Gets game center point
+        /// </summary>
+        public PointF GameCenter
+        {
+            get
+            {
+                return new PointF(this.GameDimensions.Width / 2, this.GameDimensions.Height / 2);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets window dimensions
+        /// </summary>
+        public RectangleF WindowDimensions { get; protected set; }
+
+        /// <summary>
+        /// Gets window center point
+        /// </summary>
+        public PointF WindowCenter
+        {
+            get
+            {
+                return new PointF(this.WindowDimensions.Width / 2, this.WindowDimensions.Height / 2);
+            }
         }
 
         /// <summary>
@@ -41,7 +82,7 @@
             foreach (IDrawer drawer in this.InternalDrawers)
             {
                 drawer.Initialize(renderTarget, assetProvider);
-            }
+            }            
         }
 
         /// <summary>
@@ -51,8 +92,12 @@
         /// <param name="visualState">visual state of the game</param>
         public void RenderBegin(RenderTarget renderTarget, VisualState visualState)
         {
+            // recalculate game area
+            this.GameDimensions = new RectangleF(0, 0, visualState.GridLayer.Width * visualState.GridSize, visualState.GridLayer.Height * visualState.GridSize);
+            this.FocusPoint = this.GameCenter;
+
             renderTarget.BeginDraw();
-            renderTarget.Transform = Matrix3x2.Identity;
+            renderTarget.Transform = Matrix3x2.Translation(-this.FocusPoint.X, -this.FocusPoint.Y) * Matrix3x2.Scale(1.0f, 1.0f) * Matrix3x2.Translation(this.WindowCenter.X, this.WindowCenter.Y);
             foreach (IDrawer drawer in this.InternalDrawers)
             {
                 drawer.RenderBegin(renderTarget, visualState);

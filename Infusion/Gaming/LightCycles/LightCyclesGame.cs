@@ -17,30 +17,32 @@
     public class LightCyclesGame : Game
     {
         /// <summary>
-        /// Starts game with random map
+        /// Starts a game with a random map
         /// </summary>
-        /// <param name="numberOfPlayers">number of players in the game</param>
-        /// <param name="numberOfTeams">number of teams in the game</param>
-        /// <param name="gameMode">game mode to be played</param>
-        public void StartOnRandomMap(int numberOfPlayers, int numberOfTeams, GameModeEnum gameMode)
+        /// <param name="gameInfo">game start info</param>
+        public void Start(GameInfo gameInfo)
         {
-            if (gameMode == GameModeEnum.TeamDeathMatch && numberOfTeams >= numberOfPlayers)
+            IMap map;
+            if (gameInfo.UseMapFile)
             {
-                throw new ArgumentOutOfRangeException("numberOfTeams", "in TeamDeatchMatch game number of teams must be the less than a number of players");
+                IMapSerializer mapSerializer = new ImageMapSerializer(gameInfo.MapFileName);
+                mapSerializer.Load();
+                map = mapSerializer.Read();
             }
-
-            if (gameMode == GameModeEnum.FreeForAll && numberOfTeams != numberOfPlayers)
+            else
             {
-                throw new ArgumentOutOfRangeException("numberOfTeams", "in FreeForAll game number of teams must be the same as number of players");
+                map = new MapGenerator().GenerateMap(gameInfo.MapWidth, gameInfo.MapHeight, gameInfo.NumberOfPlayers, gameInfo.NumberOfTeams);
             }
             
-            // init
-            IMap map = new MapGenerator().GenerateMap(50, 20, numberOfPlayers, numberOfTeams);
+            if (map == null)
+            {
+                throw new GameException("Map is NULL, terminating");
+            }
 
             EndConditionSet endConditions = new EndConditionSet();
             endConditions.Add(new EndCondition(new NumberOfPlayers(0), GameResultEnum.FinishedWithoutWinner));
 
-            switch (gameMode)
+            switch (gameInfo.GameMode)
             {
                 case GameModeEnum.FreeForAll:
                     endConditions.Add(new EndCondition(new NumberOfPlayers(1), GameResultEnum.FinshedWithWinner));
@@ -49,7 +51,7 @@
                     endConditions.Add(new EndCondition(new NumberOfTeams(1), GameResultEnum.FinshedWithWinners));
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("gameMode");
+                    throw new ArgumentOutOfRangeException("gameInfo");
             }
 
             EventFilterSet eventFilters = new EventFilterSet();
@@ -72,7 +74,7 @@
 
             // start
             this.Start(
-                GameModeEnum.FreeForAll,
+                gameInfo.GameMode,
                 players,
                 map,
                 endConditions,

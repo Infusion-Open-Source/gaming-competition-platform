@@ -39,14 +39,12 @@
         /// <summary>
         /// Start a game
         /// </summary>
-        /// <param name="numberOfPlayers">number of players in the game</param>
-        /// <param name="numberOfTeams">number of teams in the game</param>
-        /// <param name="gameMode">game mode to be played</param>
-        public void StartGame(int numberOfPlayers, int numberOfTeams, GameModeEnum gameMode)
+        /// <param name="gameInfo">game start info</param>
+        public void StartGame(GameInfo gameInfo)
         {
             var botsFactory = new BotFactory();
             this.Game = new LightCyclesGame();
-            ((LightCyclesGame)this.Game).StartOnRandomMap(numberOfPlayers, numberOfTeams, gameMode);
+            ((LightCyclesGame)this.Game).Start(gameInfo);
             foreach (var player in this.Game.CurrentState.PlayersData.Players)
             {
                 this.bots.Add(botsFactory.CreateBot(player));
@@ -57,7 +55,7 @@
                 this.ShowGameState();
             }
         }
-
+        
         /// <summary>
         /// Run a game step
         /// </summary>

@@ -13,23 +13,6 @@
     public class ImageMapSerializer : IMapSerializer
     {
         /// <summary>
-        /// Predefined colors for the teams
-        /// </summary>
-        private Color[] teamColors = new[] 
-        {
-            Color.Red,
-            Color.Blue,
-            Color.Yellow,
-            Color.YellowGreen,
-            Color.Green,
-            Color.Violet,
-            Color.Orange,
-            Color.Tomato,
-            Color.Aqua,
-            Color.Coral
-        };
-
-        /// <summary>
         /// internal pixel buffer for map data
         /// </summary>
         private Color[,] buffer;
@@ -99,34 +82,42 @@
             Location[,] data = new Location[this.Width, this.Height];
             char nextPlayer = 'A';
             char nextTeam = 'A';
+            bool isTeamGame = this.CountNumberOfTeams() > 1;
             Dictionary<Color, char> teams = new Dictionary<Color, char>();
             for (int x = 0; x < this.Width; x++)
             {
-                for (int y = 0; y < this.Width; y++)
+                for (int y = 0; y < this.Height; y++)
                 {
                     Color c = this.buffer[x, y];
-                    if (c == Color.Black)
+                    if (c.R == 0 && c.G == 0 && c.B == 0)
                     {
                         data[x, y] = new Obstacle();
                     }
-                    else if (c == Color.White)
+                    else if (c.R == 255 && c.G == 255 && c.B == 255)
                     {
                         data[x, y] = new Space();
                     }
                     else
                     {
                         char player = nextPlayer++;
-                        char team = nextTeam;
-                        if (teams.ContainsKey(c))
+                        if (isTeamGame)
                         {
-                            team = teams[c];
+                            char team = nextTeam;
+                            if (teams.ContainsKey(c))
+                            {
+                                team = teams[c];
+                            }
+                            else
+                            {
+                                teams.Add(c, nextTeam++);
+                            }
+
+                            data[x, y] = new PlayersStartingLocation(new Player(player, new Team(team)));
                         }
                         else
                         {
-                            teams.Add(c, nextTeam++);
+                            data[x, y] = new PlayersStartingLocation(new Player(player));
                         }
-
-                        data[x, y] = new PlayersStartingLocation(new Player(player, new Team(team)));
                     }
                 }
             }
@@ -150,7 +141,7 @@
             this.Create(map.Width, map.Height);
             for (int x = 0; x < map.Width; x++)
             {
-                for (int y = 0; y < map.Width; y++)
+                for (int y = 0; y < map.Height; y++)
                 {
                     var location = map[x, y];
                     if (location is Obstacle)
@@ -166,10 +157,10 @@
                         PlayersStartingLocation playerStartingLocation = (PlayersStartingLocation)location;
                         if (!teams.ContainsKey(playerStartingLocation.Player.Team.Id))
                         {
-                            teams.Add(playerStartingLocation.Player.Team.Id, this.teamColors[nextTeamColor++]);
+                            teams.Add(playerStartingLocation.Player.Team.Id, TeamColors.Data[nextTeamColor++]);
                         }
 
-                        this.buffer[x, y] = this.teamColors[playerStartingLocation.Player.Team.Id];
+                        this.buffer[x, y] = TeamColors.Data[playerStartingLocation.Player.Team.Id];
                     }
                     else
                     {
@@ -189,7 +180,7 @@
                 this.Create(image.Width, image.Height);
                 for (int x = 0; x < this.Width; x++)
                 {
-                    for (int y = 0; y < this.Width; y++)
+                    for (int y = 0; y < this.Height; y++)
                     {
                         this.buffer[x, y] = image.GetPixel(x, y);
                     }
@@ -211,7 +202,7 @@
             {
                 for (int x = 0; x < this.Width; x++)
                 {
-                    for (int y = 0; y < this.Width; y++)
+                    for (int y = 0; y < this.Height; y++)
                     {
                         image.SetPixel(x, y, this.buffer[x, y]);
                     }
@@ -219,6 +210,39 @@
 
                 image.Save(this.FileName, ImageFormat.Png);
             }
-        }        
+        }
+
+        /// <summary>
+        /// Count number of teams on buffered map
+        /// </summary>
+        /// <returns>number of teams</returns>
+        private int CountNumberOfTeams()
+        {
+            Dictionary<Color, char> teams = new Dictionary<Color, char>();
+            char nextTeam = 'A';
+            for (int x = 0; x < this.Width; x++)
+            {
+                for (int y = 0; y < this.Height; y++)
+                {
+                    Color c = this.buffer[x, y];
+                    if (c.R == 0 && c.G == 0 && c.B == 0)
+                    {
+                        continue;
+                    }
+                    
+                    if (c.R == 255 && c.G == 255 && c.B == 255)
+                    {
+                        continue;
+                    }
+                    
+                    if (!teams.ContainsKey(c))
+                    {
+                        teams.Add(c, nextTeam++);
+                    }
+                }
+            }
+
+            return teams.Count;
+        }
     }
 }

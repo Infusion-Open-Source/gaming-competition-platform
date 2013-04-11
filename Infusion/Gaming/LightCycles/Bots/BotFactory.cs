@@ -20,13 +20,17 @@
         /// <returns>brand new bot</returns>
         public IBot CreateBot(Player player)
         {
-            if (this.random.NextDouble() > 0.5)
+            if (this.random.NextDouble() > 0.66)
             {
                 return new RandomPigBot(player);
             }
-            else
+            else if (this.random.NextDouble() > 0.33)
             {
                 return new LineFollowerBot(player);
+            }
+            else
+            {
+                return new AlwaysLeftBot(player);
             }
         }
 
@@ -48,6 +52,11 @@
                 return new LineFollowerBot(player);
             }
 
+            if (string.Equals(name, "AlwaysLeftBot", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new AlwaysLeftBot(player);
+            }
+            
             return new LineFollowerBot(player);
         }
     }

@@ -16,7 +16,7 @@
         /// The player id.
         /// </param>
         public Player(char id)
-            : this(id, null)
+            : this(id, new Team(id))
         {
         }
 
@@ -35,6 +35,11 @@
             if (id < 'A' || id > 'Z')
             {
                 throw new ArgumentOutOfRangeException("id");
+            }
+
+            if (team == null)
+            {
+                throw new ArgumentNullException("team");
             }
 
             this.Id = id;

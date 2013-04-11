@@ -10,9 +10,9 @@
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
-    /// Class of LineFollower Bot - computer player preferring going straight, turning only to avoid collision
+    /// Class of AlwaysLeftBot Bot - computer player preferring turning left whenever possible
     /// </summary>
-    public class LineFollowerBot : IBot
+    public class AlwaysLeftBot : IBot
     {
         /// <summary>
         /// The internal random number generator.
@@ -20,10 +20,10 @@
         private readonly Random random;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LineFollowerBot" /> class.
+        /// Initializes a new instance of the <see cref="AlwaysLeftBot" /> class.
         /// </summary>
         /// <param name="player">assigned player</param>
-        public LineFollowerBot(Player player)
+        public AlwaysLeftBot(Player player)
         {
             if (player == null)
             {
@@ -94,13 +94,13 @@
             // is no way to go, go straight ahead
             if (safeDirections.Count == 0)
             {
-                return RelativeDirectionEnum.StraightForward;
+                return RelativeDirectionEnum.Left;
             }
 
-            // if can go streight, go streight - makes it look more fancy ;)
-            if (safeDirections.Contains(RelativeDirectionEnum.StraightForward))
+            // if can go left then always pick left
+            if (safeDirections.Contains(RelativeDirectionEnum.Left))
             {
-                return RelativeDirectionEnum.StraightForward;
+                return RelativeDirectionEnum.Left;
             }
 
             // pick one randomly 
