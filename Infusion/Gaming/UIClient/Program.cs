@@ -2,6 +2,7 @@
 {
     using System;
     using System.Drawing;
+    using System.IO;
     using System.Threading;
     using Infusion.Gaming.LightCycles;
     using Infusion.Gaming.LightCycles.Model.Defines;
@@ -76,32 +77,39 @@
         /// <param name="arg">thread argument</param>
         public static void GameThread(object arg)
         {
+            const string MapsPath = @"..\..\..\Maps";
             GameView view = (GameView)arg;
-
+            
             GameInfoCollection gameInfoCycle = new GameInfoCollection
             {
                 new GameInfo(8, 8, GameModeEnum.FreeForAll, 30, 20),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\infusion_logo.png"),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\pac_man.png"),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\pac_man2.png"),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\spiral.png"),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\world.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\infusion_logo.png")),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\pac_man.png")),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\pac_man2.png")),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\spiral.png")),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\world.png")),
 
                 new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, 30, 20),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\infusion_logo.png"),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\pac_man.png"),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\pac_man2.png"),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\spiral.png"),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\world.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\infusion_logo.png")),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\pac_man.png")),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\pac_man2.png")),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\spiral.png")),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\world.png")),
             };
             
             while (true)
             {
+                if (!view.IsInitialized)
+                {
+                    Thread.Sleep(100);
+                    continue;
+                }
+
                 var visualStateBuilder = new VisualStateBuilder();
                 var gameRunner = new GameRunner();
                 gameRunner.ConsoleOutputEnabled = false;
                 gameRunner.StartGame(gameInfoCycle.Cycle());
-
+                
                 var windowRect = new RectangleF(0, 0, view.WindowWidth, view.WindowHeight);
                 view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
                 while (gameRunner.RunGame())
@@ -112,7 +120,7 @@
                         break;
                     }
                     
-                    System.Threading.Thread.Sleep(100);
+                    Thread.Sleep(100);
                 }
 
                 view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
@@ -122,7 +130,7 @@
                     break;
                 }
                 
-                System.Threading.Thread.Sleep(1000);    
+                Thread.Sleep(1000);    
             }
         }
     }

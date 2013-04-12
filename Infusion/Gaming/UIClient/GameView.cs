@@ -41,7 +41,12 @@
         /// provider of game assets
         /// </summary>
         private IAssetProvider assetProvider;
-        
+
+        /// <summary>
+        /// Gets or sets a value indicating whether view has been initialized
+        /// </summary>
+        public bool IsInitialized { get; protected set; }
+
         /// <summary>
         /// Update reference of current game visual state
         /// </summary>
@@ -126,6 +131,11 @@
                 new RectangleF(0, 0, settings.Width, settings.Height));
 
             this.visualstateDrawer.Initialize(Context2D.RenderTarget, this.assetProvider);
+
+            lock (this.visualStateSyncRoot)
+            {
+                this.IsInitialized = true;
+            }
         }
 
         /// <summary>

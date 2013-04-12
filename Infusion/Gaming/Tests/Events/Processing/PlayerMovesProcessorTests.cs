@@ -67,7 +67,7 @@
         [Test]
         public void PlayerMovesProcessorIgnoresCollisionEvent()
         {
-            Event e = new PlayerMoveEvent(new Player('A'), RelativeDirectionEnum.Left);
+            Event e = new PlayerCollisionEvent(new Player('A'));
             IEnumerable<Event> newEvents;
 
             PlayerMovesProcessor processor = new PlayerMovesProcessor();
