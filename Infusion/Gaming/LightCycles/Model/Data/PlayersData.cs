@@ -232,5 +232,25 @@
                 this.RemovePlayer(player);
             }
         }
+
+        /// <summary>
+        /// Ages players trails
+        /// </summary>
+        /// <param name="gameTurn">Game turn.</param>
+        /// <param name="fadingSpeed">Fading speed.</param>
+        public void AgeTrails(int gameTurn, float fadingSpeed)
+        {
+            for (int y = 0; y < this.Height; y++)
+            {
+                for (int x = 0; x < this.Width; x++)
+                {
+                    Trail obj = this[x, y] as Trail;
+                    if (obj != null && obj.Age >= gameTurn * (1 - fadingSpeed))
+                    {
+                        this[x, y] = null;
+                    }
+                }
+            }
+        }
     }
 }

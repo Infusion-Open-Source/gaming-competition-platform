@@ -61,5 +61,12 @@
         /// The players to be removed.
         /// </param>
         void RemovePlayers(IEnumerable<Player> playersToRemove);
+
+        /// <summary>
+        /// Ages players trails
+        /// </summary>
+        /// <param name="gameTurn">Game turn.</param>
+        /// <param name="fadingSpeed">Fading speed.</param>
+        void AgeTrails(int gameTurn, float fadingSpeed);
     }
 }

@@ -10,7 +10,7 @@
     /// <summary>
     /// Processor for player move events.
     /// Reflects result of player move events.
-    /// I player collides with something then feeds with new collision events.
+    /// If player collides with something then feeds with new collision events.
     /// </summary>
     public class PlayerMovesProcessor : IEventProcessor
     {

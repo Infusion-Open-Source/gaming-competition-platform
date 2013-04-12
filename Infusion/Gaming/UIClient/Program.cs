@@ -81,18 +81,18 @@
             GameInfoCollection gameInfoCycle = new GameInfoCollection
             {
                 new GameInfo(8, 8, GameModeEnum.FreeForAll, 30, 20),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\infusion_logo.png"),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\pac_man.png"),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\pac_man2.png"),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\spiral.png"),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Projects\devel\Infusion\Gaming\Maps\FreeForAll\world.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\infusion_logo.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\pac_man.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\pac_man2.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\spiral.png"),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\FreeForAll\world.png"),
 
                 new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, 30, 20),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\infusion_logo.png"),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\pac_man.png"),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\pac_man2.png"),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\spiral.png"),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Projects\devel\Infusion\Gaming\Maps\TeamDeathmatch\world.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\infusion_logo.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\pac_man.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\pac_man2.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\spiral.png"),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, @"C:\Users\pdrozdowski\Projects\Infusion\master\Infusion\Gaming\Maps\TeamDeathmatch\world.png"),
             };
             
             while (true)

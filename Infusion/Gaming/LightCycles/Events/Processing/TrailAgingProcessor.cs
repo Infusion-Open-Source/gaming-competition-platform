@@ -2,10 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
     using Infusion.Gaming.LightCycles.Model;
-    using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     /// Trail aging processor.
@@ -63,17 +60,7 @@
                 return false;
             }
 
-            for (int y = 0; y < nextState.Map.Height; y++)
-            {
-                for (int x = 0; x < nextState.Map.Width; x++)
-                {
-                    Trail obj = nextState.PlayersData[x, y] as Trail;
-                    if (obj != null && obj.Age >= tickEvent.Turn * (1 - this.FadingSpeed))
-                    {
-                        nextState.PlayersData[x, y] = null;
-                    }
-                }
-            }
+            nextState.PlayersData.AgeTrails(tickEvent.Turn, this.FadingSpeed);
             
             // don't remove tick event from processing queue
             return false;

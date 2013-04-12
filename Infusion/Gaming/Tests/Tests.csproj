@@ -12,8 +12,6 @@
     <AssemblyName>Infusion.Gaming.LightCycles.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +52,14 @@
     <Compile Include="Conditions\NumberOfPlayersTests.cs" />
     <Compile Include="Conditions\EndConditionTests.cs" />
     <Compile Include="Events\EventsTests.cs" />
+    <Compile Include="Events\Filtering\IdlePlayerMoveEventAppenderTests.cs" />
+    <Compile Include="Events\Filtering\PlayerRecentEventFilterTests.cs" />
+    <Compile Include="Events\Filtering\PlayersInGameFilterTests.cs" />
+    <Compile Include="Events\Processing\PlayerMovesProcessorTests.cs" />
+    <Compile Include="Events\Processing\TrailAgingProcessor.cs" />
+    <Compile Include="Events\Processing\EventLoggingProcessorTests.cs" />
+    <Compile Include="Events\Processing\PlayerCollisionProcessorTests.cs" />
+    <Compile Include="Events\Processing\GarbageProcessorTests.cs" />
     <Compile Include="MockHelper.cs" />
     <Compile Include="Extensions\CharExtensionsTests.cs" />
     <Compile Include="Model\Data\DirectionHelperTests.cs" />
@@ -70,8 +76,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Events\Filtering\" />
-    <Folder Include="Events\Processing\" />
     <Folder Include="Model\Serialization\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -105,5 +109,4 @@
   <PropertyGroup>
     <PrepareForBuildDependsOn Condition="!Exists('$(StyleCopMSBuildTargetsFile)')">StyleCopMSBuildTargetsNotFound;$(PrepareForBuildDependsOn)</PrepareForBuildDependsOn>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>
