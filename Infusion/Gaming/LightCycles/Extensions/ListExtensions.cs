@@ -1,5 +1,4 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Extensions
+﻿namespace Infusion.Gaming.LightCycles.Extensions
 {
     using System.Collections.Generic;
 
@@ -8,8 +7,6 @@ namespace Infusion.Gaming.LightCycles.Extensions
     /// </summary>
     internal static class ListExtensions
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Get collection being intersection with given collection.
         /// </summary>
@@ -63,6 +60,5 @@ namespace Infusion.Gaming.LightCycles.Extensions
 
             return results;
         }
-        #endregion
     }
 }

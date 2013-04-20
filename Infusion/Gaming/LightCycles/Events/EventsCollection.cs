@@ -1,20 +1,15 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events
+﻿namespace Infusion.Gaming.LightCycles.Events
 {
     using System.Collections.Generic;
-
-    using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
 
     /// <summary>
-    ///     The events collection.
+    /// The events collection.
     /// </summary>
     internal class EventsCollection : List<Event>
     {
-        #region Constructors and Destructors
-
         /// <summary>
-        ///     Initializes a new instance of the <see cref="EventsCollection" /> class.
+        /// Initializes a new instance of the <see cref="EventsCollection" /> class.
         /// </summary>
         public EventsCollection()
         {
@@ -31,12 +26,8 @@ namespace Infusion.Gaming.LightCycles.Events
         {
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets the most recent event from collection.
+        /// Gets the most recent event from collection.
         /// </summary>
         public Event MostRecent
         {
@@ -59,7 +50,7 @@ namespace Infusion.Gaming.LightCycles.Events
         }
 
         /// <summary>
-        ///     Gets players owning events.
+        /// Gets players owning events.
         /// </summary>
         public List<Player> Players
         {
@@ -78,10 +69,6 @@ namespace Infusion.Gaming.LightCycles.Events
                 return results;
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Get collection filtered by specified player.
@@ -106,7 +93,5 @@ namespace Infusion.Gaming.LightCycles.Events
 
             return results;
         }
-
-        #endregion
     }
 }

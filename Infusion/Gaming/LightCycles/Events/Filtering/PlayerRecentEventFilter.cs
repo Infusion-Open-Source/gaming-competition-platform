@@ -1,20 +1,14 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events.Filtering
+﻿namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Data;
 
     /// <summary>
-    ///     Filter keeps only recent event from each player
+    /// Filter keeps only recent event from each player
     /// </summary>
     public class PlayerRecentEventFilter : IEventFilter
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Filter game events
         /// </summary>
@@ -38,7 +32,5 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
 
             return results;
         }
-
-        #endregion
     }
 }

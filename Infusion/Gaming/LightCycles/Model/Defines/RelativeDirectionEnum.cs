@@ -1,28 +1,27 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Model.Defines
+﻿namespace Infusion.Gaming.LightCycles.Model.Defines
 {
     /// <summary>
-    ///     The relative direction enumeration.
+    /// The relative direction enumeration.
     /// </summary>
     public enum RelativeDirectionEnum
     {
         /// <summary>
-        ///     Undefined direction.
+        /// Undefined direction.
         /// </summary>
         Undefined = 0, 
 
         /// <summary>
-        ///     Go straight forward.
+        /// Go straight forward.
         /// </summary>
         StraightForward, 
 
         /// <summary>
-        ///     Turn left.
+        /// Turn left.
         /// </summary>
         Left, 
 
         /// <summary>
-        ///     Turn right.
+        /// Turn right.
         /// </summary>
         Right
     }

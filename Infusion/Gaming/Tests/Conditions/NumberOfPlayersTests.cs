@@ -1,20 +1,17 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Tests.Conditions
+﻿namespace Infusion.Gaming.LightCycles.Tests.Conditions
 {
     using Infusion.Gaming.LightCycles.Conditions;
-
+    using Infusion.Gaming.LightCycles.Model.Data;
     using NUnit.Framework;
 
     /// <summary>
-    ///     The number of players tests.
+    /// The number of players tests.
     /// </summary>
     [TestFixture]
     public class NumberOfPlayersTests
     {
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     The exact number of players checks.
+        /// The exact number of players check.
         /// </summary>
         [Test]
         public void ExactNumberOfPlayersChecks()
@@ -25,13 +22,18 @@ namespace Infusion.Gaming.LightCycles.Tests.Conditions
             Assert.AreEqual(NumberOfPlayers, condition.Max);
             Assert.AreEqual(NumberOfPlayers, condition.Min);
 
-            Assert.IsFalse(condition.Check(MockHelper.CreateGame(NumberOfPlayers - 1).Object));
-            Assert.IsTrue(condition.Check(MockHelper.CreateGame(NumberOfPlayers).Object));
-            Assert.IsFalse(condition.Check(MockHelper.CreateGame(NumberOfPlayers + 1).Object));
+            var gameState = MockHelper.CreateGameState();
+            gameState.Object.PlayersData.Players.Add(new Player('A'));
+            gameState.Object.PlayersData.Players.Add(new Player('B'));
+            Assert.IsFalse(condition.Check(gameState.Object));
+            gameState.Object.PlayersData.Players.Add(new Player('C'));
+            Assert.IsTrue(condition.Check(gameState.Object));
+            gameState.Object.PlayersData.Players.Add(new Player('D'));
+            Assert.IsFalse(condition.Check(gameState.Object));
         }
-
+        
         /// <summary>
-        ///     The range of players checks.
+        /// The range of players checks.
         /// </summary>
         [Test]
         public void RangeOfPlayersChecks()
@@ -43,15 +45,17 @@ namespace Infusion.Gaming.LightCycles.Tests.Conditions
             Assert.AreEqual(NumberOfPlayersMax, condition.Max);
             Assert.AreEqual(NumberOfPlayersMin, condition.Min);
 
-            Assert.IsFalse(condition.Check(MockHelper.CreateGame(0).Object));
-            Assert.IsFalse(condition.Check(MockHelper.CreateGame(1).Object));
-            Assert.IsTrue(condition.Check(MockHelper.CreateGame(2).Object));
-            Assert.IsTrue(condition.Check(MockHelper.CreateGame(3).Object));
-            Assert.IsTrue(condition.Check(MockHelper.CreateGame(4).Object));
-            Assert.IsFalse(condition.Check(MockHelper.CreateGame(5).Object));
-            Assert.IsFalse(condition.Check(MockHelper.CreateGame(6).Object));
+            var gameState = MockHelper.CreateGameState();
+            gameState.Object.PlayersData.Players.Add(new Player('A'));
+            Assert.IsFalse(condition.Check(gameState.Object));
+            gameState.Object.PlayersData.Players.Add(new Player('B'));
+            Assert.IsTrue(condition.Check(gameState.Object));
+            gameState.Object.PlayersData.Players.Add(new Player('C'));
+            Assert.IsTrue(condition.Check(gameState.Object));
+            gameState.Object.PlayersData.Players.Add(new Player('D'));
+            Assert.IsTrue(condition.Check(gameState.Object));
+            gameState.Object.PlayersData.Players.Add(new Player('E'));
+            Assert.IsFalse(condition.Check(gameState.Object));
         }
-
-        #endregion
     }
 }

@@ -1,19 +1,14 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Conditions
+﻿namespace Infusion.Gaming.LightCycles.Conditions
 {
-    using System;
     using System.Collections.Generic;
-
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
-    ///     Set of the game end conditions.
+    /// Set of the game end conditions.
     /// </summary>
-    public class EndConditionSet : List<IEndCondition>, IEndCondition
+    internal class EndConditionSet : List<IEndCondition>, IEndCondition
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EndConditionSet"/> class.
         /// </summary>
@@ -32,33 +27,25 @@ namespace Infusion.Gaming.LightCycles.Conditions
         {
         }
 
-        #endregion
-
-        #region Public Properties
-        
         /// <summary>
-        ///     Gets or sets the game result when condition is met.
+        /// Gets or sets the game result when condition is met.
         /// </summary>
         public GameResultEnum Result { get; protected set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Performs condition check.
         /// </summary>
-        /// <param name="game">
-        /// The game on which condition check should be performed.
+        /// <param name="gameState">
+        /// The game state on which condition check should be performed.
         /// </param>
         /// <returns>
         /// The result of the condition check.
         /// </returns>
-        public bool Check(IGame game)
+        public bool Check(IGameState gameState)
         {
             foreach (IEndCondition endCondition in this)
             {
-                if (endCondition.Check(game))
+                if (endCondition.Check(gameState))
                 {
                     this.Result = endCondition.Result;
                     return true;
@@ -68,7 +55,5 @@ namespace Infusion.Gaming.LightCycles.Conditions
             this.Result = GameResultEnum.Undefined;
             return false;
         }
-
-        #endregion
     }
 }

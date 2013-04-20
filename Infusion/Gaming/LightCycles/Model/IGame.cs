@@ -1,68 +1,61 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Model
+﻿namespace Infusion.Gaming.LightCycles.Model
 {
     using System.Collections.Generic;
-
     using Infusion.Gaming.LightCycles.Conditions;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Events.Filtering;
     using Infusion.Gaming.LightCycles.Events.Processing;
     using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCycles.Model.MapData;
 
     /// <summary>
-    ///     The Game interface.
+    /// The Game interface.
     /// </summary>
     public interface IGame
     {
-        #region Public Properties
-
         /// <summary>
-        ///     Gets the current game state.
+        /// Gets the current game state.
         /// </summary>
         IGameState CurrentState { get; }
 
         /// <summary>
-        ///     Gets the end condition.
+        /// Gets the end condition.
         /// </summary>
         IEndCondition EndCondition { get; }
 
         /// <summary>
-        ///     Gets the event processor.
+        /// Gets the event processor.
         /// </summary>
         IEventProcessor EventProcessor { get; }
 
         /// <summary>
-        ///     Gets the event filter.
+        /// Gets the event filter.
         /// </summary>
         IEventFilter EventFilter { get; }
 
         /// <summary>
-        ///     Gets the state of the game.
+        /// Gets the state of the game.
         /// </summary>
         GameStateEnum State { get; }
 
         /// <summary>
-        ///     Gets the game mode.
+        /// Gets the game mode.
         /// </summary>
         GameModeEnum Mode { get; }
 
         /// <summary>
-        ///     Gets the previous game state.
+        /// Gets the previous game state.
         /// </summary>
         IGameState PreviousState { get; }
 
         /// <summary>
-        ///     Gets the result of the game.
+        /// Gets the result of the game.
         /// </summary>
         GameResultEnum Result { get; }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
-        ///     Resets the game.
+        /// Resets the game.
         /// </summary>
         void Reset();
 
@@ -110,10 +103,8 @@ namespace Infusion.Gaming.LightCycles.Model
         IGameState Step(IEnumerable<Event> gameEvents);
 
         /// <summary>
-        ///     Stops the game.
+        /// Stops the game.
         /// </summary>
         void Stop();
-
-        #endregion
     }
 }

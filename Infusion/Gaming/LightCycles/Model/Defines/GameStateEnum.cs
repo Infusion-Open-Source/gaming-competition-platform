@@ -1,28 +1,27 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Model.Defines
+﻿namespace Infusion.Gaming.LightCycles.Model.Defines
 {
     /// <summary>
-    ///     The game state enumeration.
+    /// The game state enumeration.
     /// </summary>
     public enum GameStateEnum
     {
         /// <summary>
-        ///     Undefined state.
+        /// Undefined state.
         /// </summary>
         Undefined = 0, 
 
         /// <summary>
-        ///     Game is initializing.
+        /// Game is initializing.
         /// </summary>
         Initializing, 
 
         /// <summary>
-        ///     Game is running.
+        /// Game is running.
         /// </summary>
         Running, 
 
         /// <summary>
-        ///     Game has stopped.
+        /// Game has stopped.
         /// </summary>
         Stopped, 
     }

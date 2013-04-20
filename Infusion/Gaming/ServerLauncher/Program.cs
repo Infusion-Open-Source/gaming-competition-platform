@@ -1,145 +1,14 @@
-﻿
-namespace Infusion.Gaming.ServerLauncher
+﻿namespace Infusion.Gaming.ServerLauncher
 {
     using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Threading;
-
     using Infusion.Gaming.LightCycles;
-    using Infusion.Gaming.LightCycles.Events;
-    using Infusion.Gaming.LightCycles.Model;
-    using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
-    ///     The program.
+    /// The program.
     /// </summary>
     internal class Program
     {
-        #region Static Fields
-
-        /// <summary>
-        ///     The random number generator.
-        /// </summary>
-        private static readonly Random Random = new Random(1);
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        /// <summary>
-        /// The next random direction.
-        /// </summary>
-        /// <param name="player">
-        /// Player for which takes next direction
-        /// </param>
-        /// <param name="state">
-        /// state of the game
-        /// </param>
-        /// <returns>
-        /// The random direction <see cref="RelativeDirectionEnum"/>.
-        /// </returns>
-        public static RelativeDirectionEnum NextDirection(Player player, IGameState state)
-        {
-            if (!state.Map.Players.Contains(player))
-            {
-                return RelativeDirectionEnum.Undefined;
-            }
-
-            Point location = state.Map.PlayersLocations[player];
-            DirectionEnum direction = state.Directions[player];
-
-            // get possible directions
-            var safeDirections = new List<RelativeDirectionEnum>();
-            safeDirections.Add(RelativeDirectionEnum.Right);
-            safeDirections.Add(RelativeDirectionEnum.Left);
-            safeDirections.Add(RelativeDirectionEnum.StraightForward);
-
-            // remove unsafe
-            for (int i = 0; i < safeDirections.Count; i++)
-            {
-                Point newLocation = DirectionHelper.NextLocation(location, direction, safeDirections[i]);
-                if (state.Map.Locations[newLocation.X, newLocation.Y].LocationType != LocationTypeEnum.Space)
-                {
-                    safeDirections.RemoveAt(i--);
-                }
-            }
-
-            // is no way to go, go straight ahead
-            if (safeDirections.Count == 0)
-            {
-                return RelativeDirectionEnum.StraightForward;
-            }
-
-            // if can go streight, go streight - makes it look more fancy ;)
-            if (safeDirections.Contains(RelativeDirectionEnum.StraightForward))
-            {
-                return RelativeDirectionEnum.StraightForward;
-            }
-
-            // pick one randomly 
-            return safeDirections[Random.Next(safeDirections.Count)];
-        }
-
-        /// <summary>
-        ///     Plays random game.
-        /// </summary>
-        public static void PlayRandomGame()
-        {
-            // init
-            const int NumberOfPlayers = 8;
-            var game = new LightCyclesGame();
-            var mapSerializer = new MapSerializer();
-            game.StartOnRandomMap(NumberOfPlayers, GameModeEnum.FreeForAll);
-            
-            // do initial UI
-            Console.Clear();
-            Console.Write(mapSerializer.Write(game.CurrentState.Map));
-            while (game.State == GameStateEnum.Running)
-            {
-                // tick
-                var events = new List<Event>();
-                for (int p = 0; p < NumberOfPlayers; p++)
-                {
-                    var player = new Player((char)('A' + p));
-                    events.Add(new PlayerMoveEvent(player, NextDirection(player, game.CurrentState)));
-                }
-
-                game.Step(events);
-
-                // do the UI
-                Console.Clear();
-                Console.Write(mapSerializer.Write(game.CurrentState.Map));
-                Thread.Sleep(100);
-            }
-
-            // end
-            if (game.Result == GameResultEnum.FinshedWithWinners)
-            {
-                Console.WriteLine("End, winning team is: " + game.CurrentState.Map.Players[0].TeamId);
-            }
-
-            if (game.Result == GameResultEnum.FinshedWithWinner)
-            {
-                Console.WriteLine("End, winner is: " + game.CurrentState.Map.Players[0]);
-            }
-
-            if (game.Result == GameResultEnum.FinishedWithoutWinner)
-            {
-                Console.WriteLine("End, no winner");
-            }
-
-            if (game.Result == GameResultEnum.Terminated)
-            {
-                Console.WriteLine("Terminated");
-            }
-        }
-
-        #endregion
-
-        #region Methods
-
         /// <summary>
         /// Program main method.
         /// </summary>
@@ -150,16 +19,34 @@ namespace Infusion.Gaming.ServerLauncher
         {
             Console.WriteLine("LightCycles Game Engine Server - Copyright (C) 2013 Paweł Drozdowski");
             Console.WriteLine("This program comes with ABSOLUTELY NO WARRANTY; for details check License.txt file.");
-            Console.WriteLine(
-                "This is free software, and you are welcome to redistribute it under certain conditions; check License.txt file for the details.");
+            Console.WriteLine("This is free software, and you are welcome to redistribute it under certain conditions; check License.txt file for the details.");
 
+            const int NumberOfPlayers = 8;
+            const int NumberOfTeams = 8;
+            const GameModeEnum GameMode = GameModeEnum.FreeForAll;
+            var gameInfo = new GameInfo(NumberOfPlayers, NumberOfTeams, GameMode, 50, 22);
+
+            /*
+             * TODO: Server should work in following cycle:
+             * - waiting for clients mode, broadcasting info about clients connected and free slots on next game + game and players/teams assignemnts
+             *   - after all slots are filled game starts in X seconds, counter is broadcasted
+             *   - or when there are still empty slots after X seconds of wait timeout game fills empty places with bots and starts the game
+             * - game runs as per normal
+             * - at the end info about winner is broadcasted and persistes for x seconds
+             * - start again
+             */ 
             while (true)
             {
-                PlayRandomGame();
+                var gameRunner = new GameRunner();
+                gameRunner.StartGame(gameInfo);
+                while (gameRunner.RunGame())
+                {
+                    System.Threading.Thread.Sleep(100);
+                }
+
+                gameRunner.EndGame();
                 Console.ReadKey();
             }
         }
-
-        #endregion
     }
 }

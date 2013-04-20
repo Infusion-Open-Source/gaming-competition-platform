@@ -1,13 +1,15 @@
-﻿
-namespace Infusion.Gaming.LightCycles
+﻿namespace Infusion.Gaming.LightCycles
 {
     using System;
+    using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Conditions;
     using Infusion.Gaming.LightCycles.Events.Filtering;
     using Infusion.Gaming.LightCycles.Events.Processing;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCycles.Model.MapData;
+    using Infusion.Gaming.LightCycles.Model.Serialization;
 
     /// <summary>
     /// Game of LightCycles
@@ -15,31 +17,41 @@ namespace Infusion.Gaming.LightCycles
     public class LightCyclesGame : Game
     {
         /// <summary>
-        /// Starts game with random map
+        /// Starts a game with a random map
         /// </summary>
-        /// <param name="numberOfPlayers">number of players in the game</param>
-        public void StartOnRandomMap(int numberOfPlayers, GameModeEnum gameMode)
+        /// <param name="gameInfo">game start info</param>
+        public void Start(GameInfo gameInfo)
         {
-            // init
-            var generator = new MapStreamGenerator();
-            string mapStream = generator.Generate(50, 20, numberOfPlayers);
-
-            var mapSerializer = new MapSerializer();
-            IMap map = mapSerializer.Read(mapStream);
+            IMap map;
+            if (gameInfo.UseMapFile)
+            {
+                IMapSerializer mapSerializer = new ImageMapSerializer(gameInfo.MapFileName);
+                mapSerializer.Load();
+                map = mapSerializer.Read();
+            }
+            else
+            {
+                map = new MapGenerator().GenerateMap(gameInfo.MapWidth, gameInfo.MapHeight, gameInfo.NumberOfPlayers, gameInfo.NumberOfTeams);
+            }
+            
+            if (map == null)
+            {
+                throw new GameException("Map is NULL, terminating");
+            }
 
             EndConditionSet endConditions = new EndConditionSet();
             endConditions.Add(new EndCondition(new NumberOfPlayers(0), GameResultEnum.FinishedWithoutWinner));
 
-            switch (gameMode)
+            switch (gameInfo.GameMode)
             {
                 case GameModeEnum.FreeForAll:
                     endConditions.Add(new EndCondition(new NumberOfPlayers(1), GameResultEnum.FinshedWithWinner));
                     break;
-                case GameModeEnum.TeamDeathmatch:
+                case GameModeEnum.TeamDeathMatch:
                     endConditions.Add(new EndCondition(new NumberOfTeams(1), GameResultEnum.FinshedWithWinners));
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("gameMode");
+                    throw new ArgumentOutOfRangeException("gameInfo");
             }
 
             EventFilterSet eventFilters = new EventFilterSet();
@@ -54,10 +66,16 @@ namespace Infusion.Gaming.LightCycles
             eventProcesors.Add(new TrailAgingProcessor(0.2f));
             eventProcesors.Add(new GarbageProcessor(true));
 
+            List<Player> players = new List<Player>();
+            foreach (PlayersStartingLocation startingLocation in map.StartingLocations.Keys)
+            {
+                players.Add(startingLocation.Player);
+            }
+
             // start
             this.Start(
-                GameModeEnum.FreeForAll,
-                map.Players,
+                gameInfo.GameMode,
+                players,
                 map,
                 endConditions,
                 eventFilters,

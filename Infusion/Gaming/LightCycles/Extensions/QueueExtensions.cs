@@ -1,5 +1,4 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Extensions
+﻿namespace Infusion.Gaming.LightCycles.Extensions
 {
     using System.Collections.Generic;
 
@@ -8,8 +7,6 @@ namespace Infusion.Gaming.LightCycles.Extensions
     /// </summary>
     internal static class QueueExtensions
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Enqueues collection of items
         /// </summary>
@@ -32,7 +29,5 @@ namespace Infusion.Gaming.LightCycles.Extensions
 
             return queue;
         }
-
-        #endregion
     }
 }

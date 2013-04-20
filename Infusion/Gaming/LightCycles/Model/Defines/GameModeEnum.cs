@@ -1,24 +1,23 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Model.Defines
+﻿namespace Infusion.Gaming.LightCycles.Model.Defines
 {
     /// <summary>
-    ///     The game mode enumeration.
+    /// The game mode enumeration.
     /// </summary>
     public enum GameModeEnum
     {
         /// <summary>
-        ///     Undefined mode.
+        /// Undefined mode.
         /// </summary>
         Undefined = 0, 
 
         /// <summary>
-        ///     Free for all.
+        /// Free for all.
         /// </summary>
         FreeForAll,
 
         /// <summary>
-        ///     Team deathmatch.
+        /// Team death match.
         /// </summary>
-        TeamDeathmatch
+        TeamDeathMatch
     }
 }

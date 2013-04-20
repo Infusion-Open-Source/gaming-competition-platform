@@ -1,20 +1,14 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events.Filtering
+﻿namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Data;
 
     /// <summary>
-    ///     Filter keeps events only from players that are still in game
+    /// Filter keeps events only from players that are still in game
     /// </summary>
     public class PlayersInGameFilter : IEventFilter
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Filter game events
         /// </summary>
@@ -31,14 +25,12 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
         {
             var data = new EventsCollection(events);
             var results = new List<Event>();
-            foreach (Player player in state.Map.Players)
+            foreach (Player player in state.PlayersData.Players)
             {
                 results.AddRange(data.FilterBy(player));
             }
 
             return results;
         }
-
-        #endregion
     }
 }

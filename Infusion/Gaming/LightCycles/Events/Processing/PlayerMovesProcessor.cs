@@ -1,5 +1,4 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events.Processing
+﻿namespace Infusion.Gaming.LightCycles.Events.Processing
 {
     using System.Collections.Generic;
     using System.Drawing;
@@ -9,14 +8,12 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
-    ///     Processor for player move events.
-    ///     Reflects result of player move events.
-    ///     I player collides with something then feeds with new collision events.
+    /// Processor for player move events.
+    /// Reflects result of player move events.
+    /// If player collides with something then feeds with new collision events.
     /// </summary>
     public class PlayerMovesProcessor : IEventProcessor
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Process player move events
         /// </summary>
@@ -37,41 +34,47 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
         /// </returns>
         public bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents)
         {
-            newEvents = new EventsCollection();
-            var moveEvent = e as PlayerMoveEvent;
-            if (moveEvent == null)
-            {
-                return false;
-            }
-
-            Point location = currentState.Map.PlayersLocations[moveEvent.Player];
-            DirectionEnum direction = currentState.Directions[moveEvent.Player];
-            Point newLocation = DirectionHelper.NextLocation(location, direction, moveEvent.Direction);
+            bool processed = false;
             EventsCollection events = new EventsCollection();
-            if (nextState.Map.Locations[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Space)
+            var moveEvent = e as PlayerMoveEvent;
+            if (moveEvent != null)
             {
-                // player moves to new loaction
-                nextState.Map.Locations[newLocation.X, newLocation.Y] = new Location(LocationTypeEnum.Player, moveEvent.Player);
-                nextState.Map.Locations[location.X, location.Y] = new Location(LocationTypeEnum.Trail, moveEvent.Player);
-            }
-            else if (nextState.Map.Locations[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Trail
-                     || nextState.Map.Locations[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Wall)
-            {
-                // player-trail collision 
-                // player-wall collision 
-                events.Add(new PlayerCollisionEvent(moveEvent.Player));
-            }
-            else if (nextState.Map.Locations[newLocation.X, newLocation.Y].LocationType == LocationTypeEnum.Player)
-            {
-                // player-player collision 
-                events.Add(new PlayerCollisionEvent(moveEvent.Player));
-                events.Add(new PlayerCollisionEvent(nextState.Map.Locations[newLocation.X, newLocation.Y].Player));
+                Point location = currentState.PlayersData.PlayersLocations[moveEvent.Player];
+                DirectionEnum direction = currentState.PlayersData.PlayersLightCycles[moveEvent.Player].Direction;
+                DirectionEnum newDirection = DirectionHelper.ChangeDirection(direction, moveEvent.Direction);
+                Point newLocation = DirectionHelper.NextLocation(location, newDirection);
+                if (nextState.Map[newLocation.X, newLocation.Y].IsPassable && nextState.PlayersData[newLocation.X, newLocation.Y] == null)
+                {
+                    // player moves to new loaction
+                    nextState.PlayersData[newLocation.X, newLocation.Y] = new LightCycleBike(moveEvent.Player, newDirection);
+                    nextState.PlayersData[location.X, location.Y] = new Trail(moveEvent.Player, 1);
+                }
+                else
+                {
+                    // collision detected
+                    if (!nextState.Map[newLocation.X, newLocation.Y].IsPassable)
+                    {
+                        // player-obstacle collision 
+                        events.Add(new PlayerCollisionEvent(moveEvent.Player));
+                    }
+                    else if (nextState.PlayersData[newLocation.X, newLocation.Y] is Trail)
+                    {
+                        // player-trail collision 
+                        events.Add(new PlayerCollisionEvent(moveEvent.Player));
+                    }
+                    else if (nextState.PlayersData[newLocation.X, newLocation.Y] is LightCycleBike)
+                    {
+                        // player-player collision 
+                        events.Add(new PlayerCollisionEvent(moveEvent.Player));
+                        events.Add(new PlayerCollisionEvent(((LightCycleBike)nextState.PlayersData[newLocation.X, newLocation.Y]).Player));
+                    }
+                }
+
+                processed = true;
             }
 
-            ((EventsCollection)newEvents).AddRange(events);
-            return true;
+            newEvents = events;
+            return processed;
         }
-
-        #endregion
     }
 }

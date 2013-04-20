@@ -1,26 +1,22 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Model
+﻿namespace Infusion.Gaming.LightCycles.Model
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-
     using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
-    ///     The direction helper.
+    /// The direction helper.
     /// </summary>
     public class DirectionHelper
     {
-        #region Static Fields
-
         /// <summary>
         /// Internal random number generator
         /// </summary>
         private static readonly Random Random = new Random((int)DateTime.Now.Ticks);
 
         /// <summary>
-        ///     The mappings.
+        /// The mappings.
         /// </summary>
         private static readonly List<DirectionHelper> Mappings = new List<DirectionHelper>
                                                                      {
@@ -42,10 +38,6 @@ namespace Infusion.Gaming.LightCycles.Model
                                                                          new DirectionHelper(DirectionEnum.Down, RelativeDirectionEnum.Undefined, DirectionEnum.Down) 
                                                                      };
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DirectionHelper"/> class.
         /// </summary>
@@ -66,38 +58,30 @@ namespace Infusion.Gaming.LightCycles.Model
             this.NewDirection = newDirection;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        ///     Gets or sets the current direction.
+        /// Gets or sets the current direction.
         /// </summary>
         public DirectionEnum Direction { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the new direction.
+        /// Gets or sets the new direction.
         /// </summary>
         public DirectionEnum NewDirection { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the relative direction to apply.
+        /// Gets or sets the relative direction to apply.
         /// </summary>
         public RelativeDirectionEnum RelativeDirection { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the shift on x.
+        /// Gets or sets the shift on x.
         /// </summary>
         public int ShiftOnX { get; protected set; }
 
         /// <summary>
-        ///     Gets or sets the shift on y.
+        /// Gets or sets the shift on y.
         /// </summary>
         public int ShiftOnY { get; protected set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Gets random direction
@@ -214,17 +198,13 @@ namespace Infusion.Gaming.LightCycles.Model
         /// <param name="direction">
         /// current global direction of move
         /// </param>
-        /// <param name="relativeDirectionEnum">
-        /// relative direction to apply
-        /// </param>
         /// <returns>
         /// new location
         /// </returns>
-        public static Point NextLocation(Point location, DirectionEnum direction, RelativeDirectionEnum relativeDirectionEnum)
+        public static Point NextLocation(Point location, DirectionEnum direction)
         {
             var newLocation = new Point(location.X, location.Y);
-            DirectionEnum newDirection = ChangeDirection(direction, relativeDirectionEnum);
-            switch (newDirection)
+            switch (direction)
             {
                 case DirectionEnum.Up:
                     newLocation.Y--;
@@ -242,7 +222,5 @@ namespace Infusion.Gaming.LightCycles.Model
 
             return newLocation;
         }
-
-        #endregion
     }
 }

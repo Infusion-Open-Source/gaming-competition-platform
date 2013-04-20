@@ -1,13 +1,10 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Extensions
+﻿namespace Infusion.Gaming.LightCycles.Extensions
 {
     /// <summary>
-    ///     The char type extensions.
+    /// The char type extensions.
     /// </summary>
     public static class CharExtensions
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Change character to lower case.
         /// </summary>
@@ -45,7 +42,5 @@ namespace Infusion.Gaming.LightCycles.Extensions
 
             return c;
         }
-
-        #endregion
     }
 }

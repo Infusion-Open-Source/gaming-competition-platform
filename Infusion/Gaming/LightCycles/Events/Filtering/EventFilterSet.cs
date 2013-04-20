@@ -1,5 +1,4 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events.Filtering
+﻿namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System;
     using System.Collections.Generic;
@@ -9,12 +8,10 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Event filter set
+    /// Event filter set
     /// </summary>
-    public class EventFilterSet : List<IEventFilter>, IEventFilter
+    internal class EventFilterSet : List<IEventFilter>, IEventFilter
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EventFilterSet"/> class.
         /// </summary>
@@ -53,7 +50,5 @@ namespace Infusion.Gaming.LightCycles.Events.Filtering
 
             return results;
         }
-
-        #endregion
     }
 }

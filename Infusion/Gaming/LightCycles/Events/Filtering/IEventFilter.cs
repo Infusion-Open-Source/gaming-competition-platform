@@ -1,11 +1,10 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events.Filtering
+﻿namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Events filter interface
+    /// Events filter interface
     /// </summary>
     public interface IEventFilter
     {

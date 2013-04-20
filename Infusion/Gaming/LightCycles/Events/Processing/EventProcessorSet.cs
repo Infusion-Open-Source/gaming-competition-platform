@@ -1,17 +1,14 @@
-﻿
-namespace Infusion.Gaming.LightCycles.Events.Processing
+﻿namespace Infusion.Gaming.LightCycles.Events.Processing
 {
     using System.Collections.Generic;
 
     using Infusion.Gaming.LightCycles.Model;
 
     /// <summary>
-    ///     Event processor set
+    /// Event processor set
     /// </summary>
-    public class EventProcessorSet : List<IEventProcessor>, IEventProcessor
+    internal class EventProcessorSet : List<IEventProcessor>, IEventProcessor
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EventProcessorSet"/> class.
         /// </summary>
@@ -59,7 +56,5 @@ namespace Infusion.Gaming.LightCycles.Events.Processing
             newEvents = new List<Event>();
             return false;
         }
-
-        #endregion
     }
 }
