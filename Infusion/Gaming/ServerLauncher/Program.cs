@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.ServerLauncher
+﻿using Infusion.Gaming.LightCycles.Model.Serialization;
+
+namespace Infusion.Gaming.ServerLauncher
 {
     using System;
     using Infusion.Gaming.LightCycles;
@@ -38,6 +40,7 @@
             while (true)
             {
                 var gameRunner = new GameRunner();
+                gameRunner.RegisterStateSink(new GameStateRenderer());
                 gameRunner.StartGame(gameInfo);
                 while (gameRunner.RunGame())
                 {

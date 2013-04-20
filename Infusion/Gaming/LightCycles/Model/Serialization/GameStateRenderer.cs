@@ -9,13 +9,14 @@
     /// <summary>
     /// The players data serializer.
     /// </summary>
-    public class GameStateRenderer
+    public class GameStateRenderer : IGameStateSink
     {
+
         /// <summary>
         /// Render game state
         /// </summary>
         /// <param name="gameState">state of the game</param>
-        public void Render(IGameState gameState)
+        public void Flush(IGameState gameState)
         {
             if (gameState == null)
             {
@@ -54,5 +55,6 @@
             Console.Clear();
             Console.Write(builder.ToString());
         }
+
     }
 }
