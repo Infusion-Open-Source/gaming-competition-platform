@@ -33,6 +33,10 @@
             float widthRatio = windowRect.Width / result.GridLayer.Width;
             float heightRatio = windowRect.Height / result.GridLayer.Height;
             result.GridSize = (int)(0.99f * Math.Min(widthRatio, heightRatio));
+            if (result.GridSize > 30)
+            {
+                result.GridSize = 30;
+            }
             
             /*
             TODO: add as visuals on user interface layer

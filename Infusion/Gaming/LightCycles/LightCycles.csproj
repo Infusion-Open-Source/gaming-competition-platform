@@ -61,6 +61,7 @@
     <Compile Include="Conditions\EndCondition.cs" />
     <Compile Include="Conditions\ICondition.cs" />
     <Compile Include="Conditions\NumberOfPlayers.cs" />
+    <Compile Include="Events\PlayerMoveResult.cs" />
     <Compile Include="GameInfoCollection.cs" />
     <Compile Include="Events\Filtering\IdlePlayerMoveEventAppender.cs" />
     <Compile Include="Events\Filtering\EventFilterSet.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="GameRunner.cs" />
     <Compile Include="LightCyclesGame.cs" />
     <Compile Include="Model\IGameStateSink.cs" />
+    <Compile Include="Model\Defines\MoveResultEnum.cs" />
     <Compile Include="Model\MapData\Space.cs" />
     <Compile Include="Model\Data\LightCycleBike.cs" />
     <Compile Include="Model\MapData\Obstacle.cs" />

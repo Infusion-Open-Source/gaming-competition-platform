@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+
+    using Infusion.Gaming.LightCycles.Events;
+    using Infusion.Gaming.LightCycles.Model.Defines;
     using Infusion.Gaming.LightCycles.Model.MapData;
 
     /// <summary>
@@ -251,6 +254,44 @@
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Move player to new location
+        /// </summary>
+        /// <param name="player">player to be moved</param>
+        /// <param name="location">current location of player</param>
+        /// <param name="moveDirection">player move direction</param>
+        /// <param name="map">map used to play</param>
+        /// <returns>move result</returns>
+        public PlayerMoveResult MovePlayer(Player player, Point location, DirectionEnum moveDirection, IMap map)
+        {
+            Point newLocation = DirectionHelper.NextLocation(location, moveDirection);
+            if (map[newLocation.X, newLocation.Y].IsPassable && this[newLocation.X, newLocation.Y] == null)
+            {
+                // player moves to new loaction
+                this[newLocation.X, newLocation.Y] = new LightCycleBike(player, moveDirection);
+                this[location.X, location.Y] = new Trail(player, 1);
+                return new PlayerMoveResult(MoveResultEnum.Successful);
+            }
+             
+            // collision detected
+            if (!map[newLocation.X, newLocation.Y].IsPassable)
+            {
+                return new PlayerMoveResult(MoveResultEnum.CollisionWithObstacle);
+            }
+                
+            if (this[newLocation.X, newLocation.Y] is Trail)
+            {
+                return new PlayerMoveResult(MoveResultEnum.CollisionWithTrail, ((Trail)this[newLocation.X, newLocation.Y]).Player);
+            }
+                
+            if (this[newLocation.X, newLocation.Y] is LightCycleBike)
+            {
+                return new PlayerMoveResult(MoveResultEnum.CollisionWithPlayer, ((LightCycleBike)this[newLocation.X, newLocation.Y]).Player);
+            }
+
+            throw new NotSupportedException();
         }
     }
 }
