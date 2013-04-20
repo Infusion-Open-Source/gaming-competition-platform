@@ -3,6 +3,10 @@
     using System.Collections.Generic;
     using System.Drawing;
 
+    using Infusion.Gaming.LightCycles.Events;
+    using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCycles.Model.MapData;
+
     /// <summary>
     /// interface for players data map 
     /// </summary>
@@ -68,5 +72,15 @@
         /// <param name="gameTurn">Game turn.</param>
         /// <param name="fadingSpeed">Fading speed.</param>
         void AgeTrails(int gameTurn, float fadingSpeed);
+
+        /// <summary>
+        /// Move player to new location
+        /// </summary>
+        /// <param name="player">player to be moved</param>
+        /// <param name="location">current location of player</param>
+        /// <param name="moveDirection">player move direction</param>
+        /// <param name="map">map used to play</param>
+        /// <returns>move result</returns>
+        PlayerMoveResult MovePlayer(Player player, Point location, DirectionEnum moveDirection, IMap map);
     }
 }
