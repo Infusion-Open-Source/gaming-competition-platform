@@ -104,7 +104,10 @@
     <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Model\MapData\IMap.cs" />
     <Compile Include="Model\MapData\Location.cs" />
+    <Compile Include="Model\Serialization\ConsoleGameStateSerializer.cs" />
+    <Compile Include="Model\Serialization\GameStateBroadcaster.cs" />
     <Compile Include="Model\Serialization\GameStateRenderer.cs" />
+    <Compile Include="Model\Serialization\IGameStateSerializer.cs" />
     <Compile Include="Model\Serialization\ImageMapSerializer.cs" />
     <Compile Include="Model\Serialization\IMapSerializer.cs" />
     <Compile Include="Model\Serialization\MapGenerator.cs" />
