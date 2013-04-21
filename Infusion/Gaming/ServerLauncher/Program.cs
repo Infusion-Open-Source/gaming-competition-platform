@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.ServerLauncher
+﻿using Infusion.Gaming.LightCycles.Model.Serialization;
+
+namespace Infusion.Gaming.ServerLauncher
 {
     using System;
     using Infusion.Gaming.LightCycles;
@@ -17,7 +19,7 @@
         /// </param>
         private static void Main(string[] args)
         {
-            Console.WriteLine("LightCycles Game Engine Server - Copyright (C) 2013 Paweł Drozdowski");
+            Console.WriteLine("LightCycles Game Engine Server - Original authors: 2013 Paweł Drozdowski, 2013 Cyryl Płotnicki-Chudyk");
             Console.WriteLine("This program comes with ABSOLUTELY NO WARRANTY; for details check License.txt file.");
             Console.WriteLine("This is free software, and you are welcome to redistribute it under certain conditions; check License.txt file for the details.");
 
@@ -38,6 +40,9 @@
             while (true)
             {
                 var gameRunner = new GameRunner();
+                gameRunner.RegisterStateSink(new GameStateRenderer());
+                gameRunner.RegisterStateSink(new GameStateBroadcaster());
+
                 gameRunner.StartGame(gameInfo);
                 while (gameRunner.RunGame())
                 {

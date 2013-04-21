@@ -18,24 +18,18 @@
         /// </summary>
         private readonly List<IBot> bots = new List<IBot>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GameRunner" /> class.
-        /// </summary>
-        public GameRunner()
-        {
-            this.ConsoleOutputEnabled = true;
-        }
+        private IList<IGameStateSink> sinks = new List<IGameStateSink>();
 
         /// <summary>
         /// Gets or sets game main object
         /// </summary>
         public IGame Game { get; protected set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether console output is enabled
-        /// </summary>
-        public bool ConsoleOutputEnabled { get; set; }
-        
+        public void RegisterStateSink(IGameStateSink sink)
+        {
+            this.sinks.Add(sink);
+        }
+
         /// <summary>
         /// Start a game
         /// </summary>
@@ -50,12 +44,17 @@
                 this.bots.Add(botsFactory.CreateBot(player));
             }
 
-            if (this.ConsoleOutputEnabled)
-            {
-                this.ShowGameState();
-            }
+            FlushState();
         }
         
+        private void FlushState()
+        {
+            foreach (var sink in this.sinks)
+            {
+                sink.Flush(this.Game.CurrentState);
+            }
+        }
+
         /// <summary>
         /// Run a game step
         /// </summary>
@@ -71,10 +70,7 @@
                 }
 
                 this.Game.Step(events);
-                if (this.ConsoleOutputEnabled)
-                {
-                    this.ShowGameState();
-                }
+                FlushState();
             }
 
             return this.Game.State == GameStateEnum.Running;
@@ -85,19 +81,9 @@
         /// </summary>
         public void EndGame()
         {
-            if (this.ConsoleOutputEnabled)
-            {
-                this.ShowGameResultMessage();
-            }
+            this.ShowGameResultMessage();
         }
         
-        /// <summary>
-        /// Show game current state on a console
-        /// </summary>
-        public void ShowGameState()
-        {
-            new GameStateRenderer().Render(this.Game.CurrentState);
-        }
 
         /// <summary>
         /// Shows game result message on a console
