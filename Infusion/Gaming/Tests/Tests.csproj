@@ -104,13 +104,13 @@
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Model\Serialization\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\LightCycles\LightCycles.csproj">
       <Project>{9753941F-A627-4D65-967C-A0472AFD9B5F}</Project>
       <Name>LightCycles</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Serialization\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
