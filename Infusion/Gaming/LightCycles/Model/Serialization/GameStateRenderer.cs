@@ -21,8 +21,10 @@ namespace Infusion.Gaming.LightCycles.Model.Serialization
                 throw new ArgumentNullException("gameState");
             }
 
-            var serializer = new ConsoleGameStateSerializer();
+            Console.Clear();
+            var serializer = new StringGameStateSerializer(Console.Out);
             serializer.Write(gameState);
+            
         }
 
     }
