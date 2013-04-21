@@ -107,7 +107,6 @@
 
                 var visualStateBuilder = new VisualStateBuilder();
                 var gameRunner = new GameRunner();
-                gameRunner.ConsoleOutputEnabled = false;
                 gameRunner.StartGame(gameInfoCycle.Cycle());
                 
                 var windowRect = new RectangleF(0, 0, view.WindowWidth, view.WindowHeight);

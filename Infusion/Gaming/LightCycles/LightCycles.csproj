@@ -13,6 +13,8 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -77,6 +79,7 @@
     <Compile Include="GameInfo.cs" />
     <Compile Include="GameRunner.cs" />
     <Compile Include="LightCyclesGame.cs" />
+    <Compile Include="Model\IGameStateSink.cs" />
     <Compile Include="Model\Defines\MoveResultEnum.cs" />
     <Compile Include="Model\MapData\Space.cs" />
     <Compile Include="Model\Data\LightCycleBike.cs" />
@@ -101,7 +104,10 @@
     <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Model\MapData\IMap.cs" />
     <Compile Include="Model\MapData\Location.cs" />
+    <Compile Include="Model\Serialization\StringGameStateSerializer.cs" />
+    <Compile Include="Model\Serialization\GameStateBroadcaster.cs" />
     <Compile Include="Model\Serialization\GameStateRenderer.cs" />
+    <Compile Include="Model\Serialization\IGameStateSerializer.cs" />
     <Compile Include="Model\Serialization\ImageMapSerializer.cs" />
     <Compile Include="Model\Serialization\IMapSerializer.cs" />
     <Compile Include="Model\Serialization\MapGenerator.cs" />
@@ -154,4 +160,5 @@
   <PropertyGroup>
     <PrepareForBuildDependsOn Condition="!Exists('$(StyleCopMSBuildTargetsFile)')">StyleCopMSBuildTargetsNotFound;$(PrepareForBuildDependsOn)</PrepareForBuildDependsOn>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>
