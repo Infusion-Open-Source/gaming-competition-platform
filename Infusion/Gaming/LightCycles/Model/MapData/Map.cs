@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     /// The game map.
@@ -20,12 +21,12 @@
         /// </param>
         public Map(int width, int height)
         {
-            if (width < 0)
+            if (width < 0 || width > Constraints.MaxMapWidth)
             {
                 throw new ArgumentOutOfRangeException("width");
             }
 
-            if (height < 0)
+            if (height < 0 || height > Constraints.MaxMapHeight)
             {
                 throw new ArgumentOutOfRangeException("height");
             }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using Infusion.Gaming.LightCycles.Conditions;
     using Infusion.Gaming.LightCycles.Events.Filtering;
     using Infusion.Gaming.LightCycles.Events.Processing;
@@ -9,7 +10,7 @@
     using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
     using Infusion.Gaming.LightCycles.Model.MapData;
-    using Infusion.Gaming.LightCycles.Model.Serialization;
+    using Infusion.Gaming.LightCycles.Model.MapData.Serialization;
 
     /// <summary>
     /// Game of LightCycles
@@ -25,13 +26,16 @@
             IMap map;
             if (gameInfo.UseMapFile)
             {
-                IMapSerializer mapSerializer = new ImageMapSerializer(gameInfo.MapFileName);
-                mapSerializer.Load();
-                map = mapSerializer.Read();
+                using (Bitmap bitmap = new Bitmap(gameInfo.MapFileName))
+                {
+                    var reader = new ImageReader(bitmap);
+                    map = reader.Read();
+                }
             }
             else
             {
-                map = new MapGenerator().GenerateMap(gameInfo.MapWidth, gameInfo.MapHeight, gameInfo.NumberOfPlayers, gameInfo.NumberOfTeams);
+                var generator = new Generator(gameInfo.MapWidth, gameInfo.MapHeight, gameInfo.NumberOfPlayers, gameInfo.NumberOfTeams);
+                map = generator.Read();
             }
             
             if (map == null)

@@ -5,6 +5,7 @@
     using System.IO;
     using System.Threading;
     using Infusion.Gaming.LightCycles;
+    using Infusion.Gaming.LightCycles.Messaging;
     using Infusion.Gaming.LightCycles.Model.Defines;
     using UIClient.Data;
     
@@ -106,11 +107,17 @@
                 }
 
                 var visualStateBuilder = new VisualStateBuilder();
-                var gameRunner = new GameRunner();
-                gameRunner.StartGame(gameInfoCycle.Cycle());
-                
+                var gameRunner = new GameRunner(new GameStateConsoleWriter());
                 var windowRect = new RectangleF(0, 0, view.WindowWidth, view.WindowHeight);
+
+                gameRunner.InitilizeGame(gameInfoCycle.Cycle());
                 view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
+
+                gameRunner.GatherPlayers();
+                
+                gameRunner.StartGame();
+                view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
+
                 while (gameRunner.RunGame())
                 {
                     view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
@@ -118,8 +125,6 @@
                     {
                         break;
                     }
-                    
-                    Thread.Sleep(100);
                 }
 
                 view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
@@ -128,8 +133,6 @@
                 {
                     break;
                 }
-                
-                Thread.Sleep(1000);    
             }
         }
     }

@@ -3,7 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
-    using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Defines;
     using SlimDX;
     using SlimDX.Direct2D;
     using SlimDX.DirectWrite;
@@ -80,7 +80,8 @@
             var playersAndTeams = this.GetPlayers(visualState);
             foreach (KeyValuePair<char, List<Point>> playerTrailPair in this.GetTrailPaths(visualState, playersAndTeams))
             {
-                var color = TeamColors.Data[playersAndTeams[playerTrailPair.Key]];
+                char team = playersAndTeams[playerTrailPair.Key];
+                Color color = Constraints.TeamDefinitions.GetTeamById(team).Color;
                 PointF p = new PointF(playerTrailPair.Value[0].X * visualState.GridSize, playerTrailPair.Value[0].Y * visualState.GridSize);
 
                 int prevPIndex = (playerTrailPair.Value.Count > 1) ? 1 : 0;

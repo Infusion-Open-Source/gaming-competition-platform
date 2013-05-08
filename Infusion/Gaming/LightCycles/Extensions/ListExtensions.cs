@@ -25,9 +25,9 @@
             var results = new List<T>();
             foreach (T item in listB)
             {
-                if (!listA.Contains(item))
+                if (listA.Contains(item))
                 {
-                    listA.Add(item);
+                    results.Add(item);
                 }
             }
 

@@ -217,7 +217,7 @@
             var playersToRemove = givenPlayers.Remove(playersInGame);
 
             playersData.RemovePlayers(playersToRemove);
-
+            
             this.CurrentState = new GameState(0, initialMap, playersData);
             this.TransitToNextState(new Event[] { });
             return this.CurrentState;

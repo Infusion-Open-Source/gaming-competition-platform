@@ -1,31 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-
-namespace ConsoleClient
+﻿namespace ConsoleClient
 {
-    class Program
+    using System;
+    using System.Net;
+    
+    /// <summary>
+    /// Console client example application
+    /// </summary>
+    public class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Program entry point
+        /// </summary>
+        /// <param name="args">program arguments</param>
+        public static void Main(string[] args)
         {
             var endpoint = new IPEndPoint(IPAddress.Loopback, 12345);
-            var client = new UdpClient();
-            client.ExclusiveAddressUse = false;
-            client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            client.Client.Bind(endpoint);
-
-            IPEndPoint inEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            var listener = new BroadcastListener(endpoint);
             Console.WriteLine("Listening on " + endpoint + ".");
 
-            while (true)
+            // play 3 games and end execution
+            for (int i = 0; i < 3; i++)
             {
-                byte[] buffer = client.Receive(ref inEndPoint);
-                Console.Clear();
-                Console.Write(Encoding.ASCII.GetString(buffer));
+                var player = new Player(listener);
+                player.Play();
             }
+
+            Console.WriteLine("Cleaning up.");
+            listener.Close();
         }
     }
 }

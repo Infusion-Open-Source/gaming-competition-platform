@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using Infusion.Gaming.LightCycles.Extensions;
+    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     /// The team.
@@ -18,7 +19,7 @@
         public Team(char id)
         {
             id = id.ToUpper();
-            if (id < 'A' || id > 'Z')
+            if (id < Constraints.MinTeamId || id > Constraints.MaxTeamId)
             {
                 throw new ArgumentOutOfRangeException("id");
             }

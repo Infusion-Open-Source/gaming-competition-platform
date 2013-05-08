@@ -8,9 +8,9 @@
     public class GameInfoCollection : List<GameInfo>
     {
         /// <summary>
-        /// Current game info index
+        /// Next game info index
         /// </summary>
-        private int currentGameInfoIndex;
+        private int nextGameInfoIndex;
 
         /// <summary>
         /// Cycle through game info collection
@@ -23,12 +23,13 @@
                 return null;
             }
 
-            if (this.currentGameInfoIndex + 1 >= this.Count)
+            GameInfo result = this[this.nextGameInfoIndex++];
+            if (this.nextGameInfoIndex >= this.Count)
             {
-                this.currentGameInfoIndex = 0;
+                this.nextGameInfoIndex = 0;
             }
 
-            return this[this.currentGameInfoIndex++];
+            return result;
         }
     }
 }

@@ -62,6 +62,7 @@
     <Compile Include="Conditions\ICondition.cs" />
     <Compile Include="Conditions\NumberOfPlayers.cs" />
     <Compile Include="Events\PlayerMoveResult.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="GameInfoCollection.cs" />
     <Compile Include="Events\Filtering\IdlePlayerMoveEventAppender.cs" />
     <Compile Include="Events\Filtering\EventFilterSet.cs" />
@@ -79,7 +80,11 @@
     <Compile Include="GameInfo.cs" />
     <Compile Include="GameRunner.cs" />
     <Compile Include="LightCyclesGame.cs" />
-    <Compile Include="Model\IGameStateSink.cs" />
+    <Compile Include="Messaging\DummySink.cs" />
+    <Compile Include="Messaging\MessageSinkSet.cs" />
+    <Compile Include="Model\Defines\Constraints.cs" />
+    <Compile Include="Model\Defines\TeamDefinition.cs" />
+    <Compile Include="Messaging\IMessageSink.cs" />
     <Compile Include="Model\Defines\MoveResultEnum.cs" />
     <Compile Include="Model\MapData\Space.cs" />
     <Compile Include="Model\Data\LightCycleBike.cs" />
@@ -104,14 +109,19 @@
     <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Model\MapData\IMap.cs" />
     <Compile Include="Model\MapData\Location.cs" />
-    <Compile Include="Model\Serialization\StringGameStateSerializer.cs" />
-    <Compile Include="Model\Serialization\GameStateBroadcaster.cs" />
-    <Compile Include="Model\Serialization\GameStateRenderer.cs" />
-    <Compile Include="Model\Serialization\IGameStateSerializer.cs" />
-    <Compile Include="Model\Serialization\ImageMapSerializer.cs" />
-    <Compile Include="Model\Serialization\IMapSerializer.cs" />
-    <Compile Include="Model\Serialization\MapGenerator.cs" />
-    <Compile Include="Model\Serialization\PlainTextMapSerializer.cs" />
+    <Compile Include="Model\MapData\Serialization\ImageWriter.cs" />
+    <Compile Include="Model\MapData\Serialization\TextMapWriter.cs" />
+    <Compile Include="Model\Serialization\TextGameStateReader.cs" />
+    <Compile Include="Model\Serialization\IGameStateReader.cs" />
+    <Compile Include="Model\MapData\Serialization\IMapReader.cs" />
+    <Compile Include="Model\MapData\Serialization\IMapWriter.cs" />
+    <Compile Include="Model\Serialization\TextGameStateWriter.cs" />
+    <Compile Include="Messaging\UdpBroadcaster.cs" />
+    <Compile Include="Messaging\ConsoleWriter.cs" />
+    <Compile Include="Model\Serialization\IGameStateWriter.cs" />
+    <Compile Include="Model\MapData\Serialization\ImageReader.cs" />
+    <Compile Include="Model\MapData\Serialization\Generator.cs" />
+    <Compile Include="Model\MapData\Serialization\TextMapReader.cs" />
     <Compile Include="Model\DirectionHelper.cs" />
     <Compile Include="Model\Defines\DirectionEnum.cs" />
     <Compile Include="Model\Game.cs" />
@@ -122,7 +132,7 @@
     <Compile Include="Model\MapData\Map.cs" />
     <Compile Include="Model\Data\Player.cs" />
     <Compile Include="Model\Defines\RelativeDirectionEnum.cs" />
-    <Compile Include="Model\TeamColors.cs" />
+    <Compile Include="Model\Defines\TeamDefinitions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

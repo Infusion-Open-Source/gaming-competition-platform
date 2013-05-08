@@ -4,7 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
-    using Infusion.Gaming.LightCycles.Model;
+    using Infusion.Gaming.LightCycles.Model.Defines;
     using SlimDX;
     using SlimDX.Direct2D;
     using UIClient.Assets;
@@ -66,7 +66,8 @@
                     float trail = visualState.GridSize > 7 ? trailLarge : trailSmall;
                     float trail2 = trail / 2;
 
-                    var color = TeamColors.Data[playersAndTeams[playerTrailPair.Key]];
+                    char team = playersAndTeams[playerTrailPair.Key];
+                    Color color = Constraints.TeamDefinitions.GetTeamById(team).Color;
                     this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(-trail2, -trail), i, playerTrailPair.Value.Count, 1.0f);
                     this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(0.0f, 0.0f), i, playerTrailPair.Value.Count, 0.3f);
                     this.DrawTrailPart(renderTarget, prevP, p, color, new PointF(trail2, trail), i, playerTrailPair.Value.Count, 1.0f);

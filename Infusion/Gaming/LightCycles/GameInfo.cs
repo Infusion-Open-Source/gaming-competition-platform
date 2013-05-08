@@ -63,12 +63,12 @@
                 throw new ArgumentOutOfRangeException("numberOfTeams", "in FreeForAll game number of teams must be the same as number of players");
             }
 
-            if (mapWidth < 0 || mapWidth > 100)
+            if (mapWidth < Constraints.MinMapWidth || mapWidth > Constraints.MaxMapWidth)
             {
                 throw new ArgumentOutOfRangeException("mapWidth");
             }
 
-            if (mapHeight < 0 || mapHeight > 100)
+            if (mapHeight < Constraints.MinMapHeight || mapHeight > Constraints.MaxMapHeight)
             {
                 throw new ArgumentOutOfRangeException("mapHeight");
             }
