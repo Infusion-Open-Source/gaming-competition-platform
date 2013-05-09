@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCyclesCommon.Definitions;
 
     /// <summary>
     /// The map generator.

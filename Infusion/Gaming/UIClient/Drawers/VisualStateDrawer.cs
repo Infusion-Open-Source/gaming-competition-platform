@@ -1,12 +1,12 @@
-﻿namespace UIClient.Drawers
+﻿namespace Infusion.Gaming.LightCycles.UIClient.Drawers
 {
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using Infusion.Gaming.LightCycles.UIClient.Assets;
+    using Infusion.Gaming.LightCycles.UIClient.Data;
     using SlimDX;
     using SlimDX.Direct2D;
-    using UIClient.Assets;
-    using UIClient.Data;
 
     /// <summary>
     /// Draws visual state

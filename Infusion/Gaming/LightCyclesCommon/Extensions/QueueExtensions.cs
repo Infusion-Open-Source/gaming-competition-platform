@@ -1,11 +1,11 @@
-﻿namespace Infusion.Gaming.LightCycles.Extensions
+﻿namespace Infusion.Gaming.LightCyclesCommon.Extensions
 {
     using System.Collections.Generic;
 
     /// <summary>
     /// Extension of generic Queue.
     /// </summary>
-    internal static class QueueExtensions
+    public static class QueueExtensions
     {
         /// <summary>
         /// Enqueues collection of items

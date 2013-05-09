@@ -1,11 +1,11 @@
-﻿namespace UIClient.Drawers
+﻿namespace Infusion.Gaming.LightCycles.UIClient.Drawers
 {
     using System.Drawing;
+    using Infusion.Gaming.LightCycles.UIClient.Assets;
+    using Infusion.Gaming.LightCycles.UIClient.Data;
+    using Infusion.Gaming.LightCycles.UIClient.Data.Visuals;
     using SlimDX;
     using SlimDX.Direct2D;
-    using UIClient.Assets;
-    using UIClient.Data;
-    using Visuals = UIClient.Data.Visuals;
 
     /// <summary>
     /// Draws a map grid
@@ -74,11 +74,11 @@
                 for (int y = 0; y < visualState.GridLayer.Height; y++)
                 {
                     PointF p = new PointF(x * visualState.GridSize, y * visualState.GridSize);
-                    bool hasC = visualState.GridLayer[x, y] is Visuals.Grid;
-                    bool hasN = visualState.GridLayer.IsInRange(x, y - 1) && visualState.GridLayer[x, y - 1] is Visuals.Grid;
-                    bool hasS = visualState.GridLayer.IsInRange(x, y + 1) && visualState.GridLayer[x, y + 1] is Visuals.Grid;
-                    bool hasE = visualState.GridLayer.IsInRange(x + 1, y) && visualState.GridLayer[x + 1, y] is Visuals.Grid;
-                    bool hasW = visualState.GridLayer.IsInRange(x - 1, y) && visualState.GridLayer[x - 1, y] is Visuals.Grid;
+                    bool hasC = visualState.GridLayer[x, y] is Grid;
+                    bool hasN = visualState.GridLayer.IsInRange(x, y - 1) && visualState.GridLayer[x, y - 1] is Grid;
+                    bool hasS = visualState.GridLayer.IsInRange(x, y + 1) && visualState.GridLayer[x, y + 1] is Grid;
+                    bool hasE = visualState.GridLayer.IsInRange(x + 1, y) && visualState.GridLayer[x + 1, y] is Grid;
+                    bool hasW = visualState.GridLayer.IsInRange(x - 1, y) && visualState.GridLayer[x - 1, y] is Grid;
 
                     if (hasC)
                     {

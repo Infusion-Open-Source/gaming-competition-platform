@@ -1,14 +1,13 @@
-﻿namespace UIClient
+﻿namespace Infusion.Gaming.LightCycles.UIClient
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
-    using System.IO;
+    using System.Net;
     using System.Threading;
-    using Infusion.Gaming.LightCycles;
-    using Infusion.Gaming.LightCycles.Messaging;
-    using Infusion.Gaming.LightCycles.Model.Defines;
-    using UIClient.Data;
-    
+    using Infusion.Gaming.LightCycles.UIClient.Data;
+    using Infusion.Gaming.LightCyclesCommon.Networking;
+
     /// <summary>
     /// Program entry point
     /// </summary>
@@ -61,7 +60,7 @@
             {
                 // start looped game on a separate thread 
                 AbortGameThread = false;
-                System.Threading.Thread thread = new Thread(GameThread);
+                System.Threading.Thread thread = new Thread(NetworkingThread);
                 thread.Start(view);
 
                 view.Run();
@@ -73,67 +72,124 @@
         }
 
         /// <summary>
-        /// Thread playing game in a loop until aborted
+        /// Thread gathering game broadcasts from network
         /// </summary>
         /// <param name="arg">thread argument</param>
-        public static void GameThread(object arg)
+        public static void NetworkingThread(object arg)
         {
-            const string MapsPath = @"..\..\..\Maps";
             GameView view = (GameView)arg;
-            
-            GameInfoCollection gameInfoCycle = new GameInfoCollection
-            {
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, 30, 20),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\infusion_logo.png")),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\pac_man.png")),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\pac_man2.png")),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\spiral.png")),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\world.png")),
+            var endpoint = new IPEndPoint(IPAddress.Loopback, 12345);
+            var listener = new BroadcastListener(endpoint);
+            List<string> gameState = new List<string>();
+            var messageParser = new MessageParser();
+            var visualStateBuilder = new VisualStateBuilder();
+            visualStateBuilder.EndPoint = endpoint.ToString();
+            int ocupiedSlots;
+            int totalSlots;
+            int turn;
+            int startsInCounter;
+            string winningTeam;
+            string winningPlayer;
+            string gameMode;
+            int mapWidth;
+            int mapHeight;
+            int numberOfPlayers;
+            int numberOfTeams;
 
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, 30, 20),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\infusion_logo.png")),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\pac_man.png")),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\pac_man2.png")),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\spiral.png")),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\world.png")),
-            };
-            
+            List<int> processedTurns = new List<int>(); 
+
             while (true)
             {
                 if (!view.IsInitialized)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(10);
                     continue;
                 }
 
-                var visualStateBuilder = new VisualStateBuilder();
-                var gameRunner = new GameRunner(new GameStateConsoleWriter());
+                string message = listener.Receive();
                 var windowRect = new RectangleF(0, 0, view.WindowWidth, view.WindowHeight);
-
-                gameRunner.InitilizeGame(gameInfoCycle.Cycle());
-                view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
-
-                gameRunner.GatherPlayers();
-                
-                gameRunner.StartGame();
-                view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
-
-                while (gameRunner.RunGame())
+                if (string.IsNullOrEmpty(message))
                 {
-                    view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
-                    if (AbortGameThread)
-                    {
-                        break;
-                    }
+                    continue;
                 }
 
-                view.UpdateVisualState(visualStateBuilder.CreateVisualState(gameRunner.Game, windowRect));
-                gameRunner.EndGame();
+                if (messageParser.TryGetString(message, "[Initialize][Mode]", out gameMode))
+                {
+                    visualStateBuilder.GameMode = gameMode;
+                }
+                else if (messageParser.TryGetInt(message, "[Initialize][MapWidth]", out mapWidth))
+                {
+                    visualStateBuilder.MapWidth = mapWidth;
+                }
+                else if (messageParser.TryGetInt(message, "[Initialize][MapHeight]", out mapHeight))
+                {
+                    visualStateBuilder.MapHeight = mapHeight;
+                }
+                else if (messageParser.TryGetInt(message, "[Initialize][NumberOfPlayers]", out numberOfPlayers))
+                {
+                    visualStateBuilder.NumberOfPlayers = numberOfPlayers;
+                }
+                else if (messageParser.TryGetInt(message, "[Initialize][NumberOfTeams]", out numberOfTeams))
+                {
+                    visualStateBuilder.NumberOfTeams = numberOfTeams;
+                }
+                else if (messageParser.TryGetIntInt(message, "[Waiting for players][Slots]", "/", out ocupiedSlots, out totalSlots))
+                {
+                    view.UpdateVisualState(visualStateBuilder.GatheringPlayers(ocupiedSlots, totalSlots, windowRect));
+                }
+                else if (messageParser.TryGetInt(message, "[GameStart][In]", out startsInCounter))
+                {
+                    view.UpdateVisualState(visualStateBuilder.GameStarts(startsInCounter, windowRect));
+                }
+                else if (messageParser.TryGet(message, "[GameStart][Now]"))
+                {
+                    processedTurns.Clear();
+                    view.UpdateVisualState(visualStateBuilder.GameStarts(0, windowRect));
+                }
+                else if (messageParser.TryGetInt(message, "[TurnStart]", out turn))
+                {
+                    gameState = new List<string>();
+                    visualStateBuilder.Turn = turn;
+                }
+                else if (messageParser.TryGetInt(message, "[TurnEnd]", out turn))
+                {
+                    if (!processedTurns.Contains(turn))
+                    {
+                        // process each turn only once
+                        processedTurns.Add(turn);
+                        visualStateBuilder.Turn = turn;
+                        view.UpdateVisualState(visualStateBuilder.GameTurn(gameState, windowRect));
+                    }
+                }
+                else if (messageParser.TryGetString(message, "[GameEnd][Team wins]", out winningTeam))
+                {
+                    view.UpdateVisualState(visualStateBuilder.GameEnds(gameState, "team", winningTeam, windowRect));
+                }
+                else if (messageParser.TryGetString(message, "[GameEnd][Player wins]", out winningPlayer))
+                {
+                    view.UpdateVisualState(visualStateBuilder.GameEnds(gameState, "player", winningPlayer, windowRect));
+                }
+                else if (messageParser.TryGet(message, "[GameEnd][No winner]"))
+                {
+                    view.UpdateVisualState(visualStateBuilder.GameEnds(gameState, "no winner", string.Empty, windowRect));
+                }
+                else if (messageParser.TryGet(message, "[GameEnd][Terminated]"))
+                {
+                    view.UpdateVisualState(visualStateBuilder.GameEnds(gameState, "terminated", string.Empty, windowRect));
+                }
+                else
+                {
+                    gameState.AddRange(message.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+                }
+
+                // exit networking thread
                 if (AbortGameThread)
                 {
                     break;
                 }
             }
+
+            listener.Close();
         }
     }
 }

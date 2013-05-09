@@ -1,8 +1,8 @@
-﻿namespace Infusion.Gaming.LightCycles.Model.Defines
+﻿namespace Infusion.Gaming.LightCyclesCommon.Definitions
 {
     using System.Collections.Generic;
     using System.Drawing;
-    using Infusion.Gaming.LightCycles.Extensions;
+    using Infusion.Gaming.LightCyclesCommon.Extensions;
 
     /// <summary>
     /// Team definitions class

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Infusion.Gaming.LightCyclesCommon.Networking;
 
     /// <summary>
     /// Player playing the game

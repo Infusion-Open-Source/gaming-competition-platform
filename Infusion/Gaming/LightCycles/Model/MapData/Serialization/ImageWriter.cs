@@ -1,9 +1,8 @@
 ﻿namespace Infusion.Gaming.LightCycles.Model.MapData.Serialization
 {
     using System;
-    using System.Collections.Generic;
     using System.Drawing;
-    using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCyclesCommon.Definitions;
 
     /// <summary>
     /// Provides writer for the map in image format

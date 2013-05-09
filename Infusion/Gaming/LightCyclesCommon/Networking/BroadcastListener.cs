@@ -1,4 +1,4 @@
-﻿namespace ConsoleClient
+﻿namespace Infusion.Gaming.LightCyclesCommon.Networking
 {
     using System;
     using System.Net;

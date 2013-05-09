@@ -2,8 +2,8 @@
 {
     using System;
     using System.Globalization;
-    using Infusion.Gaming.LightCycles.Extensions;
-    using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCyclesCommon.Definitions;
+    using Infusion.Gaming.LightCyclesCommon.Extensions;
 
     /// <summary>
     /// The team.

@@ -1,4 +1,4 @@
-﻿namespace UIClient.Data.Visuals
+﻿namespace Infusion.Gaming.LightCycles.UIClient.Data.Visuals
 {
     /// <summary>
     /// Trail visual

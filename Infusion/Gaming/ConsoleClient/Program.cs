@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net;
+    using Infusion.Gaming.LightCyclesCommon.Networking;
     
     /// <summary>
     /// Console client example application

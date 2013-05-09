@@ -27,7 +27,18 @@
             GameInfoCollection gameInfoCycle = new GameInfoCollection
             {
                 new GameInfo(8, 8, GameModeEnum.FreeForAll, 50, 22),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\infusion_logo.png"))
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\infusion_logo.png")),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\pac_man.png")),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\pac_man2.png")),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\spiral.png")),
+                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\world.png")),
+
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, 50, 22),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\infusion_logo.png")),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\pac_man.png")),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\pac_man2.png")),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\spiral.png")),
+                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\world.png")),
             };
 
             while (true)

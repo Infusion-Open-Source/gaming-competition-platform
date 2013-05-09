@@ -1,6 +1,6 @@
 ﻿namespace Infusion.Gaming.LightCycles.Tests.Extensions
 {
-    using Infusion.Gaming.LightCycles.Extensions;
+    using Infusion.Gaming.LightCyclesCommon.Extensions;
     using NUnit.Framework;
 
     /// <summary>

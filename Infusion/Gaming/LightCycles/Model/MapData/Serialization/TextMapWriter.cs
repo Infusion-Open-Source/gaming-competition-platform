@@ -1,7 +1,7 @@
 ﻿namespace Infusion.Gaming.LightCycles.Model.MapData.Serialization
 {
     using System;
-    using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCyclesCommon.Definitions;
 
     /// <summary>
     /// The map text writer.

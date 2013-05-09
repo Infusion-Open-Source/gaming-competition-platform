@@ -1,10 +1,9 @@
-﻿namespace UIClient.Drawers
+﻿namespace Infusion.Gaming.LightCycles.UIClient.Drawers
 {
     using System.Drawing;
-    using SlimDX;
+    using Infusion.Gaming.LightCycles.UIClient.Assets;
+    using Infusion.Gaming.LightCycles.UIClient.Data;
     using SlimDX.Direct2D;
-    using UIClient.Assets;
-    using UIClient.Data;
 
     /// <summary>
     /// Draws map obstacles

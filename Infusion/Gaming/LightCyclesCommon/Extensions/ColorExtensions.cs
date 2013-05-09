@@ -1,4 +1,4 @@
-﻿namespace Infusion.Gaming.LightCycles.Extensions
+﻿namespace Infusion.Gaming.LightCyclesCommon.Extensions
 {
     using System.Drawing;
 

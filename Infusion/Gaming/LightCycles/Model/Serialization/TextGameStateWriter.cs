@@ -1,10 +1,10 @@
 ﻿namespace Infusion.Gaming.LightCycles.Model.Serialization
 {
     using System;
-    using Infusion.Gaming.LightCycles.Extensions;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
     using Infusion.Gaming.LightCycles.Model.MapData;
+    using Infusion.Gaming.LightCyclesCommon.Definitions;
+    using Infusion.Gaming.LightCyclesCommon.Extensions;
 
     /// <summary>
     /// Game state writer to text

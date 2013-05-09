@@ -6,10 +6,10 @@
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Events.Filtering;
     using Infusion.Gaming.LightCycles.Events.Processing;
-    using Infusion.Gaming.LightCycles.Extensions;
     using Infusion.Gaming.LightCycles.Model.Data;
     using Infusion.Gaming.LightCycles.Model.Defines;
     using Infusion.Gaming.LightCycles.Model.MapData;
+    using Infusion.Gaming.LightCyclesCommon.Extensions;
 
     /// <summary>
     /// The game.
@@ -211,10 +211,10 @@
         /// </returns>
         protected IGameState CreateInitialState(IEnumerable<Player> players, IMap initialMap)
         {
-            var givenPlayers = new List<Player>(players);
-            var playersData = new PlayersData(initialMap, givenPlayers);
-            var playersInGame = givenPlayers.Intersect(playersData.Players);
-            var playersToRemove = givenPlayers.Remove(playersInGame);
+            IList<Player> givenPlayers = new List<Player>(players);
+            PlayersData playersData = new PlayersData(initialMap, givenPlayers);
+            IList<Player> playersInGame = givenPlayers.Intersect(playersData.Players);
+            IList<Player> playersToRemove = givenPlayers.Remove(playersInGame);
 
             playersData.RemovePlayers(playersToRemove);
             

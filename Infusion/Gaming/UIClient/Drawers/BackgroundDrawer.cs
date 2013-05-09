@@ -1,9 +1,9 @@
-﻿namespace UIClient.Drawers
+﻿namespace Infusion.Gaming.LightCycles.UIClient.Drawers
 {
+    using Infusion.Gaming.LightCycles.UIClient.Assets;
+    using Infusion.Gaming.LightCycles.UIClient.Data;
     using SlimDX;
     using SlimDX.Direct2D;
-    using UIClient.Assets;
-    using UIClient.Data;
 
     /// <summary>
     /// Draws background layer

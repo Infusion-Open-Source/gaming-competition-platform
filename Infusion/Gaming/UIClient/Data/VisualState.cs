@@ -1,6 +1,6 @@
-﻿namespace UIClient.Data
+﻿namespace Infusion.Gaming.LightCycles.UIClient.Data
 {
-    using UIClient.Data.Visuals;
+    using Infusion.Gaming.LightCycles.UIClient.Data.Visuals;
 
     /// <summary>
     /// Game visual state implementation

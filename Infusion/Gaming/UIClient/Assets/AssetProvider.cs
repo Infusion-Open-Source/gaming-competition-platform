@@ -1,4 +1,4 @@
-﻿namespace UIClient.Assets
+﻿namespace Infusion.Gaming.LightCycles.UIClient.Assets
 {
     using System.Drawing;
     using System.Drawing.Imaging;

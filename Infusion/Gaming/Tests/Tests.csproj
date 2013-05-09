@@ -107,6 +107,10 @@
     <Folder Include="Model\Serialization\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LightCyclesCommon\LightCyclesCommon.csproj">
+      <Project>{CB6B314D-D08A-44FA-B288-6321D2605F41}</Project>
+      <Name>LightCyclesCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LightCycles\LightCycles.csproj">
       <Project>{9753941F-A627-4D65-967C-A0472AFD9B5F}</Project>
       <Name>LightCycles</Name>

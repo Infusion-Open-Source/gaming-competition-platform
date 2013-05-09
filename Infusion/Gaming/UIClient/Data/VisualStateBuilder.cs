@@ -1,11 +1,13 @@
-﻿namespace UIClient.Data
+﻿namespace Infusion.Gaming.LightCycles.UIClient.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
-    using Infusion.Gaming.LightCycles.Model;
-    using UIClient.Data.Visuals;
-    using GameData = Infusion.Gaming.LightCycles.Model.Data;
-    using MapData = Infusion.Gaming.LightCycles.Model.MapData;
+    using System.Text;
+    using Infusion.Gaming.LightCycles.UIClient.Data.Visuals;
+    using Infusion.Gaming.LightCyclesCommon.Definitions;
+    using Infusion.Gaming.LightCyclesCommon.Extensions;
+    using SlimDX;
 
     /// <summary>
     /// Creates game visual state
@@ -13,21 +15,165 @@
     public class VisualStateBuilder
     {
         /// <summary>
-        /// Create visual state from game state
+        /// Keeps age of light trails
         /// </summary>
-        /// <param name="game">game state to consider</param>
+        private int[,] trailAges;
+
+        /// <summary>
+        /// Gets or sets Game mode
+        /// </summary>
+        public string GameMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets Map width
+        /// </summary>
+        public int MapWidth { get; set; }
+
+        /// <summary>
+        /// Gets or sets Map height
+        /// </summary>
+        public int MapHeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets Number of players
+        /// </summary>
+        public int NumberOfPlayers { get; set; }
+
+        /// <summary>
+        /// Gets or sets Number of teams
+        /// </summary>
+        public int NumberOfTeams { get; set; }
+
+        /// <summary>
+        /// Gets or sets Game turn
+        /// </summary>
+        public int Turn { get; set; }
+
+        /// <summary>
+        /// Gets or sets text describing endpoint
+        /// </summary>
+        public string EndPoint { get; set; }
+
+        /// <summary>
+        /// Create visual state from game state on game turn
+        /// </summary>
+        /// <param name="gameState">game state</param>
         /// <param name="windowRect">game window dimensions</param>
         /// <returns>visual state of the game</returns>
-        public VisualState CreateVisualState(IGame game, RectangleF windowRect)
+        public VisualState GameTurn(List<string> gameState, RectangleF windowRect)
         {
-            if (game == null)
+            var result = this.InitilizeVisualState(windowRect);
+            char[,] data = this.ConvertToCharMap(this.CleanUpGameState(gameState));
+            result = this.AddMapData(data, result);
+            result = this.AddPlayerData(data, result);
+            result.UserInterfaceLayer.Add(new VisualText("Listening on: " + this.EndPoint + "      Turn: " + this.Turn));
+            return result;
+        }
+
+        /// <summary>
+        /// Create visual state for game end
+        /// </summary>
+        /// <param name="gameState">game state</param>
+        /// <param name="gameResult">game result</param>
+        /// <param name="winnerName">name of game winner</param>
+        /// <param name="windowRect">game window dimensions</param>
+        /// <returns>visual state of the game</returns>
+        public VisualState GameEnds(List<string> gameState, string gameResult, string winnerName, RectangleF windowRect)
+        {
+            var result = this.InitilizeVisualState(windowRect);
+            char[,] data = this.ConvertToCharMap(this.CleanUpGameState(gameState));
+            result = this.AddMapData(data, result);
+            result = this.AddPlayerData(data, result);
+
+            string message = string.Empty;
+            if (gameResult == "team")
             {
-                throw new ArgumentNullException("game");
+                message = "Team [" + winnerName + "] has won the game!";
+            }
+            else if (gameResult == "player")
+            {
+                message = "Player [" + winnerName + "] has won the game!";
+            }
+            else if (gameResult == "no winner")
+            {
+                message = "No winner!";
+            }
+            else if (gameResult == "terminated")
+            {
+                message = "Game terminated!";
             }
 
+            result.UserInterfaceLayer.Add(new Mask(new Color4(0, 0, 0), 0.3f, windowRect));
+            result.UserInterfaceLayer.Add(new VisualText("Listening on: " + this.EndPoint + "      Turn: " + this.Turn));
+            result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText(message, new PointF((windowRect.Width / 2) - 400, (windowRect.Height / 2) - 50)));
+            return result;
+        }
+
+        /// <summary>
+        /// Create visual state for game start
+        /// </summary>
+        /// <param name="startsInCounter">number of seconds to game start</param>
+        /// <param name="windowRect">game window dimensions</param>
+        /// <returns>visual state of the game</returns>
+        public VisualState GameStarts(int startsInCounter, RectangleF windowRect)
+        {
+            this.trailAges = new int[this.MapWidth, this.MapHeight];
+            var result = this.InitilizeVisualState(windowRect);
+
+            string message = string.Empty;
+            if (startsInCounter > 0)
+            {
+                message = "Game starts in " + startsInCounter + "...";
+            }
+            else
+            {
+                message = "GO!";
+            }
+
+            result.UserInterfaceLayer.Add(new VisualText("Listening on: " + this.EndPoint + "      Turn: " + this.Turn));
+            result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText(message, new PointF((windowRect.Width / 2) - 200, (windowRect.Height / 2) - 50)));
+            return result;
+        }
+
+        /// <summary>
+        /// Create visual state for player gathering phase
+        /// </summary>
+        /// <param name="ocupiedSlots">slots already occupied</param>
+        /// <param name="totalSlots">total number of game slots</param>
+        /// <param name="windowRect">game window dimensions</param>
+        /// <returns>visual state of the game</returns>
+        public VisualState GatheringPlayers(int ocupiedSlots, int totalSlots, RectangleF windowRect)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("Game mode: " + this.GameMode);
+            builder.AppendLine("Number of players: " + this.NumberOfPlayers);
+            builder.AppendLine("Number of teams: " + this.NumberOfTeams);
+            builder.AppendLine("Map width: " + this.MapWidth);
+            builder.AppendLine("Map height: " + this.MapHeight);
+            builder.AppendLine("Players connected: " + ocupiedSlots);
+
+            var result = this.InitilizeVisualState(windowRect);
+            result.UserInterfaceLayer.Add(new VisualText("Listening on: " + this.EndPoint + "      Turn: " + this.Turn));
+            result.UserInterfaceLayer.Add(VisualText.CreateHeadingText("Waiting for players", new PointF((windowRect.Width / 2) - 150, 200)));
+            result.UserInterfaceLayer.Add(VisualText.CreateRegularText(builder.ToString(), new PointF((windowRect.Width / 2) - 120, 300)));
+            
+            return result;
+        }
+
+        /// <summary>
+        /// Create visual state from game state 
+        /// </summary>
+        /// <param name="windowRect">game window dimensions</param>
+        /// <returns>visual state of the game</returns>
+        protected VisualState InitilizeVisualState(RectangleF windowRect)
+        {
             VisualState result = new VisualState();
-            result = this.AddMapData(game.CurrentState.Map, result);
-            result = this.AddPlayerData(game.CurrentState.PlayersData, result);
+            result.BackgroundLayer = new VisualsCollection();
+            result.ObstaclesLayer = new VisualsSurface(this.MapWidth, this.MapHeight);
+            result.GridLayer = new VisualsSurface(this.MapWidth, this.MapHeight);
+            result.TrailsLayer = new VisualsSurface(this.MapWidth, this.MapHeight);
+            result.PlayersLayer = new VisualsSurface(this.MapWidth, this.MapHeight);
+            result.UserInterfaceLayer = new VisualsCollection();
 
             // adjust size of the grid accordingly to size of the map
             float widthRatio = windowRect.Width / result.GridLayer.Width;
@@ -37,46 +183,74 @@
             {
                 result.GridSize = 30;
             }
-            
-            /*
-            TODO: add as visuals on user interface layer
-            result.Turn = iGame.CurrentState.Turn;
-            result.State = iGame.State;
-            result.Mode = iGame.Mode;
-            result.Result = iGame.Result;
-            */ 
+
             return result;
+        }
+
+        /// <summary>
+        /// Cleans up game state
+        /// </summary>
+        /// <param name="gameState">game state before clean up</param>
+        /// <returns>game state after clean up</returns>
+        protected IEnumerable<string> CleanUpGameState(IEnumerable<string> gameState)
+        {
+            List<string> result = new List<string>();
+            foreach (string s in gameState)
+            {
+                if (!string.IsNullOrWhiteSpace(s))
+                {
+                    result.Add(s.Trim());
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Convert to char map
+        /// </summary>
+        /// <param name="gameState">game state</param>
+        /// <returns>character map</returns>
+        protected char[,] ConvertToCharMap(IEnumerable<string> gameState)
+        {
+            List<string> data = new List<string>(gameState);
+            char[,] charMap = new char[this.MapWidth, this.MapHeight];
+            for (int y = 0; y < this.MapHeight; y++)
+            {
+                for (int x = 0; x < this.MapWidth; x++)
+                {
+                    if (data[y].Length > x)
+                    {
+                        charMap[x, y] = data[y][x];
+                    }
+                    else
+                    {
+                        charMap[x, y] = Constraints.MapObstacleCharacter;
+                    }
+                }
+            }
+
+            return charMap;
         }
 
         /// <summary>
         /// Fill in visual state with map data
         /// </summary>
-        /// <param name="map">map data to consider</param>
+        /// <param name="data">map data to parse</param>
         /// <param name="visualState">visualState to fill in</param>
         /// <returns>filled in visual state</returns>
-        public VisualState AddMapData(MapData.IMap map, VisualState visualState)
+        protected VisualState AddMapData(char[,] data, VisualState visualState)
         {
-            if (map == null)
+            for (int x = 0; x < this.MapWidth; x++)
             {
-                throw new ArgumentNullException("map");
-            }
-
-            visualState.ObstaclesLayer = new VisualsSurface(map.Width, map.Height);
-            visualState.GridLayer = new VisualsSurface(map.Width, map.Height);
-            for (int x = 0; x < map.Width; x++)
-            {
-                for (int y = 0; y < map.Height; y++)
+                for (int y = 0; y < this.MapHeight; y++)
                 {
-                    var location = map[x, y];
-                    if (location is MapData.Obstacle)
+                    var location = data[x, y];
+                    if (location == Constraints.MapObstacleCharacter)
                     {
                         visualState.ObstaclesLayer[x, y] = new Visuals.Obstacle();
                     }
-                    else if (location is MapData.PlayersStartingLocation)
-                    {
-                        visualState.GridLayer[x, y] = new Visuals.Grid();
-                    }
-                    else if (location is MapData.Space)
+                    else 
                     {
                         visualState.GridLayer[x, y] = new Visuals.Grid();
                     }
@@ -89,48 +263,33 @@
         /// <summary>
         /// Fill in visual state with map data
         /// </summary>
-        /// <param name="playersData">players data to consider</param>
+        /// <param name="data">players data to parse</param>
         /// <param name="visualState">visualState to fill in</param>
         /// <returns>filled in visual state</returns>
-        public VisualState AddPlayerData(GameData.IPlayersData playersData, VisualState visualState)
+        protected VisualState AddPlayerData(char[,] data, VisualState visualState)
         {
-            if (playersData == null)
+            for (int x = 0; x < this.MapWidth; x++)
             {
-                throw new ArgumentNullException("playersData");
-            }
-
-            visualState.TrailsLayer = new VisualsSurface(playersData.Width, playersData.Height);
-            visualState.PlayersLayer = new VisualsSurface(playersData.Width, playersData.Height);
-            for (int x = 0; x < playersData.Width; x++)
-            {
-                for (int y = 0; y < playersData.Height; y++)
+                for (int y = 0; y < this.MapHeight; y++)
                 {
-                    var data = playersData[x, y];
-                    if (data is GameData.Trail)
+                    var location = data[x, y];
+                    if (location >= Constraints.MinPlayerTrailId && location <= Constraints.MaxPlayerTrailId)
                     {
-                        visualState.TrailsLayer[x, y] = new Visuals.Trail(((GameData.Trail)data).Player.Id, ((GameData.Trail)data).Player.Team.Id, ((GameData.Trail)data).Age);
+                        this.trailAges[x, y]++;
+                        visualState.TrailsLayer[x, y] = new Visuals.Trail(location.ToUpper(), location.ToUpper(), this.trailAges[x, y]);
                     }
-                    else if (data is GameData.LightCycleBike)
+                    else if (location >= Constraints.MinPlayerId && location <= Constraints.MaxPlayerId)
                     {
-                        visualState.PlayersLayer[x, y] = new Visuals.Bike(((GameData.LightCycleBike)data).Player.Id, ((GameData.LightCycleBike)data).Player.Team.Id);
+                        this.trailAges[x, y] = 1;
+                        visualState.PlayersLayer[x, y] = new Visuals.Bike(location, location);
+                    }
+                    else
+                    {
+                        this.trailAges[x, y] = 0;
                     }
                 }
             }
-
-            /*
-            TODO: add as visuals on user interface layer
-            visualState.Teams = new List<int>();
-            foreach (var team in iPlayersData.Teams)
-            {
-                visualState.Teams.Add(team.Id);
-            }
-
-            visualState.Players = new Dictionary<int, int>();
-            foreach (var player in iPlayersData.Players)
-            {
-                visualState.Players.Add(player.Id, player.Team.Id);
-            }*/
-
+            
             return visualState;
         }
     }

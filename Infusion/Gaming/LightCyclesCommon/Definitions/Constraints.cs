@@ -1,4 +1,4 @@
-﻿namespace Infusion.Gaming.LightCycles.Model.Defines
+﻿namespace Infusion.Gaming.LightCyclesCommon.Definitions
 {
     using System.Drawing;
 
@@ -56,6 +56,26 @@
         /// Maximal id of a team
         /// </summary>
         public const char MaxTeamId = 'H';
+
+        /// <summary>
+        /// Minimal id of a player
+        /// </summary>
+        public const char MinPlayerId = 'A';
+
+        /// <summary>
+        /// Maximal id of a player
+        /// </summary>
+        public const char MaxPlayerId = 'H';
+
+        /// <summary>
+        /// Minimal id of a player trail
+        /// </summary>
+        public const char MinPlayerTrailId = 'a';
+
+        /// <summary>
+        /// Maximal id of a player trail
+        /// </summary>
+        public const char MaxPlayerTrailId = 'h';
 
         /// <summary>
         /// Character for 'space' on a map

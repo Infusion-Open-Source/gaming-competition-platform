@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCyclesCommon.Definitions;
 
     /// <summary>
     /// Game info, describes game to be played

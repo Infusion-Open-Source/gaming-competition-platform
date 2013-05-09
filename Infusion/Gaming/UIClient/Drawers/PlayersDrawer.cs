@@ -1,15 +1,15 @@
-﻿namespace UIClient.Drawers
+﻿namespace Infusion.Gaming.LightCycles.UIClient.Drawers
 {
     using System.Collections;
     using System.Collections.Generic;
     using System.Drawing;
-    using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCycles.UIClient.Assets;
+    using Infusion.Gaming.LightCycles.UIClient.Data;
+    using Infusion.Gaming.LightCyclesCommon.Definitions;
     using SlimDX;
     using SlimDX.Direct2D;
     using SlimDX.DirectWrite;
-    using UIClient.Assets;
-    using UIClient.Data;
-
+    
     /// <summary>
     /// Draws players layer 
     /// </summary>
@@ -57,7 +57,6 @@
             this.bikeE = assetProvider.LoadBitmap("bikeE.png", renderTarget);
             this.bikeW = assetProvider.LoadBitmap("bikeW.png", renderTarget);
             this.solidBrush = new SolidColorBrush(renderTarget, new Color4(1.0f, 0.0f, 0.0f), new BrushProperties { Opacity = 0.7f });
-
             this.factory = new SlimDX.DirectWrite.Factory(SlimDX.DirectWrite.FactoryType.Isolated);
         }
 

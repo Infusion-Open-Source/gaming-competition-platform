@@ -1,11 +1,11 @@
-﻿namespace UIClient
+﻿namespace Infusion.Gaming.LightCycles.UIClient
 {
     using System.Collections.Generic;
     using System.Drawing;
+    using Infusion.Gaming.LightCycles.UIClient.Assets;
+    using Infusion.Gaming.LightCycles.UIClient.Drawers;
     using SlimDX.SampleFramework;
     using SlimDX.SampleFramework.Rendering;
-    using UIClient.Assets;
-    using UIClient.Drawers;
 
     /// <summary>
     /// Game view control

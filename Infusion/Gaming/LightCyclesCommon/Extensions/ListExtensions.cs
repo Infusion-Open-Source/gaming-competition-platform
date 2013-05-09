@@ -1,11 +1,11 @@
-﻿namespace Infusion.Gaming.LightCycles.Extensions
+﻿namespace Infusion.Gaming.LightCyclesCommon.Extensions
 {
     using System.Collections.Generic;
 
     /// <summary>
     /// Extension of generic lists.
     /// </summary>
-    internal static class ListExtensions
+    public static class ListExtensions
     {
         /// <summary>
         /// Get collection being intersection with given collection.

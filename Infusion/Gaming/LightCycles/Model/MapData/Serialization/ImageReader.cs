@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using Infusion.Gaming.LightCycles.Extensions;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCyclesCommon.Definitions;
+    using Infusion.Gaming.LightCyclesCommon.Extensions;
 
     /// <summary>
     /// Provides reader for the map in image format
