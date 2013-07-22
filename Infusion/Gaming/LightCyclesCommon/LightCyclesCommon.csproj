@@ -43,21 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Definitions\Constraints.cs" />
-    <Compile Include="Definitions\TeamDefinition.cs" />
-    <Compile Include="Definitions\TeamDefinitions.cs" />
-    <Compile Include="Extensions\CharExtensions.cs" />
-    <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="Extensions\QueueExtensions.cs" />
-    <Compile Include="Networking\BroadcastListener.cs" />
-    <Compile Include="Networking\MessageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Networking\Networking\Networking.csproj">
+      <Project>{E3B3AA56-5E89-436B-B398-E38149E30F37}</Project>
+      <Name>Networking</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

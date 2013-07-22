@@ -1,10 +1,12 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Events.Processing
+﻿using Infusion.Gaming.LightCycles.Model;
+using Infusion.Gaming.LightCyclesCommon.Definitions;
+
+namespace Infusion.Gaming.LightCycles.Tests.Events.Processing
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Events.Processing;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
     using NUnit.Framework;
 
     /// <summary>
@@ -19,11 +21,11 @@
         [Test]
         public void PlayerCollisionProcessorConsumesCollisionEvent()
         {
-            Event e = new PlayerCollisionEvent(new Player('A'));
+            Event e = new PlayerCollisionEvent(new Identity('A'));
             IEnumerable<Event> newEvents;
             var currentState = MockHelper.CreateGameState();
             var nextState = MockHelper.CreateGameState();
-            nextState.Setup(x => x.PlayersData.RemovePlayer(new Player('A'))).Verifiable();
+            nextState.Setup(x => x.PlayersData.RemovePlayer(new Identity('A'))).Verifiable();
             
             PlayerCollisionProcessor processor = new PlayerCollisionProcessor();
             bool result = processor.Process(e, currentState.Object, nextState.Object, out newEvents);
@@ -42,7 +44,7 @@
         [Test]
         public void PlayerCollisionProcessorIgnoresMoveEvent()
         {
-            Event e = new PlayerMoveEvent(new Player('A'), RelativeDirectionEnum.Left);
+            Event e = new PlayerMoveEvent(new Identity('A'), RelativeDirection.Left);
             IEnumerable<Event> newEvents;
             
             PlayerCollisionProcessor processor = new PlayerCollisionProcessor();

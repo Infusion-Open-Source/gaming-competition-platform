@@ -8,7 +8,7 @@
     <ProjectGuid>{FD71A833-72A1-4A43-94F4-D37BDF8413BD}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConsoleClient</RootNamespace>
+    <RootNamespace>Infusion.Gaming.LightCycles.ConsoleClient</RootNamespace>
     <AssemblyName>ConsoleClient</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Infusion.Gaming.LightCycles.ConsoleClient.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -54,9 +56,21 @@
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LightCyclesCommon\LightCyclesCommon.csproj">
-      <Project>{CB6B314D-D08A-44FA-B288-6321D2605F41}</Project>
-      <Name>LightCyclesCommon</Name>
+    <ProjectReference Include="..\..\Networking\Networking\Networking.csproj">
+      <Project>{E3B3AA56-5E89-436B-B398-E38149E30F37}</Project>
+      <Name>Networking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ControllingServerLauncher\ControllingServer.csproj">
+      <Project>{3A1F5C57-4295-47B1-987A-6226DB190699}</Project>
+      <Name>ControllingServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LightCyclesNetworking\LightCyclesNetworking.csproj">
+      <Project>{70C79FC9-D749-454B-A5EA-8C0A5913A796}</Project>
+      <Name>LightCyclesNetworking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LightCycles\LightCycles.csproj">
+      <Project>{9753941F-A627-4D65-967C-A0472AFD9B5F}</Project>
+      <Name>LightCycles</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

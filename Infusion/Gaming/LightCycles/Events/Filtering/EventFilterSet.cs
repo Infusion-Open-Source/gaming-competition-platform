@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Events.Filtering
+﻿using Infusion.Gaming.LightCycles.Model.State;
+
+namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System;
     using System.Collections.Generic;

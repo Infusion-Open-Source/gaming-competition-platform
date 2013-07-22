@@ -1,10 +1,12 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Events.Filtering
+﻿using Infusion.Gaming.LightCycles.Model;
+using Infusion.Gaming.LightCyclesCommon.Definitions;
+
+namespace Infusion.Gaming.LightCycles.Tests.Events.Filtering
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Events.Filtering;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
     using NUnit.Framework;
 
     /// <summary>
@@ -22,13 +24,13 @@
             // setup
             List<Event> events = new List<Event>();
 
-            List<Player> players = new List<Player>();
-            players.Add(new Player('A'));
+            List<Identity> players = new List<Identity>();
+            players.Add(new Identity('A'));
 
             var gameState = MockHelper.CreateGameState();
             gameState.SetupGet(x => x.PlayersData.Players).Returns(players);
 
-            const RelativeDirectionEnum DirectionToBeAppended = RelativeDirectionEnum.Left;
+            const RelativeDirection DirectionToBeAppended = RelativeDirection.Left;
 
             // test
             IdlePlayerMoveEventAppender filter = new IdlePlayerMoveEventAppender(DirectionToBeAppended);
@@ -36,7 +38,7 @@
 
             // check if event was created for player A
             Assert.AreEqual(1, filteredEvents.Count);
-            Assert.AreEqual('A', ((PlayerMoveEvent)filteredEvents[0]).Player.Id);
+            Assert.AreEqual('A', ((PlayerMoveEvent)filteredEvents[0]).Player.Identifier);
             Assert.AreEqual(DirectionToBeAppended, ((PlayerMoveEvent)filteredEvents[0]).Direction);
         }
 
@@ -48,17 +50,17 @@
         {
             // setup
             List<Event> events = new List<Event>();
-            events.Add(new PlayerMoveEvent(new Player('A'), RelativeDirectionEnum.Right));
-            events.Add(new PlayerMoveEvent(new Player('A'), RelativeDirectionEnum.Left));
+            events.Add(new PlayerMoveEvent(new Identity('A'), RelativeDirection.Right));
+            events.Add(new PlayerMoveEvent(new Identity('A'), RelativeDirection.Left));
 
-            List<Player> players = new List<Player>();
-            players.Add(new Player('A'));
-            players.Add(new Player('B'));
+            List<Identity> players = new List<Identity>();
+            players.Add(new Identity('A'));
+            players.Add(new Identity('B'));
 
             var gameState = MockHelper.CreateGameState();
             gameState.SetupGet(x => x.PlayersData.Players).Returns(players);
 
-            const RelativeDirectionEnum DirectionToBeAppended = RelativeDirectionEnum.StraightForward;
+            const RelativeDirection DirectionToBeAppended = RelativeDirection.StraightAhead;
 
             // test
             IdlePlayerMoveEventAppender filter = new IdlePlayerMoveEventAppender(DirectionToBeAppended);
@@ -66,7 +68,7 @@
 
             // check if event was created for player A
             Assert.AreEqual(3, filteredEvents.Count);
-            Assert.AreEqual('B', ((PlayerMoveEvent)filteredEvents[2]).Player.Id);
+            Assert.AreEqual('B', ((PlayerMoveEvent)filteredEvents[2]).Player.Identifier);
             Assert.AreEqual(DirectionToBeAppended, ((PlayerMoveEvent)filteredEvents[2]).Direction);
         }
 
@@ -78,15 +80,15 @@
         {
             // setup
             List<Event> events = new List<Event>();
-            events.Add(new PlayerMoveEvent(new Player('A'), RelativeDirectionEnum.Right));
+            events.Add(new PlayerMoveEvent(new Identity('A'), RelativeDirection.Right));
 
-            List<Player> players = new List<Player>();
-            players.Add(new Player('A'));
+            List<Identity> players = new List<Identity>();
+            players.Add(new Identity('A'));
 
             var gameState = MockHelper.CreateGameState();
             gameState.SetupGet(x => x.PlayersData.Players).Returns(players);
 
-            const RelativeDirectionEnum DirectionToBeAppended = RelativeDirectionEnum.Left;
+            const RelativeDirection DirectionToBeAppended = RelativeDirection.Left;
 
             // test
             IdlePlayerMoveEventAppender filter = new IdlePlayerMoveEventAppender(DirectionToBeAppended);
@@ -94,8 +96,8 @@
 
             // check if event for player A was unchanged and naothing has been added
             Assert.AreEqual(1, filteredEvents.Count);
-            Assert.AreEqual('A', ((PlayerMoveEvent)filteredEvents[0]).Player.Id);
-            Assert.AreEqual(RelativeDirectionEnum.Right, ((PlayerMoveEvent)filteredEvents[0]).Direction);
+            Assert.AreEqual('A', ((PlayerMoveEvent)filteredEvents[0]).Player.Identifier);
+            Assert.AreEqual(RelativeDirection.Right, ((PlayerMoveEvent)filteredEvents[0]).Direction);
         }
     }
 }

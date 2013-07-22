@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Events
+﻿using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles.Events
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Model.Data;
@@ -52,11 +54,11 @@
         /// <summary>
         /// Gets players owning events.
         /// </summary>
-        public List<Player> Players
+        public List<Identity> Players
         {
             get
             {
-                var results = new List<Player>();
+                var results = new List<Identity>();
                 foreach (Event e in this)
                 {
                     var playerEvent = e as PlayerEvent;
@@ -79,7 +81,7 @@
         /// <returns>
         /// The filtered collection of players' events <see cref="EventsCollection"/>.
         /// </returns>
-        public EventsCollection FilterBy(Player player)
+        public EventsCollection FilterBy(Identity player)
         {
             var results = new EventsCollection();
             foreach (Event e in this)

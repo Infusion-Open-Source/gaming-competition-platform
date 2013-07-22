@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Events
+﻿using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles.Events
 {
     using Infusion.Gaming.LightCycles.Model.Data;
 
@@ -13,7 +15,7 @@
         /// <param name="player">
         /// The player related to the event.
         /// </param>
-        protected PlayerEvent(Player player)
+        protected PlayerEvent(Identity player)
         {
             this.Player = player;
         }
@@ -21,6 +23,6 @@
         /// <summary>
         /// Gets or sets the player.
         /// </summary>
-        public Player Player { get; protected set; }
+        public Identity Player { get; protected set; }
     }
 }

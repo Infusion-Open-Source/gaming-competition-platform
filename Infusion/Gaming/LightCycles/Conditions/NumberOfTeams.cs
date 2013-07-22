@@ -1,4 +1,7 @@
-﻿namespace Infusion.Gaming.LightCycles.Conditions
+﻿using System.Collections.Generic;
+using Infusion.Gaming.LightCycles.Model.State;
+
+namespace Infusion.Gaming.LightCycles.Conditions
 {
     using System;
     using Infusion.Gaming.LightCycles.Model;
@@ -60,15 +63,15 @@
         /// <summary>
         /// Performs condition check.
         /// </summary>
-        /// <param name="gameState">
-        /// The game state on which condition check should be performed.
+        /// <param name="game">
+        /// The game on which condition check should be performed.
         /// </param>
         /// <returns>
         /// The result of the condition check.
         /// </returns>
-        public bool Check(IGameState gameState)
+        public bool Check(IGame game)
         {
-            int count = gameState.PlayersData.Teams.Count;
+            int count = game.CurrentState.Objects.Teams.Count;
             return this.Min <= count && count <= this.Max;
         }
     }

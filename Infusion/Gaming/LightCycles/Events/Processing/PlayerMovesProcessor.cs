@@ -1,9 +1,12 @@
-﻿namespace Infusion.Gaming.LightCycles.Events.Processing
+﻿using Infusion.Gaming.LightCycles.Definitions;
+using Infusion.Gaming.LightCycles.Model.State;
+using Infusion.Gaming.LightCycles.Util;
+
+namespace Infusion.Gaming.LightCycles.Events.Processing
 {
     using System.Collections.Generic;
     using System.Drawing;
     using Infusion.Gaming.LightCycles.Model;
-    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     /// Processor for player move events.
@@ -15,42 +18,30 @@
         /// <summary>
         /// Process player move events
         /// </summary>
-        /// <param name="e">
-        /// event to process
-        /// </param>
-        /// <param name="currentState">
-        /// current game state
-        /// </param>
-        /// <param name="nextState">
-        /// next game state
-        /// </param>
-        /// <param name="newEvents">
-        /// new events produced by processor
-        /// </param>
-        /// <returns>
-        /// was event processed by processor
-        /// </returns>
-        public bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents)
+        /// <param name="e"> event to process </param>
+        /// <param name="game"> game object </param>
+        /// <param name="newEvents"> new events produced by processor </param>
+        /// <returns> was event processed by processor </returns>
+        public bool Process(Event e, IGame game, out IEnumerable<Event> newEvents)
         {
             bool processed = false;
             EventsCollection events = new EventsCollection();
             var moveEvent = e as PlayerMoveEvent;
             if (moveEvent != null)
             {
-                var location = currentState.PlayersData.PlayersLocations[moveEvent.Player];
-                var direction = currentState.PlayersData.PlayersLightCycles[moveEvent.Player].Direction;
-                var newDirection = DirectionHelper.ChangeDirection(direction, moveEvent.Direction);
-                PlayerMoveResult result = nextState.PlayersData.MovePlayer(moveEvent.Player, location, newDirection, currentState.Map);
+                var bike = game.CurrentState.Objects.FindLightCycle(moveEvent.Player);
+                var newDirection = DirectionHelper.ChangeDirection(bike.Direction, moveEvent.Direction);
+                PlayerMoveResult result = game.NextState.Objects.MovePlayer(moveEvent.Player, bike.Location, newDirection, game.Map);
 
-                if (result.Result == MoveResultEnum.CollisionWithObstacle)
+                if (result.Result == MoveResult.CollisionWithObstacle)
                 {
                     events.Add(new PlayerCollisionEvent(moveEvent.Player));
                 }
-                else if (result.Result == MoveResultEnum.CollisionWithTrail)
+                else if (result.Result == MoveResult.CollisionWithTrail)
                 {
                     events.Add(new PlayerCollisionEvent(moveEvent.Player));
                 }
-                else if (result.Result == MoveResultEnum.CollisionWithPlayer)
+                else if (result.Result == MoveResult.CollisionWithPlayer)
                 {
                     events.Add(new PlayerCollisionEvent(moveEvent.Player));
                     events.Add(new PlayerCollisionEvent(result.OwningPlayer));

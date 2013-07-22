@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Events.Processing
+﻿using Infusion.Gaming.LightCycles.Model.State;
+
+namespace Infusion.Gaming.LightCycles.Events.Processing
 {
     using System;
     using System.Collections.Generic;
@@ -31,27 +33,16 @@
         /// <summary>
         /// Process player move events
         /// </summary>
-        /// <param name="e">
-        /// event to process
-        /// </param>
-        /// <param name="currentState">
-        /// current game state
-        /// </param>
-        /// <param name="nextState">
-        /// next game state
-        /// </param>
-        /// <param name="newEvents">
-        /// new events produced by processor
-        /// </param>
-        /// <returns>
-        /// was event processed by processor
-        /// </returns>
-        public bool Process(Event e, IGameState currentState, IGameState nextState, out IEnumerable<Event> newEvents)
+        /// <param name="e"> event to process </param>
+        /// <param name="game"> game object </param>
+        /// <param name="newEvents"> new events produced by processor </param>
+        /// <returns> was event processed by processor </returns>
+        public bool Process(Event e, IGame game, out IEnumerable<Event> newEvents)
         {
             newEvents = new EventsCollection();
             if (!this.IsSilent)
             {
-                Console.WriteLine(string.Format("No processor to pick up {0} event. Removed by garbage processor", e));
+                Console.WriteLine("No processor to pick up {0} event. Removed by garbage processor", e);
             }
 
             return true;

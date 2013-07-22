@@ -1,10 +1,12 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Events.Processing
+﻿using Infusion.Gaming.LightCycles.Model;
+using Infusion.Gaming.LightCyclesCommon.Definitions;
+
+namespace Infusion.Gaming.LightCycles.Tests.Events.Processing
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Events.Processing;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
     using NUnit.Framework;
 
     /// <summary>
@@ -49,7 +51,7 @@
         [Test]
         public void TrailAgingProcessorIgnoresMoveEvent()
         {
-            Event e = new PlayerMoveEvent(new Player('A'), RelativeDirectionEnum.Left);
+            Event e = new PlayerMoveEvent(new Identity('A'), RelativeDirection.Left);
             IEnumerable<Event> newEvents;
 
             TrailAgingProcessor processor = new TrailAgingProcessor(FadeSpeed);
@@ -66,7 +68,7 @@
         [Test]
         public void TrailAgingProcessorIgnoresCollisionEvent()
         {
-            Event e = new PlayerCollisionEvent(new Player('A'));
+            Event e = new PlayerCollisionEvent(new Identity('A'));
             IEnumerable<Event> newEvents;
 
             TrailAgingProcessor processor = new TrailAgingProcessor(FadeSpeed);

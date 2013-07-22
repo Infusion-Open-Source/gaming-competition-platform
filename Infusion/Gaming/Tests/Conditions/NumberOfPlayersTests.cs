@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Conditions
+﻿using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles.Tests.Conditions
 {
     using Infusion.Gaming.LightCycles.Conditions;
     using Infusion.Gaming.LightCycles.Model.Data;
@@ -23,12 +25,12 @@
             Assert.AreEqual(NumberOfPlayers, condition.Min);
 
             var gameState = MockHelper.CreateGameState();
-            gameState.Object.PlayersData.Players.Add(new Player('A'));
-            gameState.Object.PlayersData.Players.Add(new Player('B'));
+            gameState.Object.PlayersData.Players.Add(new Identity('A'));
+            gameState.Object.PlayersData.Players.Add(new Identity('B'));
             Assert.IsFalse(condition.Check(gameState.Object));
-            gameState.Object.PlayersData.Players.Add(new Player('C'));
+            gameState.Object.PlayersData.Players.Add(new Identity('C'));
             Assert.IsTrue(condition.Check(gameState.Object));
-            gameState.Object.PlayersData.Players.Add(new Player('D'));
+            gameState.Object.PlayersData.Players.Add(new Identity('D'));
             Assert.IsFalse(condition.Check(gameState.Object));
         }
         
@@ -46,15 +48,15 @@
             Assert.AreEqual(NumberOfPlayersMin, condition.Min);
 
             var gameState = MockHelper.CreateGameState();
-            gameState.Object.PlayersData.Players.Add(new Player('A'));
+            gameState.Object.PlayersData.Players.Add(new Identity('A'));
             Assert.IsFalse(condition.Check(gameState.Object));
-            gameState.Object.PlayersData.Players.Add(new Player('B'));
+            gameState.Object.PlayersData.Players.Add(new Identity('B'));
             Assert.IsTrue(condition.Check(gameState.Object));
-            gameState.Object.PlayersData.Players.Add(new Player('C'));
+            gameState.Object.PlayersData.Players.Add(new Identity('C'));
             Assert.IsTrue(condition.Check(gameState.Object));
-            gameState.Object.PlayersData.Players.Add(new Player('D'));
+            gameState.Object.PlayersData.Players.Add(new Identity('D'));
             Assert.IsTrue(condition.Check(gameState.Object));
-            gameState.Object.PlayersData.Players.Add(new Player('E'));
+            gameState.Object.PlayersData.Players.Add(new Identity('E'));
             Assert.IsFalse(condition.Check(gameState.Object));
         }
     }

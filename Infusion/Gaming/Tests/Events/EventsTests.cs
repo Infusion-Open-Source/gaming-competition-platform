@@ -1,11 +1,12 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Events
+﻿using Infusion.Gaming.LightCycles.Model;
+using Infusion.Gaming.LightCyclesCommon.Definitions;
+
+namespace Infusion.Gaming.LightCycles.Tests.Events
 {
     using System;
 
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
-
     using NUnit.Framework;
 
     /// <summary>
@@ -20,7 +21,7 @@
         [Test]
         public void PlayerCollisionEventChecks()
         {
-            var player = new Player('A');
+            var player = new Identity('A');
             Assert.AreEqual(player, new PlayerCollisionEvent(player).Player);
         }
 
@@ -30,12 +31,12 @@
         [Test]
         public void PlayerMoveEventChecks()
         {
-            var player = new Player('A');
-            Assert.AreEqual(player, new PlayerMoveEvent(player, RelativeDirectionEnum.Left).Player);
-            Assert.AreEqual(RelativeDirectionEnum.Left, new PlayerMoveEvent(player, RelativeDirectionEnum.Left).Direction);
-            Assert.AreEqual(RelativeDirectionEnum.Right, new PlayerMoveEvent(player, RelativeDirectionEnum.Right).Direction);
-            Assert.AreEqual(RelativeDirectionEnum.StraightForward, new PlayerMoveEvent(player, RelativeDirectionEnum.StraightForward).Direction);
-            Assert.AreEqual(RelativeDirectionEnum.Undefined, new PlayerMoveEvent(player, RelativeDirectionEnum.Undefined).Direction);
+            var player = new Identity('A');
+            Assert.AreEqual(player, new PlayerMoveEvent(player, RelativeDirection.Left).Player);
+            Assert.AreEqual(RelativeDirection.Left, new PlayerMoveEvent(player, RelativeDirection.Left).Direction);
+            Assert.AreEqual(RelativeDirection.Right, new PlayerMoveEvent(player, RelativeDirection.Right).Direction);
+            Assert.AreEqual(RelativeDirection.StraightAhead, new PlayerMoveEvent(player, RelativeDirection.StraightAhead).Direction);
+            Assert.AreEqual(RelativeDirection.Undefined, new PlayerMoveEvent(player, RelativeDirection.Undefined).Direction);
         }
 
         /// <summary>

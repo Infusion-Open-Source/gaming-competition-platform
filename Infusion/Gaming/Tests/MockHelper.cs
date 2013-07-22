@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests
+﻿using Infusion.Gaming.LightCycles.Model.State;
+
+namespace Infusion.Gaming.LightCycles.Tests
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Model;
@@ -47,11 +49,11 @@
         /// Create players data mock
         /// </summary>
         /// <returns>players data mock</returns>
-        public static Mock<IPlayersData> CreatePlayersData()
+        public static Mock<IPlayers> CreatePlayersData()
         {
-            var players = new List<Player>();
+            var players = new List<Identity>();
             var teams = new List<Team>();
-            var playersData = new Mock<IPlayersData>();
+            var playersData = new Mock<IPlayers>();
             playersData.SetupGet(x => x.Players).Returns(players);
             playersData.SetupGet(x => x.Teams).Returns(teams);
             return playersData;

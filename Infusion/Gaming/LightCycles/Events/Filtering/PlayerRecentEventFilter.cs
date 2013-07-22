@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Events.Filtering
+﻿using Infusion.Gaming.LightCycles.Model.State;
+
+namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Model;
@@ -25,7 +27,7 @@
         {
             var data = new EventsCollection(events);
             var results = new List<Event>();
-            foreach (Player player in data.Players)
+            foreach (Identity player in data.Players)
             {
                 results.Add(data.FilterBy(player).MostRecent);
             }

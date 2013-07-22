@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Events
+﻿using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles.Events
 {
     using System.Text;
     using Infusion.Gaming.LightCycles.Model.Data;
@@ -14,7 +16,7 @@
         /// <param name="player">
         /// The player which collides.
         /// </param>
-        public PlayerCollisionEvent(Player player)
+        public PlayerCollisionEvent(Identity player)
             : base(player)
         {
         }

@@ -8,8 +8,8 @@
     <ProjectGuid>{4BFDA944-5228-4AA4-9862-8C179F6F769A}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Infusion.Gaming.ServerLauncher</RootNamespace>
-    <AssemblyName>Infusion.Gaming.ServerLauncher</AssemblyName>
+    <RootNamespace>Infusion.Gaming.LightCycles.ServerLauncher</RootNamespace>
+    <AssemblyName>ServerLauncher</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -37,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Infusion.Gaming.ServerLauncher.Program</StartupObject>
+    <StartupObject>Infusion.Gaming.LightCycles.ServerLauncher.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -54,9 +54,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LightCycles\LightCycles.csproj">
-      <Project>{9753941F-A627-4D65-967C-A0472AFD9B5F}</Project>
-      <Name>LightCycles</Name>
+    <ProjectReference Include="..\..\Networking\Networking\Networking.csproj">
+      <Project>{E3B3AA56-5E89-436B-B398-E38149E30F37}</Project>
+      <Name>Networking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ControllingServerLauncher\ControllingServer.csproj">
+      <Project>{3A1F5C57-4295-47B1-987A-6226DB190699}</Project>
+      <Name>ControllingServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LightCyclesNetworking\LightCyclesNetworking.csproj">
+      <Project>{70C79FC9-D749-454B-A5EA-8C0A5913A796}</Project>
+      <Name>LightCyclesNetworking</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

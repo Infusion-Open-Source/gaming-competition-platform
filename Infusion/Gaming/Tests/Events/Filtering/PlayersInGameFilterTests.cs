@@ -1,10 +1,12 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Events.Filtering
+﻿using Infusion.Gaming.LightCycles.Model;
+using Infusion.Gaming.LightCyclesCommon.Definitions;
+
+namespace Infusion.Gaming.LightCycles.Tests.Events.Filtering
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Events.Filtering;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
     using NUnit.Framework;
 
     /// <summary>
@@ -22,8 +24,8 @@
             // setup
             List<Event> events = new List<Event>();
             
-            List<Player> players = new List<Player>();
-            players.Add(new Player('A'));
+            List<Identity> players = new List<Identity>();
+            players.Add(new Identity('A'));
 
             var gameState = MockHelper.CreateGameState();
             gameState.SetupGet(x => x.PlayersData.Players).Returns(players);
@@ -44,14 +46,14 @@
         {
             // setup
             List<Event> events = new List<Event>();
-            events.Add(new PlayerMoveEvent(new Player('A'), RelativeDirectionEnum.Undefined));
-            events.Add(new PlayerMoveEvent(new Player('B'), RelativeDirectionEnum.Undefined));
-            events.Add(new PlayerMoveEvent(new Player('B'), RelativeDirectionEnum.StraightForward));
-            events.Add(new PlayerMoveEvent(new Player('C'), RelativeDirectionEnum.Undefined));
+            events.Add(new PlayerMoveEvent(new Identity('A'), RelativeDirection.Undefined));
+            events.Add(new PlayerMoveEvent(new Identity('B'), RelativeDirection.Undefined));
+            events.Add(new PlayerMoveEvent(new Identity('B'), RelativeDirection.StraightAhead));
+            events.Add(new PlayerMoveEvent(new Identity('C'), RelativeDirection.Undefined));
 
-            List<Player> players = new List<Player>();
-            players.Add(new Player('A'));
-            players.Add(new Player('C'));
+            List<Identity> players = new List<Identity>();
+            players.Add(new Identity('A'));
+            players.Add(new Identity('C'));
 
             var gameState = MockHelper.CreateGameState();
             gameState.SetupGet(x => x.PlayersData.Players).Returns(players);
@@ -62,8 +64,8 @@
 
             // check if player B event was removed
             Assert.AreEqual(2, filteredEvents.Count);
-            Assert.AreEqual('A', ((PlayerMoveEvent)filteredEvents[0]).Player.Id);
-            Assert.AreEqual('C', ((PlayerMoveEvent)filteredEvents[1]).Player.Id);
+            Assert.AreEqual('A', ((PlayerMoveEvent)filteredEvents[0]).Player.Identifier);
+            Assert.AreEqual('C', ((PlayerMoveEvent)filteredEvents[1]).Player.Identifier);
         }
 
         /// <summary>
@@ -74,12 +76,12 @@
         {
             // setup
             List<Event> events = new List<Event>();
-            events.Add(new PlayerMoveEvent(new Player('A'), RelativeDirectionEnum.Undefined));
-            events.Add(new PlayerMoveEvent(new Player('B'), RelativeDirectionEnum.Undefined));
-            events.Add(new PlayerMoveEvent(new Player('B'), RelativeDirectionEnum.StraightForward));
-            events.Add(new PlayerMoveEvent(new Player('C'), RelativeDirectionEnum.Undefined));
+            events.Add(new PlayerMoveEvent(new Identity('A'), RelativeDirection.Undefined));
+            events.Add(new PlayerMoveEvent(new Identity('B'), RelativeDirection.Undefined));
+            events.Add(new PlayerMoveEvent(new Identity('B'), RelativeDirection.StraightAhead));
+            events.Add(new PlayerMoveEvent(new Identity('C'), RelativeDirection.Undefined));
 
-            List<Player> players = new List<Player>();
+            List<Identity> players = new List<Identity>();
 
             var gameState = MockHelper.CreateGameState();
             gameState.SetupGet(x => x.PlayersData.Players).Returns(players);

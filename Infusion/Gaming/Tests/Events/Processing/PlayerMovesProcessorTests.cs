@@ -6,7 +6,6 @@
     using Infusion.Gaming.LightCycles.Events.Processing;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
     using Infusion.Gaming.LightCycles.Model.MapData;
     using Moq;
     using NUnit.Framework;
@@ -67,7 +66,7 @@
         [Test]
         public void PlayerMovesProcessorIgnoresCollisionEvent()
         {
-            Event e = new PlayerCollisionEvent(new Player('A'));
+            Event e = new PlayerCollisionEvent(new Identity('A'));
             IEnumerable<Event> newEvents;
 
             PlayerMovesProcessor processor = new PlayerMovesProcessor();

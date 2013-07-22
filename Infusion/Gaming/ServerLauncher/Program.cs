@@ -1,63 +1,45 @@
-﻿namespace Infusion.Gaming.ServerLauncher
-{
-    using System;
-    using System.IO;
-    using Infusion.Gaming.LightCycles;
-    using Infusion.Gaming.LightCycles.Messaging;
-    using Infusion.Gaming.LightCycles.Model.Defines;
+﻿using System.Net;
+using Infusion.Gaming.LightCyclesNetworking;
+using System;
+using Infusion.Networking.ControllingServer;
 
+namespace Infusion.Gaming.LightCycles.ServerLauncher
+{
     /// <summary>
     /// The program.
     /// </summary>
-    internal class Program
+    public class Program
     {
         /// <summary>
-        /// Program main method.
+        /// Program entry point
         /// </summary>
-        /// <param name="args">
-        /// Program arguments.
-        /// </param>
-        private static void Main(string[] args)
+        /// <param name="args">program arguments</param>
+        public static void Main(string[] args)
         {
-            Console.WriteLine("LightCycles Game Engine Server - Original authors: 2013 Paweł Drozdowski, 2013 Cyryl Płotnicki-Chudyk");
+            Console.WriteLine("LightCycles - Copyright (C) 2013 Paweł Drozdowski");
             Console.WriteLine("This program comes with ABSOLUTELY NO WARRANTY; for details check License.txt file.");
             Console.WriteLine("This is free software, and you are welcome to redistribute it under certain conditions; check License.txt file for the details.");
 
-            const string MapsPath = @"..\..\..\Maps";
-            GameInfoCollection gameInfoCycle = new GameInfoCollection
-            {
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, 50, 22),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\infusion_logo.png")),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\pac_man.png")),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\pac_man2.png")),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\spiral.png")),
-                new GameInfo(8, 8, GameModeEnum.FreeForAll, Path.Combine(MapsPath, @"FreeForAll\world.png")),
-
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, 50, 22),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\infusion_logo.png")),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\pac_man.png")),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\pac_man2.png")),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\spiral.png")),
-                new GameInfo(8, 2, GameModeEnum.TeamDeathMatch, Path.Combine(MapsPath, @"TeamDeathmatch\world.png")),
-            };
-
-            while (true)
-            {
-                var gameRunner = new GameRunner(new MessageSinkSet
-                    {
-                        new GameStateConsoleWriter(),
-                        new GameStateBroadcaster()
-                    });
-                
-                gameRunner.InitilizeGame(gameInfoCycle.Cycle());
-                gameRunner.GatherPlayers();
-                gameRunner.StartGame();
-                while (gameRunner.RunGame())
-                {
-                }
-
-                gameRunner.EndGame();
-            }
+            //try
+            //{
+                //if (args.Length == 1)
+                //{
+                    IPAddress ipAddress = Dns.GetHostEntry("localhost").AddressList[0];
+                    GameServer server = new GameServer(new IPEndPoint(ipAddress, 10001), new ControllerServerServiceStub());
+                    server.RunGame();
+                //}
+                //else
+                //{
+                //    Console.WriteLine("Invalid number of arguments, expected command line in following format:");
+                //    Console.WriteLine("ServerLauncher.exe ControllingServerAddress");
+                //    Console.WriteLine("example 1: ServerLauncher.exe 192.168.1.1:10010");
+                //    Console.WriteLine("example 2: ServerLauncher.exe myServer.com");
+                //}
+            //}
+            //catch(Exception e)
+            //{
+            //    Console.Write(e);
+            //}
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿namespace Infusion.Gaming.LightCycles.Tests.Events.Processing
+﻿using Infusion.Gaming.LightCycles.Model;
+using Infusion.Gaming.LightCyclesCommon.Definitions;
+
+namespace Infusion.Gaming.LightCycles.Tests.Events.Processing
 {
     using System;
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Events;
     using Infusion.Gaming.LightCycles.Events.Processing;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
     using NUnit.Framework;
 
     /// <summary>
@@ -20,7 +22,7 @@
         [Test]
         public void GarbageProcessorConsumesMoveEvent()
         {
-            Event e = new PlayerMoveEvent(new Player('A'), RelativeDirectionEnum.Undefined);
+            Event e = new PlayerMoveEvent(new Identity('A'), RelativeDirection.Undefined);
 
             IEnumerable<Event> newEvents;
 
@@ -38,7 +40,7 @@
         [Test]
         public void GarbageProcessorConsumesCollisionEvent()
         {
-            Event e = new PlayerCollisionEvent(new Player('A'));
+            Event e = new PlayerCollisionEvent(new Identity('A'));
 
             IEnumerable<Event> newEvents;
 

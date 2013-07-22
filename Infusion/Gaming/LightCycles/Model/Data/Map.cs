@@ -1,109 +1,110 @@
-﻿
+﻿using System.Collections.Generic;
+using System.Drawing;
+using Infusion.Gaming.LightCycles.Definitions;
+using Infusion.Gaming.LightCycles.Util;
+
 namespace Infusion.Gaming.LightCycles.Model.Data
 {
     using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-
-    using Infusion.Gaming.LightCycles.Model.Defines;
+    using Infusion.Gaming.LightCycles.Model.Data.MapObjects;
 
     /// <summary>
-    ///     The game map.
+    /// game map 2D space
     /// </summary>
-    public class Map : IMap
+    public class Map : Array2D<MapLocation>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Map"/> class.
         /// </summary>
-        /// <param name="width">
-        /// The width of the map.
-        /// </param>
-        /// <param name="height">
-        /// The height of the map.
-        /// </param>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// Height and/or width are too small. Must be at least zero
-        /// </exception>
-        public Map(int width, int height)
+        /// <param name="name">map name. </param>
+        /// <param name="width"> The width of the map. </param>
+        /// <param name="height"> The height of the map. </param>
+        public Map(string name, int width, int height)
+            : base(width, height)
         {
-            if (width < 0)
+            this.Name = name;
+            if (width < Constraints.MinMapWidth || width > Constraints.MaxMapWidth)
             {
                 throw new ArgumentOutOfRangeException("width");
             }
 
-            if (height < 0)
+            if (height < Constraints.MinMapHeight || height > Constraints.MaxMapHeight)
             {
                 throw new ArgumentOutOfRangeException("height");
             }
 
-            this.Width = width;
-            this.Height = height;
-            this.Locations = new Location[this.Width, this.Height];
-            for (int y = 0; y < this.Height; y++)
-            {
-                for (int x = 0; x < this.Width; x++)
-                {
-                    if (x == 0 || y == 0 || x + 1 == this.Width || y + 1 == this.Height)
-                    {
-                        this.Locations[x, y] = new Location(LocationTypeEnum.Wall);
-                    }
-                    else
-                    {
-                        this.Locations[x, y] = new Location(LocationTypeEnum.Space);
-                    }
-                }
-            }
+            // fill entrie map with space
+            this.Fill((location) => new Space(location));
+
+            // put obstacles on map border
+            this.Fill(
+                (location, obj) => (location.X == 0 || location.Y == 0 || location.X + 1 == this.Width || location.Y + 1 == this.Height), 
+                (location) => new Obstacle(location));
         }
         
         /// <summary>
-        ///     Gets or sets the height of the map.
+        /// Initializes a new instance of the Array2D class with initial data set.
         /// </summary>
-        public int Height { get; protected set; }
-
-        /// <summary>
-        /// Get location data for specified loaction
-        /// </summary>
-        /// <param name="x">x coordinate</param>
-        /// <param name="y">y coordinate</param>
-        /// <returns>location data at specified point</returns>
-        public Location this[int x, int y]
+        /// <param name="name">map name. </param>
+        /// <param name="data">Initializing data. </param>
+        public Map(string name, MapLocation[,] data)
+            : base(data)
         {
-            get
+            this.Name = name;
+            int width = data.GetLength(0);
+            int height = data.GetLength(1);
+            if (width < Constraints.MinMapWidth || width > Constraints.MaxMapWidth)
             {
-                return this.Locations[x, y];
+                throw new ArgumentOutOfRangeException("data");
+            }
+
+            if (height < Constraints.MinMapHeight || height > Constraints.MaxMapHeight)
+            {
+                throw new ArgumentOutOfRangeException("data");
             }
         }
 
         /// <summary>
-        ///     Gets or sets the map locations.
+        /// Gets or sets map name
         /// </summary>
-        public Location[,] Locations { get; protected set; }
-        
-        /// <summary>
-        ///     Gets or sets the width of the map.
-        /// </summary>
-        public int Width { get; protected set; }
+        public string Name { get; protected set; }
 
         /// <summary>
-        /// Gets the players starting locations.
+        /// Gets players start locations
         /// </summary>
-        public Dictionary<PlayersStartingLocation, Point> StartingLocations
+        public List<PlayersStartingLocation> StartLocations
         {
             get
             {
-                Dictionary<PlayersStartingLocation, Point> results = new Dictionary<PlayersStartingLocation, Point>();
-                for (int y = 0; y < this.Height; y++)
-                {
-                    for (int x = 0; x < this.Width; x++)
-                    {
-                        if (this.Locations[x, y].LocationType == LocationTypeEnum.PlayersStartingLocation)
-                        {
-                            results.Add(((PlayersStartingLocation)this.Locations[x, y]), new Point(x, y));
-                        }
-                    }
-                }
-                return results;
+                return this.FindObjects<PlayersStartingLocation>();
             }
+        }
+
+        /// <summary>
+        /// Gets obstacles
+        /// </summary>
+        public List<Obstacle> Obstacles
+        {
+            get
+            {
+                return this.FindObjects<Obstacle>();
+            }
+        }
+
+        /// <summary>
+        /// Get players start location
+        /// </summary>
+        public PlayersStartingLocation GetPlayerStartLocation(Identity playerIdentity)
+        {
+            foreach(PlayersStartingLocation startLocation in this.FindObjects<PlayersStartingLocation>())
+            {
+                if(startLocation.Player.Equals(playerIdentity))
+                {
+                    return startLocation;
+                }
+            }
+
+            return null;
         }
     }
 }

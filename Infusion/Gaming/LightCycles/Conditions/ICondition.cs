@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Conditions
+﻿using Infusion.Gaming.LightCycles.Model.State;
+
+namespace Infusion.Gaming.LightCycles.Conditions
 {
     using Infusion.Gaming.LightCycles.Model;
 
@@ -10,12 +12,12 @@
         /// <summary>
         /// Performs condition check.
         /// </summary>
-        /// <param name="gameState">
-        /// The game state on which condition check should be performed.
+        /// <param name="game">
+        /// The game on which condition check should be performed.
         /// </param>
         /// <returns>
         /// The result of the condition check.
         /// </returns>
-        bool Check(IGameState gameState);
+        bool Check(IGame game);
     }
 }

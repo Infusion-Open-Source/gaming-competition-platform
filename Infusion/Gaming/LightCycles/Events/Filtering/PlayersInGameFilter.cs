@@ -1,4 +1,6 @@
-﻿namespace Infusion.Gaming.LightCycles.Events.Filtering
+﻿using Infusion.Gaming.LightCycles.Model.State;
+
+namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Model;
@@ -12,20 +14,14 @@
         /// <summary>
         /// Filter game events
         /// </summary>
-        /// <param name="state">
-        /// current game state
-        /// </param>
-        /// <param name="events">
-        /// events to filter
-        /// </param>
-        /// <returns>
-        /// filters events list
-        /// </returns>
+        /// <param name="state"> current game state </param>
+        /// <param name="events"> events to filter </param>
+        /// <returns> filters events list </returns>
         public IList<Event> Filter(IGameState state, IEnumerable<Event> events)
         {
             var data = new EventsCollection(events);
             var results = new List<Event>();
-            foreach (Player player in state.PlayersData.Players)
+            foreach (Identity player in state.Objects.Players)
             {
                 results.AddRange(data.FilterBy(player));
             }

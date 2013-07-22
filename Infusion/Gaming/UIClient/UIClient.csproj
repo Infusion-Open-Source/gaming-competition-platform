@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Infusion.Gaming.LightCycles.UIClient</RootNamespace>
-    <AssemblyName>Infusion.Gaming.LightCycles.UIClient</AssemblyName>
+    <AssemblyName>UIClient</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -73,6 +73,7 @@
     <Compile Include="Drawers\PlayersDrawer.cs" />
     <Compile Include="Drawers\TrailsDrawer.cs" />
     <Compile Include="Drawers\GridDrawer.cs" />
+    <Compile Include="BroadcastListener.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameView.cs" />
@@ -99,9 +100,13 @@
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LightCyclesCommon\LightCyclesCommon.csproj">
-      <Project>{CB6B314D-D08A-44FA-B288-6321D2605F41}</Project>
-      <Name>LightCyclesCommon</Name>
+    <ProjectReference Include="..\..\Networking\Networking\Networking.csproj">
+      <Project>{E3B3AA56-5E89-436B-B398-E38149E30F37}</Project>
+      <Name>Networking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LightCyclesNetworking\LightCyclesNetworking.csproj">
+      <Project>{70C79FC9-D749-454B-A5EA-8C0A5913A796}</Project>
+      <Name>LightCyclesNetworking</Name>
     </ProjectReference>
     <ProjectReference Include="..\SlimDX.SampleFramework\SlimDX.SampleFramework.csproj">
       <Project>{23F08654-7DA5-44BD-BF81-FA94EEE19DBD}</Project>

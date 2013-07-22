@@ -1,9 +1,11 @@
-﻿namespace Infusion.Gaming.LightCycles.Events.Filtering
+﻿using Infusion.Gaming.LightCycles.Definitions;
+using Infusion.Gaming.LightCycles.Model.State;
+
+namespace Infusion.Gaming.LightCycles.Events.Filtering
 {
     using System.Collections.Generic;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     /// Adds undefined move event for players that are idle
@@ -13,13 +15,13 @@
         /// <summary>
         /// Direction to append.
         /// </summary>
-        private readonly RelativeDirectionEnum direction;
+        private readonly RelativeDirection direction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IdlePlayerMoveEventAppender"/> class.
         /// </summary>
         /// <param name="direction">direction for the appended move event</param>
-        public IdlePlayerMoveEventAppender(RelativeDirectionEnum direction)
+        public IdlePlayerMoveEventAppender(RelativeDirection direction)
         {
             this.direction = direction;
         }
@@ -39,7 +41,7 @@
         public IList<Event> Filter(IGameState state, IEnumerable<Event> events)
         {
             var data = new EventsCollection(events);
-            foreach (Player player in state.PlayersData.Players)
+            foreach (Identity player in state.Objects.Players)
             {
                 if (data.FilterBy(player).Count == 0)
                 {

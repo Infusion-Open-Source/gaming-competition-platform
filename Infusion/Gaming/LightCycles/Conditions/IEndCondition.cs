@@ -1,7 +1,7 @@
-﻿namespace Infusion.Gaming.LightCycles.Conditions
-{
-    using Infusion.Gaming.LightCycles.Model.Defines;
+﻿using Infusion.Gaming.LightCycles.Definitions;
 
+namespace Infusion.Gaming.LightCycles.Conditions
+{
     /// <summary>
     /// The Condition interface.
     /// </summary>
@@ -10,6 +10,6 @@
         /// <summary>
         /// Gets the game result when condition is met.
         /// </summary>
-        GameResultEnum Result { get; }
+        GameResult Result { get; }
     }
 }

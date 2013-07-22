@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Infusion.Gaming.LightCycles</RootNamespace>
-    <AssemblyName>Infusion.Gaming.LightCycles</AssemblyName>
+    <AssemblyName>LightCycles</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -50,19 +50,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bots\BotFactory.cs" />
-    <Compile Include="Bots\AlwaysLeftBot.cs" />
-    <Compile Include="Bots\RandomPigBot.cs" />
-    <Compile Include="Bots\IBot.cs" />
-    <Compile Include="Bots\LineFollowerBot.cs" />
+    <Compile Include="Definitions\MapType.cs" />
+    <Compile Include="Util\Array2D.cs" />
     <Compile Include="Conditions\NumberOfTeams.cs" />
     <Compile Include="Conditions\EndConditionSet.cs" />
     <Compile Include="Conditions\IEndCondition.cs" />
     <Compile Include="Conditions\EndCondition.cs" />
     <Compile Include="Conditions\ICondition.cs" />
     <Compile Include="Conditions\NumberOfPlayers.cs" />
+    <Compile Include="PlayerInfo.cs" />
+    <Compile Include="Definitions\Constraints.cs" />
+    <Compile Include="Definitions\Direction.cs" />
+    <Compile Include="MapInfo.cs" />
+    <Compile Include="Definitions\GameMode.cs" />
+    <Compile Include="Definitions\GameResult.cs" />
+    <Compile Include="Definitions\GameState.cs" />
+    <Compile Include="Definitions\PlayerType.cs" />
+    <Compile Include="Definitions\RelativeDirection.cs" />
+    <Compile Include="Util\DirectionHelper.cs" />
     <Compile Include="Events\PlayerMoveResult.cs" />
-    <Compile Include="GameInfoCollection.cs" />
     <Compile Include="Events\Filtering\IdlePlayerMoveEventAppender.cs" />
     <Compile Include="Events\Filtering\EventFilterSet.cs" />
     <Compile Include="Events\Filtering\PlayerRecentEventFilter.cs" />
@@ -75,68 +81,59 @@
     <Compile Include="Events\Processing\PlayerCollisionProcessor.cs" />
     <Compile Include="Events\Processing\PlayerMovesProcessor.cs" />
     <Compile Include="Events\Processing\TrailAgingProcessor.cs" />
-    <Compile Include="GameInfo.cs" />
-    <Compile Include="GameRunner.cs" />
-    <Compile Include="LightCyclesGame.cs" />
-    <Compile Include="Messaging\DummySink.cs" />
-    <Compile Include="Messaging\MessageSinkSet.cs" />
-    <Compile Include="Messaging\IMessageSink.cs" />
-    <Compile Include="Model\Defines\MoveResultEnum.cs" />
-    <Compile Include="Model\MapData\Space.cs" />
-    <Compile Include="Model\Data\LightCycleBike.cs" />
-    <Compile Include="Model\MapData\Obstacle.cs" />
-    <Compile Include="Model\Data\PlayerGameObject.cs" />
-    <Compile Include="Model\Data\Team.cs" />
-    <Compile Include="Model\Data\GameObject.cs" />
-    <Compile Include="Model\Data\IPlayersData.cs" />
-    <Compile Include="Model\Data\PlayersData.cs" />
-    <Compile Include="Model\MapData\PlayersStartingLocation.cs" />
-    <Compile Include="Model\Data\Trail.cs" />
-    <Compile Include="Model\IGame.cs" />
+    <Compile Include="Extensions\CharExtensions.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\QueueExtensions.cs" />
+    <Compile Include="Logs\LoggerSet.cs" />
+    <Compile Include="Logs\ILog.cs" />
+    <Compile Include="Model\GameSlotsCollection.cs" />
+    <Compile Include="Model\GameSlot.cs" />
+    <Compile Include="Model\GameSlotsPool.cs" />
+    <Compile Include="Definitions\MoveResult.cs" />
+    <Compile Include="Model\IGameSlotsPool.cs" />
+    <Compile Include="Serialization\IMapProvider.cs" />
+    <Compile Include="Serialization\MapProvider.cs" />
+    <Compile Include="Model\Data\MapObjects\Space.cs" />
+    <Compile Include="Model\Data\GameObjects\LightCycleBike.cs" />
+    <Compile Include="Model\Data\MapObjects\Obstacle.cs" />
+    <Compile Include="Model\Data\GameObjects\PlayerGameObject.cs" />
+    <Compile Include="Model\IdentityCollection.cs" />
+    <Compile Include="Model\Data\GameObjects\GameObject.cs" />
+    <Compile Include="Model\Data\MapObjects\PlayersStartingLocation.cs" />
+    <Compile Include="Model\Data\GameObjects\Trail.cs" />
+    <Compile Include="IGame.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventsCollection.cs" />
     <Compile Include="Events\PlayerCollisionEvent.cs" />
     <Compile Include="Events\PlayerEvent.cs" />
     <Compile Include="Events\PlayerMoveEvent.cs" />
     <Compile Include="Events\TickEvent.cs" />
-    <Compile Include="Model\GameException.cs" />
-    <Compile Include="Model\IGameState.cs" />
-    <Compile Include="Model\MapData\IMap.cs" />
-    <Compile Include="Model\MapData\Location.cs" />
-    <Compile Include="Model\MapData\Serialization\ImageWriter.cs" />
-    <Compile Include="Model\MapData\Serialization\TextMapWriter.cs" />
-    <Compile Include="Model\Serialization\TextGameStateReader.cs" />
-    <Compile Include="Model\Serialization\IGameStateReader.cs" />
-    <Compile Include="Model\MapData\Serialization\IMapReader.cs" />
-    <Compile Include="Model\MapData\Serialization\IMapWriter.cs" />
-    <Compile Include="Model\Serialization\TextGameStateWriter.cs" />
-    <Compile Include="Messaging\UdpBroadcaster.cs" />
-    <Compile Include="Messaging\ConsoleWriter.cs" />
-    <Compile Include="Model\Serialization\IGameStateWriter.cs" />
-    <Compile Include="Model\MapData\Serialization\ImageReader.cs" />
-    <Compile Include="Model\MapData\Serialization\Generator.cs" />
-    <Compile Include="Model\MapData\Serialization\TextMapReader.cs" />
-    <Compile Include="Model\DirectionHelper.cs" />
-    <Compile Include="Model\Defines\DirectionEnum.cs" />
-    <Compile Include="Model\Game.cs" />
-    <Compile Include="Model\Defines\GameModeEnum.cs" />
-    <Compile Include="Model\Defines\GameResultEnum.cs" />
-    <Compile Include="Model\GameState.cs" />
-    <Compile Include="Model\Defines\GameStateEnum.cs" />
-    <Compile Include="Model\MapData\Map.cs" />
-    <Compile Include="Model\Data\Player.cs" />
-    <Compile Include="Model\Defines\RelativeDirectionEnum.cs" />
+    <Compile Include="Exceptions\GameException.cs" />
+    <Compile Include="Model\State\IGameState.cs" />
+    <Compile Include="Model\Data\MapObjects\MapLocation.cs" />
+    <Compile Include="Serialization\MapImageWriter.cs" />
+    <Compile Include="Serialization\TextMapWriter.cs" />
+    <Compile Include="Serialization\TextGameStateReader.cs" />
+    <Compile Include="Serialization\IGameStateReader.cs" />
+    <Compile Include="Serialization\IMapReader.cs" />
+    <Compile Include="Serialization\IMapWriter.cs" />
+    <Compile Include="Serialization\TextGameStateWriter.cs" />
+    <Compile Include="Logs\ConsoleOutput.cs" />
+    <Compile Include="Serialization\IGameStateWriter.cs" />
+    <Compile Include="Serialization\MapImageReader.cs" />
+    <Compile Include="Serialization\MapGenerator.cs" />
+    <Compile Include="Serialization\TextMapReader.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Model\State\GameState.cs" />
+    <Compile Include="Model\Data\Map.cs" />
+    <Compile Include="Model\Identity.cs" />
+    <Compile Include="Model\Data\Objects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Settings.StyleCop" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LightCyclesCommon\LightCyclesCommon.csproj">
-      <Project>{CB6B314D-D08A-44FA-B288-6321D2605F41}</Project>
-      <Name>LightCyclesCommon</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

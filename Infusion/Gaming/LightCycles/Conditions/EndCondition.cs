@@ -1,9 +1,11 @@
-﻿namespace Infusion.Gaming.LightCycles.Conditions
+﻿using Infusion.Gaming.LightCycles.Definitions;
+using Infusion.Gaming.LightCycles.Model.State;
+
+namespace Infusion.Gaming.LightCycles.Conditions
 {
     using System;
 
     using Infusion.Gaming.LightCycles.Model;
-    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     /// The game end condition.
@@ -22,7 +24,7 @@
         /// <exception cref="ArgumentNullException">
         /// Thrown when condition argument is null
         /// </exception>
-        public EndCondition(ICondition condition, GameResultEnum result)
+        public EndCondition(ICondition condition, GameResult result)
         {
             if (condition == null)
             {
@@ -41,20 +43,20 @@
         /// <summary>
         /// Gets or sets the game result when condition is met.
         /// </summary>
-        public GameResultEnum Result { get; protected set; }
+        public GameResult Result { get; protected set; }
 
         /// <summary>
         /// Performs condition check.
         /// </summary>
-        /// <param name="gameState">
-        /// The game state on which condition check should be performed.
+        /// <param name="game">
+        /// The game on which condition check should be performed.
         /// </param>
         /// <returns>
         /// The result of the condition check.
         /// </returns>
-        public bool Check(IGameState gameState)
+        public bool Check(IGame game)
         {
-            return this.Condition.Check(gameState);
+            return this.Condition.Check(game);
         }
     }
 }

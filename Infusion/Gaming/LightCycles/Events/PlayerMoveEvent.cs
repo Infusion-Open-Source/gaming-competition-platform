@@ -1,8 +1,10 @@
-﻿namespace Infusion.Gaming.LightCycles.Events
+﻿using Infusion.Gaming.LightCycles.Definitions;
+using Infusion.Gaming.LightCycles.Model;
+
+namespace Infusion.Gaming.LightCycles.Events
 {
     using System.Text;
     using Infusion.Gaming.LightCycles.Model.Data;
-    using Infusion.Gaming.LightCycles.Model.Defines;
 
     /// <summary>
     /// The player move event.
@@ -18,7 +20,7 @@
         /// <param name="direction">
         /// The direction on which player wants to move.
         /// </param>
-        public PlayerMoveEvent(Player player, RelativeDirectionEnum direction)
+        public PlayerMoveEvent(Identity player, RelativeDirection direction)
             : base(player)
         {
             this.Direction = direction;
@@ -27,7 +29,7 @@
         /// <summary>
         /// Gets or sets the direction.
         /// </summary>
-        public RelativeDirectionEnum Direction { get; protected set; }
+        public RelativeDirection Direction { get; protected set; }
 
         /// <summary>
         /// To string.
