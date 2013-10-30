@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<TimeLimit>1000</TimeLimit>
+	<ViewArea>10</ViewArea>
+	<FogOfWar>true</FogOfWar>
+	<PlayerMappings>
+		<Mapping Id="A" Name="LineFollower" />
+		<Mapping Id="B" Name="LineFollower" />
+	</PlayerMappings>
+	<TeamMappings />
+</RunSettings>
