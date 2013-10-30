@@ -263,6 +263,10 @@
                     else if (args.KeyCode == Keys.OemOpenBrackets)
                     {
                         newSettigs.FollowedPlayerIndex--;
+                        if (newSettigs.FollowedPlayerIndex < 0)
+                        {
+                            newSettigs.FollowedPlayerIndex = 0;
+                        }
                     }
                     else if (args.KeyCode == Keys.Oemcomma)
                     {
