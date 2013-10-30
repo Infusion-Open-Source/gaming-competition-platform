@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<TimeLimit>100</TimeLimit>
+	<ViewArea>10</ViewArea>
+	<FogOfWar>true</FogOfWar>
+	<PlayerMappings>
+		<Mapping Id="A" Name="RandomPig" />
+		<Mapping Id="B" Name="RandomPig" />
+		<Mapping Id="C" Name="RandomPig" />
+		<Mapping Id="D" Name="RandomPig" />
+		<Mapping Id="E" Name="RandomPig" />
+		<Mapping Id="F" Name="RandomPig" />
+		<Mapping Id="G" Name="RandomPig" />
+		<Mapping Id="H" Name="RandomPig" />
+	</PlayerMappings>
+	<TeamMappings>
+		<Mapping Id="A" Name="BOT SQUAD A" />
+		<Mapping Id="B" Name="BOT SQUAD B" />
+	</TeamMappings>
+</RunSettings>

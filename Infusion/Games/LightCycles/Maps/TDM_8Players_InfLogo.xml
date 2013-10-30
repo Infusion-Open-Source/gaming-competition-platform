@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameSettings>
+	<GameMode>TeamDeathMatch</GameMode>
+	<PlayerSlotAssignment>ABCDEFGH</PlayerSlotAssignment>
+	<TeamSlotAssignment>AAAABBBB</TeamSlotAssignment>
+	<MapSource>File</MapSource>
+	<MapName>Infusion</MapName>
+	<MapFileName>.\Maps\TeamDeathmatch\infusion_logo.png</MapFileName>
+	<MapWidth>0</MapWidth>
+	<MapHeight>0</MapHeight>
+	<TrailAging>0.2</TrailAging>
+	<ObstacleRatio>0</ObstacleRatio>
+	<CleanMoveScore>1</CleanMoveScore>
+	<TrailHitScore>20</TrailHitScore>
+	<LastManStandScore>100</LastManStandScore>
+</GameSettings>
