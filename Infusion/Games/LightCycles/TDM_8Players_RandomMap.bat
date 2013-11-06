@@ -1,1 +1,1 @@
-.\bin\LightCycles.exe ".\Players\MixedBots.xml" ".\Maps\TDM_8Players_RandomMap.xml" ".\TeamsAndPlayers.xml" > ".\Logs\TDM_8Players_RandomMap.log"
+.\bin\LightCycles.exe ".\Players\MixedBots.xml" ".\Maps\TDM_8Players_RandomMap.xml" ".\TeamsAndPlayers.xml"

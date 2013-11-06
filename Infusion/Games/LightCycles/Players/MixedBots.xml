@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
-	<TimeLimit>100</TimeLimit>
+	<TimeLimit>500</TimeLimit>
 	<ViewArea>10</ViewArea>
 	<FogOfWar>true</FogOfWar>
 	<PlayerMappings>

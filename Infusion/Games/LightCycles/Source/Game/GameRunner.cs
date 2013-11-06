@@ -19,11 +19,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="GameRunner" /> class.
         /// </summary>
+        /// <param name="output">run output</param>
         /// <param name="runSettings">run settings</param>
         /// <param name="settings">game rules</param>
         /// <param name="teamsAndPlayers">teams and players info</param>
-        public GameRunner(RunSettings runSettings, GameSettings settings, TeamsAndPlayers teamsAndPlayers)
+        public GameRunner(TextWriter output, RunSettings runSettings, GameSettings settings, TeamsAndPlayers teamsAndPlayers)
         {
+            if (output == null)
+            {
+                throw new ArgumentNullException("output");
+            }
+
             if (runSettings == null)
             {
                 throw new ArgumentNullException("runSettings");
@@ -39,10 +45,16 @@
                 throw new ArgumentNullException("teamsAndPlayers");
             }
 
+            this.Output = output;
             this.Settings = settings;
             this.RunSettings = runSettings;
             this.TeamsAndPlayers = teamsAndPlayers;
         }
+
+        /// <summary>
+        /// Game runner output
+        /// </summary>
+        public TextWriter Output { get; protected set; }
 
         /// <summary>
         /// Gets or sets player controller
@@ -75,6 +87,11 @@
         public Dictionary<Identity, TeamInfo> TeamsInfos { get; protected set; }
 
         /// <summary>
+        /// Gets or sets game
+        /// </summary>
+        public Game Game { get; protected set; }
+
+        /// <summary>
         /// Runs the game
         /// </summary>
         public void Run()
@@ -84,11 +101,11 @@
             GameInfo mapInfo = this.SetupMap();
 
             // create game
-            Game game = new Game(gameMode, mapInfo, playersSetup);
-            game.CreateInitialState();
+            this.Game = new Game(gameMode, mapInfo, playersSetup);
+            this.Game.CreateInitialState();
 
             // make general game initial state output
-            this.OutputInitialGameState(game);
+            this.OutputInitialGameState(this.Game);
             
             // create player processes
             this.PlayerController = new PlayerController(playersSetup.PlayersIdentities, this.TeamsAndPlayers.GetPlayersExePaths(this.PlayerInfos));
@@ -97,30 +114,30 @@
             int playersReady;
             while (!this.CheckIfPlayersAreReady(playersSetup, out playersReady))
             {
-                Console.Out.WriteLine("Players ready: " + playersReady);
+                this.Output.WriteLine("Players ready: " + playersReady);
             }
 
-            Console.Out.WriteLine("Players ready: " + playersReady);
+            this.Output.WriteLine("Players ready: " + playersReady);
 
             // make player context based initial game state output
             foreach (Identity identity in playersSetup.PlayersIdentities)
             {
-                this.OutputInitialGameState(game, identity);
+                this.OutputInitialGameState(this.Game, identity);
             }
 
             // give it some time
             Thread.Sleep(5000);
 
-            while (game.Result == GameResult.Undefined)
+            while (this.Game.Result == GameResult.Undefined)
             {
                 // make general game state output
-                this.OutputGameState(game);
+                this.OutputGameState(this.Game);
                 
                 // make player context based game state output (can take a while)
                 Dictionary<Identity, string> stateDict = new Dictionary<Identity, string>();
                 foreach (Identity identity in playersSetup.PlayersIdentities)
                 {
-                    stateDict.Add(identity, this.PrepareOutputGameState(game, identity));
+                    stateDict.Add(identity, this.PrepareOutputGameState(this.Game, identity));
                 }
 
                 // clear all data from players 
@@ -129,22 +146,22 @@
                 // quickly send state
                 foreach (Identity identity in playersSetup.PlayersIdentities)
                 {
-                    this.OutputGameState(game, identity, stateDict[identity]);
+                    this.OutputGameState(this.Game, identity, stateDict[identity]);
                 }
                 
                 Thread.Sleep(this.RunSettings.TimeLimit); // give player time to produce an output, response after that time will be ignored
 
                 // gather player events
-                game.CreateNextState(this.GatherPlayerEvents(game, playersSetup.PlayersIdentities));
-                game.CheckEndConditions();
+                this.Game.CreateNextState(this.GatherPlayerEvents(this.Game, playersSetup.PlayersIdentities));
+                this.Game.CheckEndConditions();
             }
 
             // output game result
-            this.OutputGameState(game);
-            this.OutputGameFinalState(game);
+            this.OutputGameState(this.Game);
+            this.OutputGameFinalState(this.Game);
             foreach (Identity identity in playersSetup.PlayersIdentities)
             {
-                this.OutputGameFinalState(game, identity);
+                this.OutputGameFinalState(this.Game, identity);
             }
 
             this.PlayerController.Close();
@@ -157,35 +174,35 @@
         /// <param name="game">game to output</param>
         private void OutputInitialGameState(Game game)
         {
-            Console.Out.WriteLine("Game mode: " + this.Settings.GameMode);
-            Console.Out.WriteLine("Players: " + this.Settings.PlayerSlotAssignment);
-            Console.Out.WriteLine("Teams: " + this.Settings.TeamSlotAssignment);
-            Console.Out.WriteLine("Map source: " + this.Settings.MapSource);
-            Console.Out.WriteLine("Map name: " + this.Settings.MapName);
-            Console.Out.WriteLine("Map file name: " + this.Settings.MapFileName);
-            Console.Out.WriteLine("Map width: " + this.Settings.MapWidth);
-            Console.Out.WriteLine("Map height: " + this.Settings.MapHeight);
-            Console.Out.WriteLine("Trail aging: " + this.Settings.TrailAging);
-            Console.Out.WriteLine("Obstacle ratio: " + this.Settings.ObstacleRatio);
-            Console.Out.WriteLine("Clean move score: " + this.Settings.CleanMoveScore);
-            Console.Out.WriteLine("Trail hit score: " + this.Settings.TrailHitScore);
-            Console.Out.WriteLine("Last man stand score: " + this.Settings.LastManStandScore);
+            this.Output.WriteLine("Game mode: " + this.Settings.GameMode);
+            this.Output.WriteLine("Players: " + this.Settings.PlayerSlotAssignment);
+            this.Output.WriteLine("Teams: " + this.Settings.TeamSlotAssignment);
+            this.Output.WriteLine("Map source: " + this.Settings.MapSource);
+            this.Output.WriteLine("Map name: " + this.Settings.MapName);
+            this.Output.WriteLine("Map file name: " + this.Settings.MapFileName);
+            this.Output.WriteLine("Map width: " + this.Settings.MapWidth);
+            this.Output.WriteLine("Map height: " + this.Settings.MapHeight);
+            this.Output.WriteLine("Trail aging: " + this.Settings.TrailAging);
+            this.Output.WriteLine("Obstacle ratio: " + this.Settings.ObstacleRatio);
+            this.Output.WriteLine("Clean move score: " + this.Settings.CleanMoveScore);
+            this.Output.WriteLine("Trail hit score: " + this.Settings.TrailHitScore);
+            this.Output.WriteLine("Last man stand score: " + this.Settings.LastManStandScore);
 
-            Console.Out.WriteLine("Players data: " + this.PlayerInfos.Keys.Count);
+            this.Output.WriteLine("Players data: " + this.PlayerInfos.Keys.Count);
             foreach (Identity id in this.PlayerInfos.Keys)
             {
                 PlayerInfo info = this.PlayerInfos[id];
-                Console.Out.WriteLine("Player " + id.Identifier + ":{0}:{1}", info.Name, info.TrailColor);
+                this.Output.WriteLine("Player " + id.Identifier + ":{0}:{1}", info.Name, info.TrailColor);
             }
 
-            Console.Out.WriteLine("Teams data: " + this.TeamsInfos.Keys.Count);
+            this.Output.WriteLine("Teams data: " + this.TeamsInfos.Keys.Count);
             foreach (Identity id in this.TeamsInfos.Keys)
             {
                 TeamInfo info = this.TeamsInfos[id];
-                Console.Out.WriteLine("Team " + id.Identifier + ":{0}:{1}", info.Name, info.TrailColor);
+                this.Output.WriteLine("Team " + id.Identifier + ":{0}:{1}", info.Name, info.TrailColor);
             }
 
-            Console.Out.Flush();
+            this.Output.Flush();
         }
 
         /// <summary>
@@ -232,10 +249,10 @@
         /// <param name="game">current game</param>
         private void OutputGameState(Game game)
         {
-            Console.Out.WriteLine("Turn: " + game.CurrentState.Turn);
+            this.Output.WriteLine("Turn: " + game.CurrentState.Turn);
             TextGameStateWriter writer = new TextGameStateWriter();
-            Console.Out.Write(writer.Write(game.Map, game.CurrentState));
-            Console.Out.Flush();
+            this.Output.Write(writer.Write(game.Map, game.CurrentState));
+            this.Output.Flush();
         }
 
         /// <summary>
@@ -282,26 +299,26 @@
         /// <param name="game">current game</param>
         private void OutputGameFinalState(Game game)
         {
-            Console.Out.WriteLine("Game ends");
+            this.Output.WriteLine("Game ends");
             switch (game.Result)
             {
                 case GameResult.FinshedWithWinner:
-                    Console.Out.WriteLine("Winner: " + game.Winner);
+                    this.Output.WriteLine("Winner: " + game.Winner);
                     break;
                 case GameResult.FinshedWithWinners:
-                    Console.Out.WriteLine("WinningTeam: " + game.WinningTeam);
+                    this.Output.WriteLine("WinningTeam: " + game.WinningTeam);
                     break;
                 case GameResult.FinishedWithoutWinner:
-                    Console.Out.WriteLine("Game is draw");
+                    this.Output.WriteLine("Game is draw");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("game");
             }
 
-            Console.Out.WriteLine("Scores data: " + this.PlayerInfos.Keys.Count);
+            this.Output.WriteLine("Scores data: " + this.PlayerInfos.Keys.Count);
             foreach (Identity id in this.PlayerInfos.Keys)
             {
-                Console.Out.WriteLine("Score " + id.Identifier + ":" + game.PlayerSetup.Scoreboard[id]);
+                this.Output.WriteLine("Score " + id.Identifier + ":" + game.PlayerSetup.Scoreboard[id]);
             }
         }
 
@@ -393,7 +410,7 @@
                 }
             }
             
-            Console.Out.Write("Commands: " + lines + Environment.NewLine + playerCommansLog);
+            this.Output.Write("Commands: " + lines + Environment.NewLine + playerCommansLog);
             return events;
         }
 

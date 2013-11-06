@@ -172,7 +172,7 @@
             }
             catch (InvalidOperationException)
             {
-                Console.WriteLine("Process " + identity + " is down.");
+                // Console.WriteLine("Process " + identity + " is down.");
             }
             catch (Exception ex)
             {

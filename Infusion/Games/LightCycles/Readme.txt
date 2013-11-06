@@ -1,32 +1,5 @@
 Here's a short QA
 
-How to start?
-=============
-Run 1vs1_InfLogo.bat - this will start a game where 2 players fight against each other.
-After the console window will close run RunLogViewer.bat to see the replay.
-
-
-How to use log viewer?
-======================
-Log viewer can render game log and show you in a visual way entire gameplay.
-It scans Logs directory in search for *.log files, and if founds a file which is able to read then it starts the presentation.
-
-By default it waits for you hit the space bar on game start, on end of game turn and at end of the game.
-You can change that behavior using built in shortcuts.
-
-There is bunch of short cuts, here is the list:
-[space] - next turn, continue
-[back space] - previous turn
-[t] - toggle wait on turn end
-[s] - toggle wait on game start
-[e] - toggle wait on game end
-[arrows] - pan around the screen
-[page up][page down] - zoom in and out
-[home] - get back to default zoom
-[f] - toggle player follow mode (turn off automatically when player dies)
-[[],[]] - follow previous/next player
-
-
 How to write a bot?
 ===================
 Easiest way is to use working example and do the appropriate changes on it.
@@ -310,9 +283,9 @@ All the rest of parameters are at their defaults.
 
 To finally run the game we create bat file like .\run.bat as follows:
 
-	.\bin\LightCycles.exe ".\Players\SuperBot_vs_RandomBots.xml" ".\Maps\myRandomMap.xml" ".\TeamsAndPlayers.xml" > ".\Logs\myRandomMap.log"
+	.\bin\LightCycles.exe ".\Players\SuperBot_vs_RandomBots.xml" ".\Maps\myRandomMap.xml" ".\TeamsAndPlayers.xml" 
 
-This will run the game and feed files created by us and redirect output to logs folder.
+This will run the game and feed files created by us.
 After game completes we can view all the replays in Logs folder by executing RunLogViewer.bat
 
 

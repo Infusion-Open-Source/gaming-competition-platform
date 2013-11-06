@@ -18,22 +18,20 @@
         [STAThread]
         public static void Main(string[] args)
         {
-            if (args.Length == 1)
+            string dir = args[0];
+            bool moveToArchive = args.Length > 1 && args[1] == "Archive";
+            if (Directory.Exists(dir))
             {
-                string dir = args[0];
-                if (Directory.Exists(dir))
+                PlaybackSettings playbackSettigs = new PlaybackSettings();
+                playbackSettigs.WaitOnStart = true;
+                playbackSettigs.WaitOnEnd = true;
+                playbackSettigs.WaitOnTurn = true;
+                using (GameView view = new GameView(playbackSettigs))
                 {
-                    PlaybackSettings playbackSettigs = new PlaybackSettings();
-                    playbackSettigs.WaitOnStart = true;
-                    playbackSettigs.WaitOnEnd = true;
-                    playbackSettigs.WaitOnTurn = true;
-                    using (GameView view = new GameView(playbackSettigs))
-                    {
-                        Thread netThread = new Thread(PlaybackThread);
-                        netThread.Start(new object[] { dir, view });
-                        view.Run();
-                        netThread.Abort();
-                    }
+                    Thread netThread = new Thread(PlaybackThread);
+                    netThread.Start(new object[] { dir, view, moveToArchive });
+                    view.Run();
+                    netThread.Abort();
                 }
             }
         }
@@ -47,6 +45,7 @@
             object[] args = (object[])arg;
             string logFilesPath = (string)args[0];
             GameView view = (GameView)args[1];
+            bool moveToArchive = (bool)args[2];
 
             try
             {
@@ -54,6 +53,9 @@
                 {
                     Thread.Sleep(10);
                 }
+
+                string archivePath = Path.Combine(logFilesPath, "Archive");
+                Directory.CreateDirectory(archivePath);
 
                 while (true)
                 {
@@ -80,6 +82,11 @@
                             StartRoutine(view, visualStateBuilder);
                             TurnRoutine(view, visualStateBuilder, gameDetails);
                             EndRoutine(view, visualStateBuilder);
+                            
+                            if (moveToArchive)
+                            {
+                                File.Move(file, Path.Combine(archivePath, Path.GetFileName(file)));
+                            }
                         }
                     }
                 }
