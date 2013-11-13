@@ -73,8 +73,7 @@
             {
                 char winningTeamChar = this.GameDetails.GameResult.Replace("WinningTeam: ", string.Empty)[0];
                 var winningTeam = this.GameDetails.FindTeam(winningTeamChar);
-                result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText("Team", new PointF((this.WindowRect.Width / 2) - 100, (this.WindowRect.Height / 2) - 300)));
-                result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText(winningTeam.Name, winningTeam.Color, new PointF((this.WindowRect.Width / 2) - 250, (this.WindowRect.Height / 2) - 200)));
+                result.UserInterfaceLayer.Add(VisualText.CreateEnormousHeadingText(winningTeam.Name, winningTeam.Color, new PointF((this.WindowRect.Width / 2) - 250, (this.WindowRect.Height / 2) - 200)));
                 result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText("Has won the game!", new PointF((this.WindowRect.Width / 2) - 250, (this.WindowRect.Height / 2) - 100)));
             }
             else if (this.GameDetails.GameResult.StartsWith("Winner: "))
@@ -82,14 +81,13 @@
                 char winnwerChar = this.GameDetails.GameResult.Replace("Winner: ", string.Empty)[0];
                 var winner = this.GameDetails.FindPlayer(winnwerChar);
                 int score = this.GameDetails.FindPlayersScore(winnwerChar);
-                result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText("Player", new PointF((this.WindowRect.Width / 2) - 100, (this.WindowRect.Height / 2) - 300)));
-                result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText(winner.Name, winner.Color, new PointF((this.WindowRect.Width / 2) - 250, (this.WindowRect.Height / 2) - 200)));
+                result.UserInterfaceLayer.Add(VisualText.CreateEnormousHeadingText(winner.Name, winner.Color, new PointF((this.WindowRect.Width / 2) - 250, (this.WindowRect.Height / 2) - 200)));
                 result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText("Has won the game!", new PointF((this.WindowRect.Width / 2) - 250, (this.WindowRect.Height / 2) - 100)));
                 result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText("Score: " + score, new PointF((this.WindowRect.Width / 2) - 250, (this.WindowRect.Height / 2) - 0)));
             }
             else
             {
-                result.UserInterfaceLayer.Add(VisualText.CreateSuperHeadingText(this.GameDetails.GameResult, new PointF((this.WindowRect.Width / 2) - 100, (this.WindowRect.Height / 2) - 300)));
+                result.UserInterfaceLayer.Add(VisualText.CreateEnormousHeadingText(this.GameDetails.GameResult, new PointF((this.WindowRect.Width / 2) - 100, (this.WindowRect.Height / 2) - 300)));
             }
 
             if (waitingForButton)

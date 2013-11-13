@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SlimDX.SampleFramework")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Credit Suisse")]
+[assembly: AssemblyCompany("Infusion")]
 [assembly: AssemblyProduct("SlimDX.SampleFramework")]
-[assembly: AssemblyCopyright("Copyright © Credit Suisse 2013")]
+[assembly: AssemblyCopyright("Copyright © Infusion 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

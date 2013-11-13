@@ -2,6 +2,7 @@
 {
     using System;
     using System.Drawing;
+    using System.IO;
     using Infusion.Gaming.LightCycles.Definitions;
     using Infusion.Gaming.LightCycles.Exceptions;
     using Infusion.Gaming.LightCycles.Model.Data;
@@ -50,6 +51,11 @@
         {
             if (this.MapInfo.MapType == MapType.BitmapStream)
             {
+                if (!File.Exists(this.MapInfo.MapFileName))
+                {
+                    throw new GameConfigurationException("Map file path invalid, no such file: " + this.MapInfo.MapFileName);
+                }
+
                 using (Bitmap bitmap = new Bitmap(this.MapInfo.MapFileName))
                 {
                     var reader = new MapImageReader();

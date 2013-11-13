@@ -1,1 +1,1 @@
-.\bin\UIClient.exe ".\Logs"
+.\bin\UIClient.exe ".\Logs" Archive

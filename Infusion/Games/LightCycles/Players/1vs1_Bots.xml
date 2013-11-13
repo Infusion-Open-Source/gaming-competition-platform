@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
-	<TimeLimit>500</TimeLimit>
+	<PlayersPathRoot>.\Players\</PlayersPathRoot>
+	<TimeLimit>100</TimeLimit>
 	<ViewArea>10</ViewArea>
 	<FogOfWar>true</FogOfWar>
+	<DebugMode>false</DebugMode>
+	<RandomizeStartLocations>true</RandomizeStartLocations>	
 	<PlayerMappings>
-		<Mapping Id="A" Name="LineFollower" />
+		<Mapping Id="A" Name="MyBot" />
 		<Mapping Id="B" Name="LineFollower" />
 	</PlayerMappings>
 	<TeamMappings />
+	<TeamInformation />
 </RunSettings>

@@ -11,71 +11,78 @@ namespace RandomPig
     {
         static void Main(string[] args)
         {
-            string youAre = string.Empty;
-            string players = string.Empty;
-            string teams = string.Empty;
-            string gameMode = string.Empty;
-
-            while (true)
+            try
             {
-                string line = Console.ReadLine();
-                if (line == null || string.IsNullOrEmpty(line))
-                {
-                    continue;
-                }
-                if (line.StartsWith("Ready?"))
-                {
-                    Console.WriteLine("Ready!");
-                }
-                else if (line.StartsWith("You Are: "))
-                {
-                    youAre = line.Replace("You Are: ", string.Empty);
-                }
-                else if (line.StartsWith("Players: "))
-                {
-                    players = line.Replace("Players: ", string.Empty);
-                }
-                else if (line.StartsWith("Teams: "))
-                {
-                    teams = line.Replace("Teams: ", string.Empty);
-                }
-                else if (line.StartsWith("Game mode: "))
-                {
-                    gameMode = line.Replace("Game mode: ", string.Empty);
-                }
-                else if (line.StartsWith("Turn"))
-                {
-                    int turn = int.Parse(line.Replace("Turn: ", string.Empty));
-                    line = Console.ReadLine();
-                    int numberOfLines = int.Parse(line);
-                    if (numberOfLines > 1)
-                    {
-                        string[] data = new string[numberOfLines];
-                        for (int i = 0; i < numberOfLines; i++)
-                        {
-                            line = Console.ReadLine();
-                            data[i] = line;
-                        }
+                string youAre = string.Empty;
+                string players = string.Empty;
+                string teams = string.Empty;
+                string gameMode = string.Empty;
 
-                        // string response = DoTheAI(youAre, players, teams, gameMode, data);
-                        string response = DoTheAISmarterWay(youAre, players, teams, gameMode, data);
-                        Console.WriteLine(response);
-                    }
-                    else
+                while (true)
+                {
+                    string line = Console.ReadLine();
+                    if (line == null || string.IsNullOrEmpty(line))
                     {
-                        // game lost I'm dead
+                        continue;
+                    }
+                    if (line.StartsWith("Ready?"))
+                    {
+                        Console.WriteLine("Ready!");
+                    }
+                    else if (line.StartsWith("You Are: "))
+                    {
+                        youAre = line.Replace("You Are: ", string.Empty);
+                    }
+                    else if (line.StartsWith("Players: "))
+                    {
+                        players = line.Replace("Players: ", string.Empty);
+                    }
+                    else if (line.StartsWith("Teams: "))
+                    {
+                        teams = line.Replace("Teams: ", string.Empty);
+                    }
+                    else if (line.StartsWith("Game mode: "))
+                    {
+                        gameMode = line.Replace("Game mode: ", string.Empty);
+                    }
+                    else if (line.StartsWith("Turn"))
+                    {
+                        int turn = int.Parse(line.Replace("Turn: ", string.Empty));
+                        line = Console.ReadLine();
+                        int numberOfLines = int.Parse(line);
+                        if (numberOfLines > 1)
+                        {
+                            string[] data = new string[numberOfLines];
+                            for (int i = 0; i < numberOfLines; i++)
+                            {
+                                line = Console.ReadLine();
+                                data[i] = line;
+                            }
+
+                            // string response = DoTheAI(youAre, players, teams, gameMode, data);
+                            string response = DoTheAISmarterWay(youAre, players, teams, gameMode, data);
+                            Console.Out.WriteLine(response);
+                            Console.Out.Flush();
+                        }
+                        else
+                        {
+                            // game lost I'm dead
+                            line = Console.ReadLine();
+                            string gameResult = line;
+                            break;
+                        }
+                    }
+                    else if (line.StartsWith("Game ends"))
+                    {
+                        // game end, check whether won or lost
                         line = Console.ReadLine();
                         string gameResult = line;
                         break;
                     }
                 }
-                else if (line.StartsWith("Game ends"))
-                {
-                    // game end, check whether won or lost
-                    line = Console.ReadLine();
-                    string gameResult = line;
-                    break;
-                }
+            }
+            catch (Exception)
+            {
             }
         }
 

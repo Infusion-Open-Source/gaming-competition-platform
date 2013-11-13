@@ -1,38 +1,10 @@
+
 Here's a short QA
-
-How to start?
-=============
-Run 1vs1_InfLogo.bat - this will start a game where 2 players fight against each other.
-After the console window will close run RunLogViewer.bat to see the replay.
-
-
-How to use log viewer?
-======================
-Log viewer can render game log and show you in a visual way entire gameplay.
-It scans Logs directory in search for *.log files, and if founds a file which is able to read then it starts the presentation.
-
-By default it waits for you hit the space bar on game start, on end of game turn and at end of the game.
-You can change that behavior using built in shortcuts.
-
-There is bunch of short cuts, here is the list:
-[space] - next turn, continue
-[back space] - previous turn
-[t] - toggle wait on turn end
-[s] - toggle wait on game start
-[e] - toggle wait on game end
-[arrows] - pan around the screen
-[page up][page down] - zoom in and out
-[home] - get back to default zoom
-[f] - toggle player follow mode (turn off automatically when player dies)
-[[],[]] - follow previous/next player
-
-
 
 How to write a bot?
 ===================
 Easiest way is to use working example and do the appropriate changes on it.
-Please refer to sources for two bots provided, you can find them in .\Players\Bots\
-
+Please refer to sources for two bots provided, you can find them in .\Players\Bots\ There is already soultion created for your player with initial implementation in .\Players\Bots\MyBot which is good place to start.
 
 What input will my player get from the game engine and how should I respond?
 ============================================================================
@@ -235,8 +207,7 @@ example on a map with 8 players (you will find data like this in game logs):
 How to add a new player?
 ========================
 Let's assume we want create new "SuperBot" player.
-We need to have 2 files to do that: SuperBot.exe and PlayerInfo.xml
-In PlayerInfo.xml we can define what will be the name of our player, it's trail color and how to run our player.
+We need to have 2 files to do that: SuperBot.exe and PlayerInfo.xml In PlayerInfo.xml we can define what will be the name of our player, it's trail color and how to run our player.
 Here's an example of xml file content:
 
 	<?xml version="1.0" encoding="utf-8"?>
@@ -244,23 +215,7 @@ Here's an example of xml file content:
 
 So I've set name to be SuperBot, color to be my favorite: Pink, and I told game engine that player is started just by running the exe file. 
 Next I need to make a folder under .\Players directory like .\Players\SuperBot and put both files out there.
-
-Last step is to add my new bot to players repository file .\TeamsAndPlayers.xml 
-I need to add extra PlayerConfig line to make sure game knows about my player setup.
-Note the root path of player directories.
-
-...
-    <TeamsAndPlayers PathRoot=".\Players\">
-	<PlayerConfigs>
-		<PlayerConfig Name="LineFollower" Config="Bots\LineFollower\PlayerInfo.xml" />
-		<PlayerConfig Name="RandomPig" Config="Bots\RandomPig\PlayerInfo.xml" />
-		<PlayerConfig Name="SuperBot" Config="SuperBot\PlayerInfo.xml" />
-	</PlayerConfigs>
-...
-
-
-So I've told game engine that I will refer later on to my bot by name "SuperBot" and it's player info can be found in .\Players\SuperBot\PlayerInfo.xml
-Now the player has been added to the game structure.
+Now I can refer in game to my player using it's name. Note that name should be unique.
 
 
 How to make a new player play custom game?
@@ -270,9 +225,12 @@ To do so, first I need to make XML file with game players setup, let's put it he
 
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
+	<PlayersPathRoot>.\Players\</PlayersPathRoot> <!-- rot path for players executables and configs -->
 	<TimeLimit>1000</TimeLimit> <!-- number of milliseconds game waits for player response each turn -->
 	<ViewArea>10</ViewArea> <!-- player view radius -->
 	<FogOfWar>true</FogOfWar> <!-- is fog of war enabled -->
+	<DebugMode>false</DebugMode> <!-- will game run turn by turn for player debuging purposes -->
+	<RandomizeStartLocations>true</RandomizeStartLocations>	<!-- should randomize order of start locations on a map -->
 	<PlayerMappings>
 		<Mapping Id="A" Name="SuperBot" /> <!-- my new player should start on game slot A -->
 		<Mapping Id="B" Name="RandomPig" /> <!-- on other slots we have random bot -->
@@ -283,8 +241,8 @@ To do so, first I need to make XML file with game players setup, let's put it he
 		<Mapping Id="G" Name="RandomPig" />
 		<Mapping Id="H" Name="RandomPig" />
 	</PlayerMappings>
-	<TeamMappings/> <!-- no team mapping need for FFA game mode -->
-</RunSettings>
+	<TeamMappings/> <!-- no team mapping required for FFA game mode -->
+	<TeamInformation /> <!-- no team information required for FFA game mode --> </RunSettings>
 
 Now I have a players file I can feed into game engine, let's setup game itself.
 To do that we need another XML let's call it .\Maps\myRandomMap.xml with following content:
@@ -311,7 +269,7 @@ All the rest of parameters are at their defaults.
 
 To finally run the game we create bat file like .\run.bat as follows:
 
-	.\bin\LightCycles.exe ".\Players\SuperBot_vs_RandomBots.xml" ".\Maps\myRandomMap.xml" ".\TeamsAndPlayers.xml" 
+	.\bin\LightCycles.exe ".\Players\SuperBot_vs_RandomBots.xml" ".\Maps\myRandomMap.xml"
 
 This will run the game and feed files created by us.
 After game completes we can view all the replays in Logs folder by executing RunLogViewer.bat
@@ -336,7 +294,7 @@ Remember few rules:
 - color white (255,255,255) is a free space players can travel trough
 - in FFA mode players starting position are marked by red (255,0,0) color. Typically you'll need to draw 8 red pixels.
 - in Team game you need to use red (255,0,0) color for starting positions of team A and green (0,255,0) for starting positions of team B. If you'd like to have more than 2 teams here is color table for your reference:
-	A (255, 0, 0)
+		A (255, 0, 0)
         B (0, 255, 0)
         C (0, 0, 255)
         D (255, 255, 0)
@@ -348,7 +306,6 @@ Remember few rules:
 Max 8 team is allowed in game.
 Save your custom map in an appropriate place in .\Maps folder and wire a game map just as in previous question.
 Note: map max dimensions are 1000x1000 (bigger map requires change in code, refer Constraints class)
-
 
 
 

@@ -1,0 +1,23 @@
+=== 13 Nov 2013 ===
+
+- added x-mass map and the setup for it
+- added Flushes for RandomPig and LineFollower
+- added general exception handlers for RandomPig and LineFollower so they will never crash during testing
+- added player solution 'MyBot' already set up to make player life easier :)
+- bigger winner name in viewer
+- if log file is corrupted then viewer will rename it to *.corrupted to indiate that it cannot read it
+- game engine writes current progress to console to avoid confusion is it runing or not
+- added debug flag in 'players' config, when set to true game engine waits for hitting enter in it's console on the end of every turn. This will allow players to debug their solutions.
+- removed TeamsAndPlayers config, less configuration now, playerInfo files are automatically discovered from .\Players dir
+- teams info moved to 'players' config - one file less to edit now
+- removed unnecessary level of mapping, now in 'players' file you just put name of player who will play the game, not the name of the registered mapping
+- on the end of game log name of player is put next to score
+- while game is still making log file it has name "*.temp" to indicate that, after processing completes file is renamed to "*.log"
+- on the end of game players processes are killed instead of gently asking for closure... will help cleaning up when players that hungs on endless loops
+- added RandomizeStartLocations flag in 'players' file, controls random selection of players start locations
+- running game batches with random locations now supported, just set RandomizeStartLocations flag and multiply same entry in run .bat files to make a batch
+- readme updated accordingly to changes above
+
+=== 6 Nov 2013 ===
+- initial release
+

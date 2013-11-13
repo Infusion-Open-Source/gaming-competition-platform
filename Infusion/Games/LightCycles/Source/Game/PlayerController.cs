@@ -123,7 +123,13 @@
 
             foreach (Process process in this.playerProcesses.Values)
             {
-                process.Close();
+                try
+                {
+                    process.Kill();
+                }
+                catch (Exception)
+                {
+                }
             }
         }
 

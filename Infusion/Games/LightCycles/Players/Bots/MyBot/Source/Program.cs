@@ -1,16 +1,18 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Linefollower
+namespace MyBot
 {
     class Program
     {
         static void Main(string[] args)
         {
             try
-            {            
+            {
                 string youAre = string.Empty;
                 string players = string.Empty;
                 string teams = string.Empty;
@@ -19,7 +21,7 @@ namespace Linefollower
                 while (true)
                 {
                     string line = Console.ReadLine();
-                    if(line == null || string.IsNullOrEmpty(line))
+                    if (line == null || string.IsNullOrEmpty(line))
                     {
                         continue;
                     }
@@ -43,19 +45,20 @@ namespace Linefollower
                     {
                         gameMode = line.Replace("Game mode: ", string.Empty);
                     }
-                    else if (line.StartsWith("Turn: "))
+                    else if (line.StartsWith("Turn"))
                     {
                         int turn = int.Parse(line.Replace("Turn: ", string.Empty));
-                        int numberOfLines = int.Parse(Console.ReadLine());
+                        line = Console.ReadLine();
+                        int numberOfLines = int.Parse(line);
                         if (numberOfLines > 1)
                         {
                             string[] data = new string[numberOfLines];
                             for (int i = 0; i < numberOfLines; i++)
                             {
-                                data[i] = Console.ReadLine();
+                                line = Console.ReadLine();
+                                data[i] = line;
                             }
 
-                            // string response = DoTheAI(youAre, players, teams, gameMode, data);
                             string response = DoTheAISmarterWay(youAre, players, teams, gameMode, data);
                             Console.Out.WriteLine(response);
                             Console.Out.Flush();
@@ -63,14 +66,16 @@ namespace Linefollower
                         else
                         {
                             // game lost I'm dead
-                            string gameResult = Console.ReadLine();
+                            line = Console.ReadLine();
+                            string gameResult = line;
                             break;
                         }
                     }
                     else if (line.StartsWith("Game ends"))
                     {
                         // game end, check whether won or lost
-                        string gameResult = Console.ReadLine();
+                        line = Console.ReadLine();
+                        string gameResult = line;
                         break;
                     }
                 }
@@ -101,18 +106,16 @@ namespace Linefollower
                     }
                 }
             }
-
+            
             // do the checks
             bool canGoLeft = data[myLine][myIndex - 1] == ' ';
             bool canGoRight = data[myLine][myIndex + 1] == ' ';
             bool canGoStraight = data[myLine - 1][myIndex] == ' ';
 
-            if (canGoStraight)
-                return "S"; // prefer straight, otherwise pick random
-
             List<string> myOptions = new List<string>();
             if (canGoLeft) myOptions.Add("L");
             if (canGoRight) myOptions.Add("R");
+            if (canGoStraight) myOptions.Add("S");
 
             if (myOptions.Count > 0)
                 return myOptions[Random.Next(myOptions.Count)]; // get random available option

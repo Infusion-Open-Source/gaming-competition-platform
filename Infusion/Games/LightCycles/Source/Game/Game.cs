@@ -39,7 +39,7 @@
             this.PlayerSetup = playerSetup;
             this.MapProvider = new MapProvider(mapInfo, playerSetup);
             this.Map = this.MapProvider.Provide();
-            this.SlotPool = new GameSlotsPool(playerSetup, this.Map.StartLocations);
+            this.SlotPool = new GameSlotsPool(playerSetup, this.Map.StartLocations, mapInfo.RandomizeStartLocations);
 
             // set end conditions
             var endConditions = new EndConditionSet();

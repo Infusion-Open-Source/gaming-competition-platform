@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
-	<TimeLimit>500</TimeLimit>
+	<PlayersPathRoot>.\Players\</PlayersPathRoot>
+	<TimeLimit>100</TimeLimit>
 	<ViewArea>10</ViewArea>
 	<FogOfWar>true</FogOfWar>
+	<DebugMode>false</DebugMode>
+	<RandomizeStartLocations>true</RandomizeStartLocations>	
 	<PlayerMappings>
-		<Mapping Id="A" Name="LineFollower" />
+		<Mapping Id="A" Name="MyBot" />
 		<Mapping Id="B" Name="RandomPig" />
 		<Mapping Id="C" Name="LineFollower" />
 		<Mapping Id="D" Name="RandomPig" />
@@ -13,8 +16,6 @@
 		<Mapping Id="G" Name="LineFollower" />
 		<Mapping Id="H" Name="RandomPig" />
 	</PlayerMappings>
-	<TeamMappings>
-		<Mapping Id="A" Name="BOT SQUAD A" />
-		<Mapping Id="B" Name="BOT SQUAD B" />
-	</TeamMappings>
+	<TeamMappings />
+	<TeamInformation />
 </RunSettings>

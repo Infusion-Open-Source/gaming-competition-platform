@@ -16,6 +16,12 @@
 		<Mapping Id="G" Name="RandomPig" />
 		<Mapping Id="H" Name="RandomPig" />
 	</PlayerMappings>
-	<TeamMappings />
-	<TeamInformation />
+	<TeamMappings>
+		<Mapping Id="A" Name="BOT SQUAD A" />
+		<Mapping Id="B" Name="BOT SQUAD B" />
+	</TeamMappings>
+	<TeamInformation>
+		<TeamInfo Name="BOT SQUAD A" TrailColor="255,0,0" />
+		<TeamInfo Name="BOT SQUAD B" TrailColor="0,0,255" />
+	</TeamInformation>
 </RunSettings>

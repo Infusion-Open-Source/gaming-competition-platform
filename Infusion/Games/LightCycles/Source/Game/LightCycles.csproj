@@ -51,16 +51,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Mapping.cs" />
+    <Compile Include="Config\MappingCollection.cs" />
     <Compile Include="Config\PlayerConfig.cs" />
     <Compile Include="Config\PlayerInfo.cs" />
+    <Compile Include="Config\PlayerInfoCollection.cs" />
     <Compile Include="Config\RunSettings.cs" />
     <Compile Include="Config\GameSettings.cs" />
     <Compile Include="Config\TeamInfo.cs" />
-    <Compile Include="Config\TeamsAndPlayers.cs" />
+    <Compile Include="Config\TeamInfoCollection.cs" />
     <Compile Include="Definitions\MapType.cs" />
     <Compile Include="Events\PlayerScoreEvent.cs" />
     <Compile Include="Events\PlayerScoreSource.cs" />
     <Compile Include="Events\Processing\PlayerScoreProcessor.cs" />
+    <Compile Include="Exceptions\GameConfigurationException.cs" />
     <Compile Include="GameRunner.cs" />
     <Compile Include="PlayerController.cs" />
     <Compile Include="Program.cs" />

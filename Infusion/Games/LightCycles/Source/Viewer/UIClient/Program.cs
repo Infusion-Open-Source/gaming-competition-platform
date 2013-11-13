@@ -74,6 +74,7 @@
                         {
                             // if file is bad then skip it
                             gameDetails = null;
+                            File.Move(file, file + ".corrupted");
                         }
 
                         if (gameDetails != null)

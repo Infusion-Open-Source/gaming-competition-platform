@@ -1,1 +1,1 @@
-.\bin\LightCycles.exe ".\Players\MixedBots.xml" ".\Maps\TDM_8Players_InfLogo.xml" ".\TeamsAndPlayers.xml"
+.\bin\LightCycles.exe ".\Players\MixedBotsTDM.xml" ".\Maps\TDM_8Players_InfLogo.xml"

@@ -22,8 +22,7 @@
         /// <param name="output">run output</param>
         /// <param name="runSettings">run settings</param>
         /// <param name="settings">game rules</param>
-        /// <param name="teamsAndPlayers">teams and players info</param>
-        public GameRunner(TextWriter output, RunSettings runSettings, GameSettings settings, TeamsAndPlayers teamsAndPlayers)
+        public GameRunner(TextWriter output, RunSettings runSettings, GameSettings settings)
         {
             if (output == null)
             {
@@ -39,20 +38,14 @@
             {
                 throw new ArgumentNullException("settings");
             }
-
-            if (teamsAndPlayers == null)
-            {
-                throw new ArgumentNullException("teamsAndPlayers");
-            }
-
+            
             this.Output = output;
             this.Settings = settings;
             this.RunSettings = runSettings;
-            this.TeamsAndPlayers = teamsAndPlayers;
         }
 
         /// <summary>
-        /// Game runner output
+        /// Gets or sets game runner output
         /// </summary>
         public TextWriter Output { get; protected set; }
 
@@ -70,12 +63,7 @@
         /// Gets or sets game settings
         /// </summary>
         public GameSettings Settings { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets teams and players settings
-        /// </summary>
-        public TeamsAndPlayers TeamsAndPlayers { get; protected set; }
-
+        
         /// <summary>
         /// Gets or sets players information
         /// </summary>
@@ -108,7 +96,13 @@
             this.OutputInitialGameState(this.Game);
             
             // create player processes
-            this.PlayerController = new PlayerController(playersSetup.PlayersIdentities, this.TeamsAndPlayers.GetPlayersExePaths(this.PlayerInfos));
+            Dictionary<Identity, string> exePaths = new Dictionary<Identity, string>();
+            foreach (Identity identity in playersSetup.PlayersIdentities)
+            {
+                exePaths.Add(identity, this.RunSettings.PlayersInfoMap[identity].ExePath);
+            }
+
+            this.PlayerController = new PlayerController(playersSetup.PlayersIdentities, exePaths);
 
             // check if players are ready to play
             int playersReady;
@@ -148,8 +142,20 @@
                 {
                     this.OutputGameState(this.Game, identity, stateDict[identity]);
                 }
-                
-                Thread.Sleep(this.RunSettings.TimeLimit); // give player time to produce an output, response after that time will be ignored
+
+                Console.Write("[DEBUG] Turn " + this.Game.CurrentState.Turn);
+                if (this.RunSettings.DebugMode)
+                {
+                    // give player possibility to manualy trigger next turn to allow player process debuging
+                    Console.Write(" - press [ENTER] to continue...");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    // give player time to produce an output, response after that time will be ignored
+                    Thread.Sleep(this.RunSettings.TimeLimit);
+                    Console.WriteLine();
+                }
 
                 // gather player events
                 this.Game.CreateNextState(this.GatherPlayerEvents(this.Game, playersSetup.PlayersIdentities));
@@ -318,7 +324,7 @@
             this.Output.WriteLine("Scores data: " + this.PlayerInfos.Keys.Count);
             foreach (Identity id in this.PlayerInfos.Keys)
             {
-                this.Output.WriteLine("Score " + id.Identifier + ":" + game.PlayerSetup.Scoreboard[id]);
+                this.Output.WriteLine("Score " + id.Identifier + ":" + this.PlayerInfos[id].Name + ":" + game.PlayerSetup.Scoreboard[id]);
             }
         }
 
@@ -422,12 +428,12 @@
         {
             if (this.Settings.MapSource == "File")
             {
-                return new GameInfo(Path.GetFileName(this.Settings.MapName), this.Settings.MapFileName, this.Settings.TrailAging, this.Settings.CleanMoveScore, this.Settings.TrailHitScore, this.Settings.LastManStandScore);
+                return new GameInfo(Path.GetFileName(this.Settings.MapName), this.Settings.MapFileName, this.Settings.TrailAging, this.Settings.CleanMoveScore, this.Settings.TrailHitScore, this.Settings.LastManStandScore, this.RunSettings.RandomizeStartLocations);
             }
 
             if (this.Settings.MapSource == "Generate")
             {
-                return new GameInfo(this.Settings.MapName, this.Settings.MapWidth, this.Settings.MapHeight, this.Settings.TrailAging, this.Settings.ObstacleRatio, this.Settings.CleanMoveScore, this.Settings.TrailHitScore, this.Settings.LastManStandScore);
+                return new GameInfo(this.Settings.MapName, this.Settings.MapWidth, this.Settings.MapHeight, this.Settings.TrailAging, this.Settings.ObstacleRatio, this.Settings.CleanMoveScore, this.Settings.TrailHitScore, this.Settings.LastManStandScore, this.RunSettings.RandomizeStartLocations);
             }
 
             throw new ArgumentOutOfRangeException("this.Settings.MapSource", "Map source not recognized");
@@ -461,9 +467,10 @@
         {
             if (gameMode == GameMode.FreeForAll)
             {
+                // override any team related settings with ffa settings
                 this.Settings.TeamSlotAssignment = this.Settings.PlayerSlotAssignment;
                 PlayerSetup playersSetup = new PlayerSetup(this.Settings.PlayerSlotAssignment, this.Settings.TeamSlotAssignment);
-                this.PlayerInfos = this.TeamsAndPlayers.GetPlayersInformation(playersSetup, this.RunSettings.PlayerMappings);
+                this.PlayerInfos = this.RunSettings.PlayersInfoMap;
                 this.TeamsInfos = new Dictionary<Identity, TeamInfo>();
                 return playersSetup;
             }
@@ -471,8 +478,8 @@
             if (gameMode == GameMode.TeamDeathMatch)
             {
                 PlayerSetup playersSetup = new PlayerSetup(this.Settings.PlayerSlotAssignment, this.Settings.TeamSlotAssignment);
-                this.PlayerInfos = this.TeamsAndPlayers.GetPlayersInformation(playersSetup, this.RunSettings.PlayerMappings);
-                this.TeamsInfos = this.TeamsAndPlayers.GetTeamsInformation(playersSetup, this.RunSettings.TeamMappings);
+                this.PlayerInfos = this.RunSettings.PlayersInfoMap;
+                this.TeamsInfos = this.RunSettings.TeamInfoMap;
                 return playersSetup;
             }
 

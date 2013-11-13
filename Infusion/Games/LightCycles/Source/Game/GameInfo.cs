@@ -19,7 +19,8 @@
         /// <param name="cleanMoveScore">score on clean move</param>
         /// <param name="trailHitScore">score on trail hit</param>
         /// <param name="lastManStandScore">score on survival</param>
-        public GameInfo(string mapName, int mapWidth, int mapHeight, float trailAging, float obstacleRatio, int cleanMoveScore, int trailHitScore, int lastManStandScore)
+        /// <param name="randomizeStartLocations">randomize start locations</param>
+        public GameInfo(string mapName, int mapWidth, int mapHeight, float trailAging, float obstacleRatio, int cleanMoveScore, int trailHitScore, int lastManStandScore, bool randomizeStartLocations)
         {
             if (mapWidth < Constraints.MinMapWidth || mapWidth > Constraints.MaxMapWidth)
             {
@@ -66,6 +67,7 @@
             this.CleanMoveScore = cleanMoveScore;
             this.TrailHitScore = trailHitScore;
             this.LastManStandScore = lastManStandScore;
+            this.RandomizeStartLocations = randomizeStartLocations;
         }
 
         /// <summary>
@@ -77,7 +79,8 @@
         /// <param name="cleanMoveScore">score on clean move</param>
         /// <param name="trailHitScore">score on trail hit</param>
         /// <param name="lastManStandScore">score on survival</param>
-        public GameInfo(string mapName, string mapFileName, float trailAging, int cleanMoveScore, int trailHitScore, int lastManStandScore)
+        /// <param name="randomizeStartLocations">randomize start locations</param>
+        public GameInfo(string mapName, string mapFileName, float trailAging, int cleanMoveScore, int trailHitScore, int lastManStandScore, bool randomizeStartLocations)
         {
             if (cleanMoveScore < 0)
             {
@@ -104,6 +107,7 @@
             this.CleanMoveScore = cleanMoveScore;
             this.TrailHitScore = trailHitScore;
             this.LastManStandScore = lastManStandScore;
+            this.RandomizeStartLocations = randomizeStartLocations;
         }
         
         /// <summary>
@@ -155,5 +159,10 @@
         /// Gets or sets score for survival
         /// </summary>
         public int LastManStandScore { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether game should randomize starting locations
+        /// </summary>
+        public bool RandomizeStartLocations { get; protected set; }
     }
 }

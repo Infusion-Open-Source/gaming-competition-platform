@@ -2,18 +2,18 @@
 <RunSettings>
 	<PlayersPathRoot>.\Players\</PlayersPathRoot>
 	<TimeLimit>100</TimeLimit>
-	<ViewArea>10</ViewArea>
+	<ViewArea>15</ViewArea>
 	<FogOfWar>true</FogOfWar>
 	<DebugMode>false</DebugMode>
-	<RandomizeStartLocations>true</RandomizeStartLocations>
+	<RandomizeStartLocations>true</RandomizeStartLocations>	
 	<PlayerMappings>
 		<Mapping Id="A" Name="MyBot" />
 		<Mapping Id="B" Name="RandomPig" />
-		<Mapping Id="C" Name="RandomPig" />
+		<Mapping Id="C" Name="LineFollower" />
 		<Mapping Id="D" Name="RandomPig" />
-		<Mapping Id="E" Name="RandomPig" />
+		<Mapping Id="E" Name="LineFollower" />
 		<Mapping Id="F" Name="RandomPig" />
-		<Mapping Id="G" Name="RandomPig" />
+		<Mapping Id="G" Name="LineFollower" />
 		<Mapping Id="H" Name="RandomPig" />
 	</PlayerMappings>
 	<TeamMappings />

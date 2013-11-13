@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("UIClient")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Credit Suisse")]
+[assembly: AssemblyCompany("Infusion")]
 [assembly: AssemblyProduct("UIClient")]
-[assembly: AssemblyCopyright("Copyright © Credit Suisse 2013")]
+[assembly: AssemblyCopyright("Copyright © Infusion 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

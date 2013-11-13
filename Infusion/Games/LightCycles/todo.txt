@@ -1,0 +1,37 @@
+Stuff todo
+==========
+- Fix bug in Viewer on staying open for too long, keep system away from loging off
+- Make map reader more tolerant to grayscale maps
+- Adjust viewer to be started with the game / showing game is in progress and starting playback when is ready
+- For tournaments add extraction for a scoreboard (handling scoreboard in viewer would be nice)
+- More automated way for infrastructure:
+	- adding new player 
+	- setting ftp for player
+	- sending ftp credentials email
+- Review maps for deadtraps like the one Remek found in Infusion Logo map
+- Make random map generator player positioning more 'fair' and more 'player too close to obstacle' aware
+- if there are more logs than one: it would be nice to know which is being played currently and something like "1/8" (really helpful when playing replays from yesterday) - add info to viewer what it is playing now
+- logviewer could be also run in a mode that generates a bitmap(s) as well - than it would be quite easy to merge those bitmap into a movie, and share on yt on whichever other service - this is nice :)
+- it would be nice to pick one of the logs to be played again, or choose particular one...
+
+Presentation fixes
+==================
+- Make a presentation more how-to, just as on a cheet sheets
+- Show more proper images from wiever + ascii to more clearly explain relative view of player and world rotation
+
+Starter package changes
+=======================
+- Create cheat-sheets (PDF):
+	- how to test if game is running fine on your pc
+	- how to add your bot
+	- communication with engine in-a-pill
+	- how to use log viewer
+- Add some common functions package:
+	- char[,] handling, converting, rotating, clonning, cropping
+	
+Future ideas
+============
+- rewrite to Mono to run cross platform
+- web interface for making submission instead of ftp?
+
+

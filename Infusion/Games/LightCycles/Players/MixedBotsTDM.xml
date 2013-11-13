@@ -9,13 +9,19 @@
 	<PlayerMappings>
 		<Mapping Id="A" Name="MyBot" />
 		<Mapping Id="B" Name="RandomPig" />
-		<Mapping Id="C" Name="RandomPig" />
+		<Mapping Id="C" Name="LineFollower" />
 		<Mapping Id="D" Name="RandomPig" />
-		<Mapping Id="E" Name="RandomPig" />
+		<Mapping Id="E" Name="LineFollower" />
 		<Mapping Id="F" Name="RandomPig" />
-		<Mapping Id="G" Name="RandomPig" />
+		<Mapping Id="G" Name="LineFollower" />
 		<Mapping Id="H" Name="RandomPig" />
 	</PlayerMappings>
-	<TeamMappings />
-	<TeamInformation />
+	<TeamMappings>
+		<Mapping Id="A" Name="BOT SQUAD A" />
+		<Mapping Id="B" Name="BOT SQUAD B" />
+	</TeamMappings>
+	<TeamInformation>
+		<TeamInfo Name="BOT SQUAD A" TrailColor="255,0,0" />
+		<TeamInfo Name="BOT SQUAD B" TrailColor="0,0,255" />
+	</TeamInformation>
 </RunSettings>

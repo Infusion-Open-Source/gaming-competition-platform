@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Infusion.Gaming.LightCycles
+﻿namespace Infusion.Gaming.LightCycles
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
     using System.Text;
@@ -10,17 +9,36 @@ namespace Infusion.Gaming.LightCycles
     using Infusion.Gaming.LightCycles.Definitions;
     using Infusion.Gaming.LightCycles.Model;
     using Infusion.Gaming.LightCycles.Util;
-    
+
     /// <summary>
     /// Program entry point
     /// </summary>
     public class Program
     {
-        public static Dictionary<Mapping, int> numberOfWins = new Dictionary<Mapping, int>();
-        public static Dictionary<Mapping, int> numberOfLoses = new Dictionary<Mapping, int>();
-        public static Dictionary<Mapping, int> numberOfDraws = new Dictionary<Mapping, int>();
-        public static Dictionary<Mapping, int> totalScore = new Dictionary<Mapping, int>();
-        public static List<string> tournamentLog = new List<string>();
+        /// <summary>
+        /// Number of wins per player
+        /// </summary>
+        private static Dictionary<Mapping, int> numberOfWins = new Dictionary<Mapping, int>();
+
+        /// <summary>
+        /// Number of loses per player
+        /// </summary>
+        private static Dictionary<Mapping, int> numberOfLoses = new Dictionary<Mapping, int>();
+
+        /// <summary>
+        /// Number of draws per player
+        /// </summary>
+        private static Dictionary<Mapping, int> numberOfDraws = new Dictionary<Mapping, int>();
+
+        /// <summary>
+        /// Player total score
+        /// </summary>
+        private static Dictionary<Mapping, int> totalScore = new Dictionary<Mapping, int>();
+
+        /// <summary>
+        /// Tournament log
+        /// </summary>
+        private static List<string> tournamentLog = new List<string>();
 
         /// <summary>
         /// Entry point method
@@ -28,7 +46,7 @@ namespace Infusion.Gaming.LightCycles
         /// <param name="args">program arguments</param>
         public static void Main(string[] args)
         {
-            if (args.Length > 3 && args[3] == "Tournament")
+            if (args.Length > 2 && args[2] == "Tournament")
             {
                 PlayTournament(args);
             }
@@ -46,7 +64,6 @@ namespace Infusion.Gaming.LightCycles
         {
             RunSettings runSettings = new ConfigProvider<RunSettings>().Load(args[0]);
             GameSettings gameSettings = new ConfigProvider<GameSettings>().Load(args[1]);
-            TeamsAndPlayers teamsAndPlayers = new ConfigProvider<TeamsAndPlayers>().Load(args[2]);           
             foreach (Mapping mapping in runSettings.PlayerMappings)
             {
                 numberOfWins.Add(mapping, 0);
@@ -55,8 +72,8 @@ namespace Infusion.Gaming.LightCycles
                 totalScore.Add(mapping, 0);
             }
 
-            const int numberOfGamesToPlay = 1;
-            int totalNumberOfGames = numberOfGamesToPlay * runSettings.PlayerMappings.Count * (runSettings.PlayerMappings.Count - 1);
+            const int NumberOfGamesToPlay = 1;
+            int totalNumberOfGames = NumberOfGamesToPlay * runSettings.PlayerMappings.Count * (runSettings.PlayerMappings.Count - 1);
             int gameNumber = 1;
             foreach (Mapping mappingA in runSettings.PlayerMappings)
             {
@@ -64,22 +81,23 @@ namespace Infusion.Gaming.LightCycles
                 {
                     if (mappingA.Id != mappingB.Id)
                     {
-                        for (int game = 0; game < numberOfGamesToPlay; game++)
+                        for (int game = 0; game < NumberOfGamesToPlay; game++)
                         {
                             string outputFileName = Path.Combine(".\\Logs", GetOneOnOneLogFileName(mappingA.Name, mappingB.Name, game));
-                            using (TextWriter output = new StreamWriter(outputFileName))
+                            string tmpOutputFileName = outputFileName + ".tmp";
+                            using (TextWriter output = new StreamWriter(tmpOutputFileName))
                             {
                                 RunSettings gameRunSettings = new RunSettings();
                                 gameRunSettings.FogOfWar = runSettings.FogOfWar;
                                 gameRunSettings.TimeLimit = runSettings.TimeLimit;
                                 gameRunSettings.ViewArea = runSettings.ViewArea;
-                                gameRunSettings.PlayerMappings = new List<Mapping>();
+                                gameRunSettings.PlayerMappings = new MappingCollection();
                                 gameRunSettings.PlayerMappings.Add(new Mapping() { Id = "A", Name = mappingA.Name });
                                 gameRunSettings.PlayerMappings.Add(new Mapping() { Id = "B", Name = mappingB.Name });
 
                                 Stopwatch stopwatch = new Stopwatch();
                                 stopwatch.Start();
-                                GameRunner runner = new GameRunner(output, gameRunSettings, gameSettings, teamsAndPlayers);
+                                GameRunner runner = new GameRunner(output, gameRunSettings, gameSettings);
                                 runner.Run();
                                 output.Close();
                                 stopwatch.Stop();
@@ -134,6 +152,8 @@ namespace Infusion.Gaming.LightCycles
                                 tournamentLog.Add(outputBuilder.ToString());
                                 OutputScoreboard(runSettings.PlayerMappings);
                             }
+
+                            File.Move(tmpOutputFileName, outputFileName);
                         }
                     }
                 }
@@ -152,7 +172,7 @@ namespace Infusion.Gaming.LightCycles
             int longestName = 0;
             foreach (Mapping mapping in playerMappings)
             {
-                if(mapping.Name.Length > longestName)
+                if (mapping.Name.Length > longestName)
                 {
                     longestName = mapping.Name.Length;
                 }
@@ -178,7 +198,7 @@ namespace Infusion.Gaming.LightCycles
             }
 
             outputBuilder.AppendLine();
-            foreach(string gameResult in tournamentLog)
+            foreach (string gameResult in tournamentLog)
             {
                 outputBuilder.AppendLine(gameResult);
             }
@@ -194,14 +214,16 @@ namespace Infusion.Gaming.LightCycles
         {
             RunSettings runSettings = new ConfigProvider<RunSettings>().Load(args[0]);
             GameSettings gameSettings = new ConfigProvider<GameSettings>().Load(args[1]);
-            TeamsAndPlayers teamsAndPlayers = new ConfigProvider<TeamsAndPlayers>().Load(args[2]);
             string outputFileName = Path.Combine(".\\Logs", GetLogFileName(args[1]));
-            using (TextWriter output = new StreamWriter(outputFileName))
+            string tmpOutputFileName = outputFileName + ".tmp";
+            using (TextWriter output = new StreamWriter(tmpOutputFileName))
             {
-                GameRunner runner = new GameRunner(output, runSettings, gameSettings, teamsAndPlayers);
+                GameRunner runner = new GameRunner(output, runSettings, gameSettings);
                 runner.Run();
                 output.Close();
             }
+
+            File.Move(tmpOutputFileName, outputFileName);
         }
 
         /// <summary>

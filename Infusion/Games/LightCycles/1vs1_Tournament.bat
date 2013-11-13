@@ -1,1 +1,0 @@
-.\bin\LightCycles.exe ".\Players\TournamentPlayers.xml" ".\Maps\TournamentMap.xml" ".\TeamsAndPlayers.xml" Tournament

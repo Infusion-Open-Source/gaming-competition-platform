@@ -60,6 +60,29 @@
         public float FontSize { get; protected set; }
 
         /// <summary>
+        /// Creates enormous heading text
+        /// </summary>
+        /// <param name="text">heading text</param>
+        /// <param name="location">text location</param>
+        /// <returns>heading visual</returns>
+        public static VisualText CreateEnormousHeadingText(string text, PointF location)
+        {
+            return new VisualText(text, location, new Color4(0f, 1f, 0f), 1.0f, 75.0f);
+        }
+
+        /// <summary>
+        /// Creates enormous heading text
+        /// </summary>
+        /// <param name="text">heading text</param>
+        /// <param name="color">heading text color</param>
+        /// <param name="location">text location</param>
+        /// <returns>heading visual</returns>
+        public static VisualText CreateEnormousHeadingText(string text, Color color, PointF location)
+        {
+            return new VisualText(text, location, new Color4(color.R / 255f, color.G / 255f, color.B / 255f), 1.0f, 75.0f);
+        }
+
+        /// <summary>
         /// Creates super heading text
         /// </summary>
         /// <param name="text">heading text</param>
